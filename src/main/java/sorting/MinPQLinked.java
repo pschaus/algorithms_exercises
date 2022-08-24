@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
  *  You can add any method that you want but leave the instance variable
  *  and public API untouched since it used by the tests
  *
- * Hint: use the
+ * Hint: use the unit tests to debug your code, you might get some inspiration from the insert method
  *
  * @param <Key> the generic type of key on this priority queue
  */
@@ -132,7 +132,7 @@ public class MinPQLinked<Key> {
     }
 
     // Creates a new empty node in last layer (ensuring it stay essentially an almost complete tree)
-    // and returns its
+    // and returns the node
     private Node createNodeInLastLayer() {
         Node current = root;
         current.size++;
