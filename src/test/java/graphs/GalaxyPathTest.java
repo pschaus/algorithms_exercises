@@ -60,7 +60,7 @@ public class GalaxyPathTest {
         public static Collection data() {
             LinkedList<Object []> coll = new LinkedList<>();
             for (int i = 0; i < 100; i++) {
-                String name = "data/graphs.GalaxyPath/in_20_"+i;
+                String name = "data/GalaxyPath/in_20_"+i;
                 coll.add(new Object[] {name, new Instance(name)});
             }
             return coll;
@@ -77,6 +77,29 @@ public class GalaxyPathTest {
         @GradeFeedback(message = "Sorry, something is wrong with your algorithm, hint: debug on the small with five galaxies, modify the example if necessary to find the bug", onFail=true)
         @GradeFeedback(message = "Are you sure your code is in O(#galaxies^2) ?", onTimeout=true)
         public void test() throws Exception {
+
+            // Hint: feel free to duplicate and modify this test for your needs
+
+
+            int[][] matrix = new int[5][5];
+
+            matrix[0][1] = 1;
+            matrix[0][2] = 1;
+            matrix[1][3] = 3;
+            matrix[2][4] = 1;
+            matrix[3][4] = 3;
+
+            HashSet<Integer> dest = new HashSet<>();
+            dest.add(4);
+
+            int len = GalaxyPath.findPath(matrix, 0, dest);
+            assertEquals(3, len);
+
+            matrix[2][4] = 2;
+            len = GalaxyPath.findPath(matrix, 0, dest);
+            assertEquals(2, len);
+
+
             assertEquals(instance.solution, GalaxyPath.findPath(instance.matrix, instance.from, instance.destination));
         }
 

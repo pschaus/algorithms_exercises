@@ -51,7 +51,7 @@ class LinkedStack<E> implements Stack<E> {
         // TODO Implement empty method
         // STUDENT return false;
         // BEGIN STRIP
-        return false;
+        return size == 0;
         // END STRIP
     }
 
@@ -64,7 +64,8 @@ class LinkedStack<E> implements Stack<E> {
         // TODO Implement peek method
         // STUDENT return null;
         // BEGIN STRIP
-        return null;
+        if (empty()) throw new EmptyStackException();
+        else return top.item;
         // END STRIP
     }
 
@@ -77,7 +78,13 @@ class LinkedStack<E> implements Stack<E> {
         // TODO Implement pop method
         // STUDENT return null;
         // BEGIN STRIP
-        return null;
+        if (empty()) throw new EmptyStackException();
+        else {
+            E ret = top.item;
+            top = top.next;
+            size--;
+            return ret;
+        }
         // END STRIP
     }
 
@@ -89,6 +96,8 @@ class LinkedStack<E> implements Stack<E> {
     public void push(E item) {
         // TODO STUDENT: Implement push method
         // BEGIN STRIP
+        top = new Node(item,top);
+        size++;
         // END STRIP
     }
 }
@@ -106,6 +115,10 @@ class ArrayStack<E> implements Stack<E> {
     private E[] array;        // array storing the elements on the stack
     private int size;        // size of the stack
 
+    public ArrayStack() {
+        array = (E[]) new Object[10];
+    }
+
     /**
      * Tests if this stack is empty
      */
@@ -114,7 +127,7 @@ class ArrayStack<E> implements Stack<E> {
         // TODO Implement empty method
         // STUDENT return false;
         // BEGIN STRIP
-        return false;
+        return size == 0;
         // END STRIP
     }
 
@@ -127,7 +140,8 @@ class ArrayStack<E> implements Stack<E> {
         // TODO Implement peek method
         // STUDENT return null;
         // BEGIN STRIP
-        return null;
+        if (empty()) throw new EmptyStackException();
+        else return array[size-1];
         // END STRIP
     }
 
@@ -140,7 +154,13 @@ class ArrayStack<E> implements Stack<E> {
         // TODO Implement pop method
         // STUDENT return null;
         // BEGIN STRIP
-        return null;
+        if (empty()) throw new EmptyStackException();
+        else {
+            E ret = array[size-1];
+            size--;
+            array[size] = null; // so that the object can possibly be garbage collected
+            return ret;
+        }
         // END STRIP
     }
 
@@ -152,6 +172,13 @@ class ArrayStack<E> implements Stack<E> {
     public void push(E item) {
         // TODO STUDENT: Implement push method
         // BEGIN STRIP
+        if (size == array.length) {
+            // doubling the size
+            E newArray[] = (E[]) new Object[size*2];
+            System.arraycopy(array, 0, newArray, 0, size);
+            array = newArray;
+        }
+        array[size++] = item;
         // END STRIP
     }
 }

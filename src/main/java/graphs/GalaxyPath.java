@@ -34,8 +34,9 @@ public class GalaxyPath {
      * @param destinations a set of habitable galaxies (ids taken on on [0..n-1])
      * @return the shortest (number of years) feasible path in years from the source to a habitable destination galaxy.
      *         More formally if P = (n0, n1, ...nk) is a valid path of duration k
-     *            iff n1=source, nk = destination and
+     *            iff n1 = source, nk = destination and
      *                for all (ni, ni+1) in P, graph[ni][ni+1] >= i+1
+     *         -1 if no path exists
      *
      */
     public static int findPath(int [][] graph, int source, Set<Integer> destinations) {
