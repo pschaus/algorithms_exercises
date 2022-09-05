@@ -94,7 +94,7 @@ class LinkedStack<E> implements Stack<E> {
      */
     @Override
     public void push(E item) {
-        // TODO STUDENT: Implement push method
+        // TODO Implement push method
         // BEGIN STRIP
         top = new Node(item,top);
         size++;
@@ -170,7 +170,7 @@ class ArrayStack<E> implements Stack<E> {
      */
     @Override
     public void push(E item) {
-        // TODO STUDENT: Implement push method
+        // TODO Implement push method
         // BEGIN STRIP
         if (size == array.length) {
             // doubling the size
