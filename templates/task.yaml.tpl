@@ -13,12 +13,6 @@ context: |-
     .. warning::
 
          * Instruction provided at the top of the source file on IntelliJ.
-         * Please note, the score displayed on INGInious is given for information only.
-         * The tests will be modified for the final evaluation.
-         * We therefore advise you to verify your code locally with the provided tests plus possibly your own additional tests.
-         * Regularly save your code (even incomplete) by submitting on inginious to make a backup (rare SEB crash, but can happen, the intermediate inginious submission serves as a backup in this case).
-         * It is also advised to check if your code meets the requested specification.
-         * If a technical problem prevents you from progressing, report it to the supervisor without wasting time, after that will be too late.
          * Debug using small and easy unit tests provided in junit tests, it can also help to clarify the instructions.
 
 
@@ -29,12 +23,11 @@ file: ''
 groups: false
 input_random: '0'
 limits:
-    memory: '100'
+    memory: '300'
     time: '30'
     output: '2'
-name: '{1}'
+name: '{3}'
 network_grading: false
-order: {3}
 problems:
   code:
     header: 'Paste here the content of the whole file associated with this question'

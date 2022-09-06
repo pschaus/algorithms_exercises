@@ -10,17 +10,12 @@ import re
 
 
 # Will be filled by process.py
-exercise = '{}'
-student_file = f'{{exercise}}.java'
-test_file = f'{{exercise}}TestInginious.java'
-
-# Archive for jplag
+package = '{0}'
+exercise = '{1}'
+student_file = f'{{package}}/{{exercise}}.java'
+test_file = f'{{package}}/{{exercise}}TestInginious.java'
 
 input.parse_template(student_file)
-
-student_name = input.get_input("@username")
-subprocess.call(['archive', '-a', student_file,'-o',student_name+''], universal_newlines=True)
-
 
 compile_error = subprocess.call(f'javac -cp ".:libs/junit-4.12.jar:libs/hamcrest-core-1.3.jar:libs/JavaGrading.jar" RunTests.java {{test_file}} {{student_file}} 2>&1', shell=True, stdout=open('compiler.out', 'w'))
 
