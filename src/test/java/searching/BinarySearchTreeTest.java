@@ -1,6 +1,5 @@
 package searching;
 
-import utils.BinaryNode;
 import utils.BSTNode;
 
 import org.junit.Test;
@@ -36,10 +35,10 @@ public class BinarySearchTreeTest {
         @GradeFeedback(message="Sorry, something is wrong with your algorithm. Debug first on this small example", onFail=true)
         public void  testExample() {
             TreeSet<Integer> correct = new java.util.TreeSet<>();
-            int values [] = new int []{12, 8, 18, 3, 11, 14, 20, 9, 15};
+            int [] values = new int []{12, 8, 18, 3, 11, 14, 20, 9, 15};
             int [] inputs = new int []{11, 14, 9, 4, 16, 10, 19, 21, 30, 40};
 
-            BSTNode root = new BSTNode(values[0]);
+            BSTNode<Integer> root = new BSTNode<>(values[0]);
             correct.add(values[0]);
             for (int i = 0; i < values.length; i++) {
                 root.add(values[i]);
@@ -82,7 +81,7 @@ public class BinarySearchTreeTest {
     }
 
     static class Instance {
-        BSTNode root;
+        BSTNode<Integer> root;
         TreeSet<Integer> correct;
         int query;
 
@@ -95,7 +94,7 @@ public class BinarySearchTreeTest {
                     input[i] = scan.nextInt();
                 }
                 this.query = scan.nextInt();
-                this.root = new BSTNode(input[0]);
+                this.root = new BSTNode<>(input[0]);
                 this.correct = new TreeSet<>();
                 this.correct.add(input[0]);
                 for (int i = 1; i < input.length; i++) {
