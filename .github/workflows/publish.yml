@@ -41,7 +41,8 @@ jobs:
           GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no" git clone git@github.com:pschaus/algorithms_exercises_students.git
           echo "rm src ..."
           cd algorithms_exercises_students
-          git rm -r src
+          ls
+          git rm -r ./src
           cd ..
           echo "regenerate sources"
           echo "strip algorithms_exercises_students ..."
