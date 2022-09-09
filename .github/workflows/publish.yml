@@ -52,7 +52,7 @@ jobs:
           cp pom.xml algorithms_exercises_students/.
           cp -r libs algorithms_exercises_students/.
           cp -r data algorithms_exercises_students/.
-          cd minicp
+          cd algorithms_exercises_students
           git add -A
           git commit -m "generated at $(date)"
           GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no" git push
