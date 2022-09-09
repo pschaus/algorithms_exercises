@@ -42,7 +42,7 @@ jobs:
           echo "rm src ..."
           cd algorithms_exercises_students
           ls
-          git rm -rf ./src
+          if [ -d "src" ]; then git rm -rf ./src; fi
           cd ..
           echo "regenerate sources"
           echo "strip algorithms_exercises_students ..."
