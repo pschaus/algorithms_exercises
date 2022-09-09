@@ -1,20 +1,10 @@
 package searching;
 
-import utils.BinaryNode;
+import utils.BSTNode;
 
 /**
- * You are given a binary search tree (BST) whose nodes implement the following interface
- *
- *  interface Node {
- *      // Returns the value of the node
- *      int getValue();
- *
- *      // Returns the left child of the node
- *      Node getLeft();
- *
- *      // Returns the right child of the node
- *      Node getRight();
- *  }
+ * You are given a binary search tree (BST) whose nodes implement the BinaryNode and KeyNode interfaces
+ * available in the utils package.
  *
  * We ask you to complete the ceil method, which take as argument the root of a BST and an integer `value`.
  * This methods finds a node `N` in the BST such that
@@ -46,7 +36,7 @@ public class BinarySearchTree {
      * @param root the root of the tree
      * @param value the value we want to ceil
      */
-    public static Integer ceil(BinaryNode root, int value) {
+    public static Integer ceil(BSTNode<Integer> root, int value) {
         // BEGIN STRIP
         return tail_ceil(root, value, null);
         // END STRIP
@@ -62,11 +52,11 @@ public class BinarySearchTree {
      * @param value the value we want to ceil
      * @param currentBest the current best value found for the ceiling
      */
-    private static Integer tail_ceil(BinaryNode root, int value, Integer currentBest) {
+    private static Integer tail_ceil(BSTNode<Integer> root, int value, Integer currentBest) {
         if (root == null) {
             return currentBest;
         }
-        int nodeValue = root.getValue();
+        int nodeValue = root.getKey();
         if (nodeValue == value) {
             return value;
         } else if (nodeValue > value) {
