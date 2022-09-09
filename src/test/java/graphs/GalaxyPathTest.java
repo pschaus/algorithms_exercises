@@ -60,7 +60,7 @@ public class GalaxyPathTest {
         public static Collection data() {
             LinkedList<Object []> coll = new LinkedList<>();
             for (int i = 0; i < 100; i++) {
-                String name = "data/GalaxyPath/in_20_"+i;
+                String name = "data/graphs.GalaxyPath/in_20_"+i;
                 coll.add(new Object[] {name, new Instance(name)});
             }
             return coll;
