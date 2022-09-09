@@ -4,37 +4,29 @@ import java.util.Arrays;
 
 /**
  * Author Pierre Schaus
- * <p>
- * Assume the following 5x5 matrix:
+ *
+ * Assume the following 5x5 matrix that represent a grid surface:
  * int [][] tab = new int[][] {{1,3,3,1,3},
- * {4,2,2,4,5},
- * {4,4,1,4,2},
- * {1,4,2,3,6},
- * {1,1,1,6,3}};
- * <p>
- * Each entry in the matrix represents an altitude.
- * The goal is to implement a GlobalWarmingImpl class that extends the GlobalWarming method described below.
- * <p>
+ *                             {4,2,2,4,5},
+ *                             {4,4,1,4,2},
+ *                             {1,4,2,3,6},
+ *                             {1,1,1,6,3}};
+ *
+ * Each entry in the matrix represents an altitude point at the corresponding grid coordinate.
+ * The goal is to implement a GlobalWarmingImpl class that extends the GlobalWarming abstract class described below.
+ *
  * Given a global water level, all positions in the matrix with a value <= the water level are flooded and therefore unsafe.
- * So, assuming the water level is 3, all safe points are in green (in the representation above).
- * <p>
+ * So, assuming the water level is 3, all safe points are highlighted between parenthesis:
+ *
+ *   1 , 3 , 3 , 1 , 3
+ *  (4), 2 , 2 ,(4),(5)
+ *  (4),(4), 1 ,(4), 2
+ *   1 ,(4), 2 , 3 ,(6)
+ *   1 , 1 , 1 ,(6), 3}
+ *
  * The method you need to implement is nbSafePoints
  * - calculating the number of safe points for a given water level
- * <p>
- * import java.util.List;
- * <p>
- * abstract class GlobalWarming {
- * <p>
- * <p>
- * final int[][] altitude;
- * <p>
- * public GlobalWarming(int[][] altitude) {
- * this.altitude = altitude;
- * }
- * <p>
- * public abstract int nbSafePoints(int waterLevel);
- * }
- * <p>
+ *
  * Complete the code below. Pay attention to the expected time complexity of each method.
  * To meet this time complexity, you need to do some pre-computation in the constructor.
  * Feel free to create internal classes in GlobalWarmingImpl to make your implementation easier.

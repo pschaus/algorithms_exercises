@@ -3,9 +3,14 @@ package sorting;
 /**
  * Author Pierre Schaus
  *
- * Consider the Merge Sort (top-down) algorithm.
+ * Complete the Merge Sort (top-down) algorithm below making use
+ * of the provided merge method.
+ * You are not allowed to use imports or other external classes of Java.
+ * Hint: Merger Sort this is a divide and conquer algorithm.
+ *       It is easier to implement it recursively.
+ *       As an alternative exercise, you can try to implement it
+ *       non recursively, using a loop instead.
  */
-
 public class MergeSort {
     /**
      * Pre-conditions: a[lo..mid] and a[mid+1..hi] are sorted
@@ -35,7 +40,7 @@ public class MergeSort {
     private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
         // TODO
         // BEGIN STRIP
-        if(hi<=lo) return;
+        if (hi<=lo) return;
         int mid =lo+ (hi-lo)/2;
         sort(a, aux, lo, mid);
         sort(a, aux,  mid + 1, hi);
