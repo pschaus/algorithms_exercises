@@ -1,0 +1,61 @@
+name: Update html
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: pschaus/minicp:version1.1
+    steps:
+      - uses: actions/checkout@v2
+      - name: Step1 - Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Step2 - Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Step 3 - Build package Maven
+        run: |
+          mvn -B package --file pom.xml
+      - name: Step4 - Test
+        run: |
+          mvn test
+      - name: Step5 - Strip exercises, commit and push to algorithms_exercises_students
+        env:
+          MY_SSH_KEY: ${{ secrets.MY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+        run: |
+          echo "generate commit in minicp and hide solutions..."
+          echo "config git ..."
+          git config --global user.name github-actions
+          git config --global user.email pschaus@users.noreply.github.com
+          echo "setup ssh keys ..."
+          mkdir -p ~/.ssh
+          (umask  077 ; echo $MY_SSH_KEY | base64 --decode > ~/.ssh/id_rsa)
+          chmod -R 700 ~/.ssh
+          md5sum ~/.ssh/id_rsa
+          #ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no git@github.com
+          echo "clone ..."
+          ls ~/.ssh/id_rsa
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no" git clone git@github.com:pschaus/algorithms_exercises_students.git
+          echo "rm src ..."
+          cd algorithms_exercises
+          git rm -r src
+          cd ..
+          echo "regenerate sources"
+          echo "strip algorithms_exercises ..."
+          amanda --orig src/ --dest algorithms_exercises/src/
+          echo "copy other files ..."
+          cp README.md algorithms_exercises/.
+          cp pom.xml algorithms_exercises/.
+          cp -r libs algorithms_exercises/.
+          cp -r data algorithms_exercises/.
+          cd minicp
+          git add -A
+          git commit -m "generated at $(date)"
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no" git push
+          cd ..
