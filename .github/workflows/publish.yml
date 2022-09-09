@@ -18,16 +18,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Step 3 - Build package Maven
-        run: |
-          mvn -B package --file pom.xml
-      - name: Step4 - Test
+      - name: Step3 - Test
         run: |
           mvn test
-      - name: Step5 - Strip exercises, commit and push to algorithms_exercises_students
+      - name: Step4 - Strip exercises, commit and push to algorithms_exercises_students
         env:
           MY_SSH_KEY: ${{ secrets.MY_SSH_KEY }}
-          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+          #KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
         run: |
           echo "generate commit in minicp and hide solutions..."
           echo "config git ..."
