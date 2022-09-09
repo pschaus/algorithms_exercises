@@ -22,5 +22,5 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Maven test
-      run: mvn test
+#    - name: Maven test
+#      run: mvn test
