@@ -40,17 +40,17 @@ jobs:
           ls ~/.ssh/id_rsa
           GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no" git clone git@github.com:pschaus/algorithms_exercises_students.git
           echo "rm src ..."
-          cd algorithms_exercises
+          cd algorithms_exercises_students
           git rm -r src
           cd ..
           echo "regenerate sources"
-          echo "strip algorithms_exercises ..."
-          amanda --orig src/ --dest algorithms_exercises/src/
+          echo "strip algorithms_exercises_students ..."
+          amanda --orig src/ --dest algorithms_exercises_students/src/
           echo "copy other files ..."
-          cp README.md algorithms_exercises/.
-          cp pom.xml algorithms_exercises/.
-          cp -r libs algorithms_exercises/.
-          cp -r data algorithms_exercises/.
+          cp README.md algorithms_exercises_students/.
+          cp pom.xml algorithms_exercises_students/.
+          cp -r libs algorithms_exercises_students/.
+          cp -r data algorithms_exercises_students/.
           cd minicp
           git add -A
           git commit -m "generated at $(date)"
