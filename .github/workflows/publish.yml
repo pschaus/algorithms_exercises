@@ -1,9 +1,9 @@
-name: Update html
+name: test + strip + deploy student
 
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
