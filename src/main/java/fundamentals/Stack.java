@@ -11,12 +11,31 @@ import java.util.EmptyStackException;
  */
 public interface Stack<E> {
 
+    /**
+     * Looks at the object at the top of this stack
+     * without removing it from the stack
+     */
     public boolean empty();
 
+    /**
+     * Returns the first element of the stack, without removing it from the stack
+     *
+     * @throws EmptyStackException if the stack is empty
+     */
     public E peek() throws EmptyStackException;
 
+    /**
+     * Remove the first element of the stack and returns it
+     *
+     * @throws EmptyStackException if the stack is empty
+     */
     public E pop() throws EmptyStackException;
 
+    /**
+     * Adds an element to the stack
+     *
+     * @param item the item to add
+     */
     public void push(E item);
 
 }
@@ -43,9 +62,6 @@ class LinkedStack<E> implements Stack<E> {
         }
     }
 
-    /**
-     * Tests if this stack is empty
-     */
     @Override
     public boolean empty() {
         // TODO Implement empty method
@@ -55,10 +71,6 @@ class LinkedStack<E> implements Stack<E> {
         // END STRIP
     }
 
-    /**
-     * Looks at the object at the top of this stack
-     * without removing it from the stack
-     */
     @Override
     public E peek() throws EmptyStackException {
         // TODO Implement peek method
@@ -69,10 +81,6 @@ class LinkedStack<E> implements Stack<E> {
         // END STRIP
     }
 
-    /**
-     * Removes the object at the top of this stack
-     * and returns that object as the value of this function
-     */
     @Override
     public E pop() throws EmptyStackException {
         // TODO Implement pop method
@@ -88,10 +96,6 @@ class LinkedStack<E> implements Stack<E> {
         // END STRIP
     }
 
-    /**
-     * Pushes an item onto the top of this stack
-     * @param item the item to append
-     */
     @Override
     public void push(E item) {
         // TODO Implement push method
@@ -119,9 +123,6 @@ class ArrayStack<E> implements Stack<E> {
         array = (E[]) new Object[10];
     }
 
-    /**
-     * Tests if this stack is empty
-     */
     @Override
     public boolean empty() {
         // TODO Implement empty method
@@ -131,10 +132,6 @@ class ArrayStack<E> implements Stack<E> {
         // END STRIP
     }
 
-    /**
-     * Looks at the object at the top of this stack
-     * without removing it from the stack
-     */
     @Override
     public E peek() throws EmptyStackException {
         // TODO Implement peek method
@@ -145,10 +142,6 @@ class ArrayStack<E> implements Stack<E> {
         // END STRIP
     }
 
-    /**
-     * Removes the object at the top of this stack
-     * and returns that object as the value of this function
-     */
     @Override
     public E pop() throws EmptyStackException {
         // TODO Implement pop method
@@ -164,10 +157,6 @@ class ArrayStack<E> implements Stack<E> {
         // END STRIP
     }
 
-    /**
-     * Pushes an item onto the top of this stack
-     * @param item the item to append
-     */
     @Override
     public void push(E item) {
         // TODO Implement push method
