@@ -29,7 +29,6 @@ import utils.BSTNode;
  */
 public class BinarySearchTree {
 
-
     /**
      * Returns the ceiled value of `value` in the tree rooted at `root`
      *
@@ -57,15 +56,22 @@ public class BinarySearchTree {
             return currentBest;
         }
         int nodeValue = root.getKey();
+        // If the value is in the tree, it is its own ceiled value
         if (nodeValue == value) {
             return value;
         } else if (nodeValue > value) {
+            // The value of this node is larger than the value we look for.
+            // Thus the ceiled value we are looking for is either the value
+            // we currently have or the value of the current node or one of its
+            // descendant
             if (currentBest == null || nodeValue < currentBest) {
                 return tail_ceil(root.getLeft(), value, nodeValue);
             } else {
                 return tail_ceil(root.getLeft(), value, currentBest);
             }
         } else {
+            // In this case the value of the node is lower than the value we
+            // want to ceil, thus value must be in the right subtree.
             return tail_ceil(root.getRight(), value, currentBest);
         }
     }
