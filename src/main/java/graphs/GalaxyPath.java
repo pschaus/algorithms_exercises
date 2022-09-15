@@ -67,9 +67,6 @@ public class GalaxyPath {
         return -1;
         // END STRIP
     }
-
-
-
 }
 
 
