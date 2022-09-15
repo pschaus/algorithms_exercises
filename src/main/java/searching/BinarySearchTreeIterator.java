@@ -36,10 +36,18 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
 
     public BinarySearchTreeIterator() { };
 
+    /**
+     * Returns the size of the tree
+     */
     public int size() {
         return this.size(root);
     }
 
+    /**
+     * Returns the size of the a subtree of the tree
+     *
+     * @param node the root of the subtree
+     */
     private int size(BSTNode<Key> node) {
         if (node == null) {
             return 0;
@@ -47,10 +55,21 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
         return node.getSize();
     }
 
+    /**
+     * Adds a value in the tree
+     *
+     * @param key the value to add
+     */
     public void put(Key key) {
         this.root = put(this.root, key);
     }
 
+    /**
+     * Adds a value in a subtree of the tree
+     *
+     * @param node the root of the subtree
+     * @param key the value to add
+     */
     private BSTNode<Key> put(BSTNode<Key> node, Key key) {
         if (node == null) {
             return new BSTNode<>(key, 1);
