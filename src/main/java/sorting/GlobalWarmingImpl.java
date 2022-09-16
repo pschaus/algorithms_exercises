@@ -78,7 +78,11 @@ public class GlobalWarmingImpl extends GlobalWarming {
 
     }
 
-
+    /**
+     * Returns the number of safe points given a water level
+     *
+     * @param waterLevel the level of water
+     */
     public int nbSafePoints(int waterLevel) {
         // TODO
         // expected time complexity O(log(n^2))
