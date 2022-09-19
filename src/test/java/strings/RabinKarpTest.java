@@ -47,8 +47,8 @@ public class RabinKarpTest {
     @Test
     @Grade(value=20)
     public void randomWordTest(){
-        int[] seeds = new int[]{42,56,3,9,65,99,23};
-        Random rand = new Random(new Random().nextInt(seeds.length));
+        //int[] seeds = new int[]{42,56,3,9,65,99,23};
+        Random rand = new Random(new Random(5).nextInt(7));
         String[] pat = new String[10];
         int length = 8;
 
