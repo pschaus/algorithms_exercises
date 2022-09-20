@@ -102,16 +102,12 @@ public class ConnectedComponentsTest {
     @Test(timeout = 3000)
     @Grade(value = 25)
     public void complexityOk() {
-        //long t0 = System.currentTimeMillis();
         int n = 7002;
         Graph g = new Graph(n);
         for (int i = 0; i < n; i++) {
             g.addEdge(i, (i + 2) % n);
         }
         ConnectedComponents.numberOfConnectedComponents(g);
-        //long t1 = System.currentTimeMillis();
-        //System.out.println("time constructor bis=:"+(t1-t0));
-
     }
 
     @Test

@@ -49,11 +49,4 @@ public class Graph {
     public Iterable<Integer> adj(int v) {
         return edges[v];
     }
-
-    /**
-     * @return a string representation
-     */
-    public String toString() {
-        return "Ne devrait pas être utilisé";
-    }
 }
