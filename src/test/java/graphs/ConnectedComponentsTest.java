@@ -11,6 +11,20 @@ import static org.junit.Assert.assertEquals;
 
 public class ConnectedComponentsTest {
 
+    @Test
+    public void exampleTest() {
+        int n = 9;
+        Graph g = new Graph(n);
+        g.addEdge(0, 1);
+        g.addEdge(1, 2);
+        g.addEdge(2, 5);
+        g.addEdge(3, 4);
+        g.addEdge(4, 7);
+        g.addEdge(6, 8);
+        assertEquals(3, ConnectedComponents.numberOfConnectedComponents(g));
+    }
+
+    // BEGIN STRIP
     private static class WeightedQuickUnionUF {
         private int[] parent;   // parent[i] = parent of i
         private int[] size;     // size[i] = number of sites in subtree rooted at i
@@ -123,4 +137,5 @@ public class ConnectedComponentsTest {
         testRandomGraphOk(90, 40);
     }
 
+    // END STRIP
 }

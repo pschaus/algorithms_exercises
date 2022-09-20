@@ -1,6 +1,5 @@
 package fundamentals;
 
-
 import com.github.guillaumederval.javagrading.Grade;
 import com.github.guillaumederval.javagrading.GradingRunnerWithParametersFactory;
 import org.junit.Test;

@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 public class UnionTest {
 
+    // BEGIN STRIP
     public static Union.Interval[] unionSolution(Union.Interval[] intervals) {
         if (intervals.length == 0) return intervals;
         Arrays.sort(intervals);
@@ -28,6 +29,7 @@ public class UnionTest {
         res.add(new Union.Interval(min, max));
         return res.toArray(new Union.Interval[0]);
     }
+    // END STRIP
 
     @Test
     @Grade(value = 25)
@@ -86,6 +88,7 @@ public class UnionTest {
         return new Union.Interval(min, min + rand.nextInt(4));
     }
 
+    // BEGIN STRIP
     @Test(timeout = 1000)
     @Grade(value = 25)
     public void testRandom2() {
@@ -114,4 +117,5 @@ public class UnionTest {
         Union.Interval[] res = Union.union(intervals);
         assertArrayEquals(res, unionSolution(intervals));
     }
+    // END STRIP
 }

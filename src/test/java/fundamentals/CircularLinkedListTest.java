@@ -19,7 +19,6 @@ import static org.junit.Assert.*;
 public class CircularLinkedListTest {
 
     // some random tests
-
     @RunWith(Parameterized.class)
     public static class CircularLinkedListTestRandom {
         private CircularLinkedList<Integer> student;
@@ -71,16 +70,13 @@ public class CircularLinkedListTest {
         }
     }
 
-
     // complexity tests
-
     @RunWith(Parameterized.class)
     @Parameterized.UseParametersRunnerFactory(GradingRunnerWithParametersFactory.class)
     public static class CircularLinkedListTestComplexity {
 
         private CircularLinkedList<Integer> student;
         private List<Integer> correct;
-
 
         public CircularLinkedListTestComplexity(CircularLinkedList<Integer> student, List<Integer> correct) {
             this.student = student;
@@ -123,7 +119,6 @@ public class CircularLinkedListTest {
     }
 
     // more extreme tests
-
     public static class TestExtreme {
 
         @Test
@@ -155,7 +150,6 @@ public class CircularLinkedListTest {
             a.remove(1);
         }
 
-
         @Test(expected = ConcurrentModificationException.class)
         @Grade(value=5)
         public void testConcurrentModificationNext() {
@@ -165,8 +159,5 @@ public class CircularLinkedListTest {
             iter.next();
         }
     }
-
-
-
 }
 
