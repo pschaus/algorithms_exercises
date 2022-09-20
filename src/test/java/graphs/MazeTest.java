@@ -34,7 +34,7 @@ public class MazeTest{
         Iterable<Integer> path = Maze.shortestPath(maze1,0,0,6,0);
         Integer [] pathArray = toArray(path);
         assertTrue(validPathSourceToDest(0,0,6,0,maze1,path));
-        assertTrue(pathArray.length == 15);
+        assertEquals(15, pathArray.length);
     }
 
     @Test
@@ -42,13 +42,13 @@ public class MazeTest{
     public void testMaze1b() {
         // should not have a path
         // unreachable destination
-        assertTrue(!Maze.shortestPath(maze1,0,0,6,6).iterator().hasNext());
+        assertFalse(Maze.shortestPath(maze1, 0, 0, 6, 6).iterator().hasNext());
         // unreachable destination
-        assertTrue(!Maze.shortestPath(maze1,6,6,0,0).iterator().hasNext());
+        assertFalse(Maze.shortestPath(maze1, 6, 6, 0, 0).iterator().hasNext());
         // start position is a wall
-        assertTrue(!Maze.shortestPath(maze1,1,0,6,0).iterator().hasNext());
+        assertFalse(Maze.shortestPath(maze1, 1, 0, 6, 0).iterator().hasNext());
         // end position is a wall
-        assertTrue(!Maze.shortestPath(maze1,6,0,1,0).iterator().hasNext());
+        assertFalse(Maze.shortestPath(maze1, 6, 0, 1, 0).iterator().hasNext());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class MazeTest{
         Iterable<Integer> path = Maze.shortestPath(maze1,0,0,0,0);
         Integer [] pathArray = toArray(path);
         assertTrue(validPathSourceToDest(0,0,0,0,maze1,path));
-        assertTrue(pathArray.length == 1);
+        assertEquals(1, pathArray.length);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class MazeTest{
         Iterable<Integer> path = Maze.shortestPath(maze2,0,0,1,6);
         Integer [] pathArray = toArray(path);
         assertTrue(validPathSourceToDest(0,0,1,6,maze2,path));
-        assertTrue(pathArray.length == 10);
+        assertEquals(10, pathArray.length);
     }
 
     @Test (timeout = 20)
