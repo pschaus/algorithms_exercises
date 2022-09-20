@@ -5,88 +5,54 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.Arrays;
 
 public class MedianTest {
 
-    public static int partition(Median.Vector a, int lo, int hi) {
-        int i = lo, j = hi+1;
-        int v = a.get(lo);
-        while (true) {
-            while (a.get(++i) < v) if (i == hi) break;
-            while (v < a.get(--j)) if (j == lo) break;
-            if (i >= j) break;
-            a.swap(i,j);
+    private final Random random = new Random(635654);
+
+    public static int [] randomInput(int size, Random r) {
+        int [] input = new int[size];
+        for (int i = 0; i < size; i++) {
+            input[i] = r.nextInt(size);
         }
-        a.swap(lo,j);
-        return j;
+        return input;
     }
 
-    public static int median(Median.Vector a, int lo, int hi) {
-        int i = partition(a,lo,hi);
-        if (i == a.size()/2) return a.get(i);
-        else if (i < a.size()/2) {
-            return median(a,i+1,hi);
-        } else {
-            return median(a,lo,i-1);
-        }
-    }
-
-    public static void sort(Median.Vector a, int lo, int hi) {
-        if (lo < hi) {
-            int i = partition(a,lo,hi);
-            sort(a,lo,i-1);
-            sort(a,i+1,hi);
-        }
-    }
-
-    public static Median.Vector randomVector(int n) {
-        java.util.Random rand = new java.util.Random();
-        int [] array = new int[n];
-        for (int i = 0; i < n; i++) {
-            array[i] = rand.nextInt(n);
-        }
-        Median.Vector v = new Median.Vector(array.length);
-        for (int i = 0; i < v.size(); i++) {
-            v.set(i,array[i]);
+    public static Median.Vector vectorFromInput(int [] input) {
+        Median.Vector v = new Median.Vector(input.length);
+        for (int i = 0; i < input.length; i++) {
+            v.set(i, input[i]);
         }
         return v;
+    }
+
+    public static int getMedian(int [] input) {
+        int [] copy = new int[input.length];
+        System.arraycopy(input, 0, copy, 0, input.length);
+        Arrays.sort(copy);
+        return copy[copy.length/2];
     }
 
     @Test
     @Grade(value = 30)
     public void testMedianOk() {
         for (int i = 100; i < 1000; i += 10) {
-            Median.Vector v = randomVector(i+1);
-            assertEquals("correct median value computed", Median.median(v, 0, v.size() - 1), median(v, 0, v.size() - 1));
+            int [] input = randomInput(i+1, random);
+            Median.Vector v = vectorFromInput(input);
+            assertEquals("correct median value computed", getMedian(input), Median.median(v, 0, v.size() - 1));
         }
     }
 
     @Test
-    @Grade(value = 50)
+    @Grade(value = 50, cpuTimeout=500)
     public void testComplexityNLogNOk() {
         for (int i = 100; i < 2000000; i += 100000) {
-            Median.Vector v1 = randomVector(i+1);
+            int [] input = randomInput(i+1, random);
+            Median.Vector v1 = vectorFromInput(input);
             Median.median(v1,0,v1.size()-1);
-
-            Median.Vector v2 = randomVector(i+1);
-            sort(v2,0,v2.size()-1);
-
-            assertTrue("complexity larger than O(n.log(n))",v1.nOp() <= v2.nOp()*3);
         }
     }
-    @Test
-    @Grade(value = 20)
-    public void testComplexityNOk() {
-        for (int i = 100; i < 2000000; i += 100000) {
-            Median.Vector v1 = randomVector(i+1);
-            Median.median(v1,0,v1.size()-1);
-
-            Median.Vector v2 = randomVector(i+1);
-            median(v2,0,v2.size()-1);
-
-            assertTrue("complexity larger than O(n) expected",v1.nOp() <= v2.nOp()*3);
-        }
-    }
-
-
 }
