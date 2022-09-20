@@ -31,7 +31,7 @@ class Helpers {
     public static String shuffle(String input, int seed){
         Random r = new Random(seed);
 
-        List<Character> characters = new ArrayList<Character>();
+        List<Character> characters = new ArrayList<>();
         for(char c:input.toCharArray()){
             characters.add(c);
         }
@@ -44,17 +44,10 @@ class Helpers {
         return output.toString();
     }
 
-    public static String repeat(String s, int times) {
-        if (times <= 0) return "";
-        else return s + repeat(s, times-1);
-    }
-
 }
 
 @RunWith(Enclosed.class)
 public class WordTransformationSPTest {
-
-
 
     @RunWith(Parameterized.class)
     public static class WTSPCorrectnessTests {
@@ -174,42 +167,28 @@ public class WordTransformationSPTest {
         @Grade(value=4) //4*10 = 40
         public void runAsExpected() {
             Random r = new Random(seeds[2]);
-            long t0 = System.currentTimeMillis();
             String s = from;
             String d = Helpers.shuffle(s, r.nextInt());
             WordTransformationSP.minimalCost(s, d);
-            long t1 = System.currentTimeMillis();
-            //System.out.println("time constructor=:"+(t1-t0));
+
         }
 
         @Test(timeout=1000)
-        @Grade(value=1) //1*10 = 10
+        @Grade(value=1)
         public void runAsExtreme() {
-            Random r = new Random(seeds[1]);
-
-            long t0 = System.currentTimeMillis();
-
             String s = from+Helpers.generateWord(TOTAL_OF_WORD- SIZE_OF_WORD,seeds[3]);
             String d = Helpers.shuffle(s,seeds[0]);
-
             WordTransformationSP.minimalCost(s, d);
-
-            long t1 = System.currentTimeMillis();
-
-            //System.out.println("time constructor bis=:"+(t1-t0));
         }
 
         @Parameterized.Parameters
         public static String[] data() {
             Random r = new Random(seeds[0]);
             String[] tests = new String[TEST_SIZE];
-
             for (int i = 0; i < TEST_SIZE; i++) {
                 tests[i] = Helpers.generateWord(SIZE_OF_WORD, r.nextInt() );
             }
             return tests;
         }
-
     }
-
 }
