@@ -159,7 +159,6 @@ public class BreadthFirstShortestPathsTest {
         @Test
         @Grade(value = 1, cpuTimeout = 1000)
         public void test() throws Exception {
-            Graph g = instance.graph;
             BreadthFirstShortestPaths bfs = new BreadthFirstShortestPaths(instance.graph, instance.sources);
             for(int i = 0; i < instance.destinations.size(); i++){
                 int dest = instance.destinations.get(i);
