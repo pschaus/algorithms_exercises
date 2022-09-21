@@ -5,7 +5,7 @@ import java.util.EmptyStackException;
 import java.util.Queue;
 
 /**
- * Author: Pierre Schaus and Auguste Burlat
+ * Author: Pierre Schaus and Auguste Burlats
  * Implement the abstract data type stack using two queues
  * You are not allowed to modify or add the instance variables,
  * only the body of the methods
@@ -39,7 +39,7 @@ public class StackWithTwoQueues<E> {
     public E peek() throws EmptyStackException {
         // STUDENT return null;
         // BEGIN STRIP
-        if(empty()) throw new EmptyStackException();
+        if (empty()) throw new EmptyStackException();
         return queue1.peek();
         // END STRIP
     }
@@ -52,7 +52,7 @@ public class StackWithTwoQueues<E> {
     public E pop() throws EmptyStackException {
         // STUDENT return null;
         // BEGIN STRIP
-        if(empty()) throw new EmptyStackException();
+        if (empty()) throw new EmptyStackException();
         return queue1.remove();
         // END STRIP
     }
@@ -65,9 +65,9 @@ public class StackWithTwoQueues<E> {
     public void push(E item) {
         // BEGIN STRIP
         queue2.add(item);
-        while(!queue1.isEmpty())
+        while (!queue1.isEmpty()) {
             queue2.add(queue1.remove());
-
+        }
         Queue<E> buffer = queue1;
         queue1 = queue2;
         queue2 = buffer;
