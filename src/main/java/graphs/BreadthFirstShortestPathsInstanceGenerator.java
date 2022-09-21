@@ -28,10 +28,9 @@ public class BreadthFirstShortestPathsInstanceGenerator {
             int nSources = rand.nextInt(6) + 4;
             int nDest = rand.nextInt(20);
 
-            GFG obj = new GFG();
 
-            List<Integer> sources = obj.getRandomElement(nodelist, nSources);
-            List<Integer> destinations = obj.getRandomElement(nodelist, nDest);
+            List<Integer> sources = getRandomElement(nodelist, nSources);
+            List<Integer> destinations = getRandomElement(nodelist, nDest);
 
 
 
@@ -57,10 +56,8 @@ public class BreadthFirstShortestPathsInstanceGenerator {
             int nSources = rand.nextInt(6) + 4;
             int nDest = rand.nextInt(20);
 
-            GFG obj = new GFG();
-
-            List<Integer> sources = obj.getRandomElement(nodelist, nSources);
-            List<Integer> destinations = obj.getRandomElement(nodelist, nDest);
+            List<Integer> sources = getRandomElement(nodelist, nSources);
+            List<Integer> destinations = getRandomElement(nodelist, nDest);
 
 
 
@@ -126,15 +123,8 @@ public class BreadthFirstShortestPathsInstanceGenerator {
 
 
     }
-}
 
-// Java program select a random element from List
-
-
-
-class GFG {
-
-    public List<Integer>
+    public static List<Integer>
     getRandomElement(List<Integer> list, int totalItems)
     {
         Random rand = new Random();
@@ -156,5 +146,7 @@ class GFG {
         }
         return newList;
     }
+
 }
+
 
