@@ -1,11 +1,11 @@
-package fundamentals;
+package sorting;
 
 import com.github.guillaumederval.javagrading.Grade;
 import org.junit.Test;
+import sorting.Median;
 
 import static org.junit.Assert.*;
 
-import java.util.LinkedList;
 import java.util.Random;
 import java.util.Arrays;
 
