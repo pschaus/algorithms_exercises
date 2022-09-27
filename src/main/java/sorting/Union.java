@@ -1,4 +1,4 @@
-package fundamentals;
+package sorting;
 
 // BEGIN STRIP
 import java.util.ArrayList;
