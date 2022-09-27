@@ -70,10 +70,8 @@ public class MineClimbing {
         dist[startX][startY] = 0;
         while (!pq.isEmpty()) {
             PositionAndCost next = pq.poll();
-            if (next.x == endX && next.y == endY)
-                break;
-            if (dist[next.x][next.y] != next.cost)
-                continue;
+            if (next.x == endX && next.y == endY) break;
+            if (dist[next.x][next.y] != next.cost) continue;
 
             final int[][] pos = new int[][]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 
