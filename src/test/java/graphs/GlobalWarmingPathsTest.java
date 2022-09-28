@@ -114,9 +114,6 @@ public class GlobalWarmingPathsTest {
 
     private boolean correctnessShortestPath() {
         int level = 200000;
-        Point p1 = point(10,10);
-        Point p2 = point(15,15);
-
         for (int k = 0; k < 50; k++) {
             int [][] matrix = getRandomMatrix(50,1000000);
             GlobalWarmingPaths g1 = new GlobalWarmingPaths(matrix,level);
@@ -174,7 +171,6 @@ public class GlobalWarmingPathsTest {
     public void timeComplexityConstructorCorrect() {
         final int [][] matrix = getRandomMatrix(100,2000000);
 
-        int max = 0;
         // do some computation here
         long t0 = System.currentTimeMillis();
         GlobalWarming g = new GlobalWarmingPaths(matrix,1000000 );

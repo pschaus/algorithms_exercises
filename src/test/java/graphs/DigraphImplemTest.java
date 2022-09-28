@@ -7,223 +7,198 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import utils.Digraph;
 
-import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-class DigraphImplemCorrect implements Digraph {
-
-    private List<Integer>[] outEdges;
-    private int nE = 0;
-
-    public DigraphImplemCorrect(int V) {
-        outEdges = new List[V];
-        for (int i = 0; i < V; i++) {
-            outEdges[i] = new LinkedList<>();
-        }
-    }
-
-    /**
-     * The number of vertices
-     */
-    public int V() {
-        return outEdges.length;
-    }
-
-    /**
-     * The number of edges
-     */
-    public int E() {
-        return nE;
-    }
-
-    /**
-     * Add the edge v->w
-     */
-    public void addEdge(int v, int w) {
-        outEdges[v].add(w);
-        nE++;
-    }
-
-    /**
-     * The nodes adjacent to edge v
-     */
-    public Iterable<Integer> adj(int v) {
-        return outEdges[v];
-    }
-
-    /**
-     * A copy of the digraph with all edges reversed
-     */
-    public Digraph reverse() {
-        Digraph g = new DigraphImplemCorrect(V());
-        for (int v = 0; v < outEdges.length; v++) {
-            for (int w : adj(v)) {
-                g.addEdge(w, v);
-            }
-        }
-        return g;
-    }
-
-
-}
-
-
 @RunWith(Enclosed.class)
 public class DigraphImplemTest {
 
-    @RunWith(Parameterized.class)
-    public static class TestDigraphComplexity {
-        private Digraph student;
-        private Digraph expected;
+    static class Instance {
 
-        public TestDigraphComplexity(Digraph student, Digraph expected) {
-            this.student = student;
-            this.expected = expected;
-        }
-
-        public void assertEqualsIterable(Iterable<Integer> one, Iterable<Integer> two) {
-            ArrayList<Integer> oneList = new ArrayList<>();
-            for (int i : one) {
-                oneList.add(i);
-            }
-            ArrayList<Integer> twoList = new ArrayList<>();
-            for (int i : two) {
-                twoList.add(i);
-            }
-            Integer[] oneArray = oneList.toArray(new Integer[0]);
-            Arrays.sort(oneArray);
-            Integer[] twoArray = twoList.toArray(new Integer[0]);
-            Arrays.sort(twoArray);
-            assertArrayEquals("same adjacent nodes", oneArray, twoArray);
-        }
+        int V;
+        int E;
+        List<List<Integer>> expectedAdj;
+        List<List<Integer>> expectedReverseAdj;
 
 
-        public void assertEqualsGraph(Digraph g1, Digraph g2) {
-            assertEquals("same #nodes", g1.V(), g2.V());
-            assertEquals("same #edges", g1.E(), g2.E());
-            for (int i = 0; i < g1.V(); i++) {
-                assertEqualsIterable(g1.adj(i), g2.adj(i));
-            }
-        }
-
-
-        @Test(timeout = 500)
-        @Grade(value = 25)
-        public void sameRevert() {
-            assertEqualsGraph(student.reverse(), expected.reverse());
-        }
-
-
-        @Parameterized.Parameters
-        public static List<Object[]> data() throws IOException {
-            List<Object[]> data = new ArrayList<>();
-
-            int n = 10000;
-
-            Digraph student1 = new DigraphImplem(n);
-            Digraph correct1 = new DigraphImplemCorrect(n);
-
-            for (int k = 0; k < n; k++) {
-
-                student1.addEdge(k, (k + 1) % n);
-                correct1.addEdge(k, (k + 1) % n);
-
-            }
-            data.add(new Object[]{student1, correct1});
-
-            Digraph student2 = new DigraphImplem(n);
-            Digraph correct2 = new DigraphImplemCorrect(n);
-
-            for (int k = 1; k < n; k++) {
-
-                student2.addEdge(0, k);
-                correct2.addEdge(0, k);
-
-            }
-            data.add(new Object[]{student2, correct2});
-
-
-            return data;
-        }
-    }
-
-
-    @RunWith(Parameterized.class)
-    public static class TestDigraphEval {
-        private Digraph student;
-        private Digraph expected;
-
-        public TestDigraphEval(Digraph student, Digraph expected) {
-            this.student = student;
-            this.expected = expected;
-        }
-
-        public void assertEqualsIterable(Iterable<Integer> one, Iterable<Integer> two) {
-            ArrayList<Integer> oneList = new ArrayList<>();
-            for (int i : one) {
-                oneList.add(i);
-            }
-            ArrayList<Integer> twoList = new ArrayList<>();
-            for (int i : two) {
-                twoList.add(i);
-            }
-            Integer[] oneArray = oneList.toArray(new Integer[0]);
-            Arrays.sort(oneArray);
-            Integer[] twoArray = twoList.toArray(new Integer[0]);
-            Arrays.sort(twoArray);
-            assertArrayEquals("same adjacent nodes", oneArray, twoArray);
-        }
-
-
-        public void assertEqualsGraph(Digraph g1, Digraph g2) {
-            assertEquals("same #nodes", g1.V(), g2.V());
-            assertEquals("same #edges", g1.E(), g2.E());
-            for (int i = 0; i < g1.V(); i++) {
-                assertEqualsIterable(g1.adj(i), g2.adj(i));
-            }
-        }
-
-        @Test
-        @Grade(value = 0.5)
-        public void sameGraph() {
-            assertEqualsGraph(student, expected);
-        }
-
-        @Test
-        @Grade(value = 0.5)
-        public void sameRevert() {
-            assertEqualsGraph(student.reverse(), expected.reverse());
-        }
-
-        @Parameterized.Parameters
-        public static List<Object[]> data() throws IOException {
-            List<Object[]> data = new ArrayList<>();
-            Random r1 = new Random();
-            Random r2 = new Random(r1.nextInt(4));
-
-            for (int i = 0; i < 50; i++) {
-
-                boolean[][] matrix = new boolean[10][10];
-
-                Digraph student = new DigraphImplem(10);
-                Digraph correct = new DigraphImplemCorrect(10);
-
-                for (int k = 0; k < 20; k++) {
-                    int v = r2.nextInt(10);
-                    int w = r2.nextInt(10);
-                    if (v != w && !matrix[v][w]) {
-                        student.addEdge(v, w);
-                        correct.addEdge(v, w);
-                        matrix[v][w] = true;
+        public Instance(String file, String reverseFile) {
+            try {
+                Scanner dis = new Scanner(new FileInputStream(file));
+                V = dis.nextInt();
+                E = dis.nextInt();
+                expectedAdj = new ArrayList<>(V);
+                for (int i = 0; i < V; i++) {
+                    expectedAdj.add(new ArrayList<>());
+                }
+                for (int i = 0; i < V; i++) {
+                    List<Integer> succ = expectedAdj.get(i);
+                    dis.nextInt();
+                    int size = dis.nextInt();
+                    for (int j = 0; j < size; j++) {
+                        succ.add(dis.nextInt());
                     }
                 }
-                data.add(new Object[]{student, correct});
+                dis.close();
+                dis = new Scanner(new FileInputStream(reverseFile));
+                expectedReverseAdj = new ArrayList<>(V);
+                for (int i = 0; i < V; i++) {
+                    expectedReverseAdj.add(new ArrayList<>());
+                }
+                dis.nextInt();
+                dis.nextInt();
+                for (int i = 0; i < V; i++) {
+                    List<Integer> succ = expectedReverseAdj.get(i);
+                    dis.nextInt();
+                    int size = dis.nextInt();
+                    for (int j = 0; j < size; j++) {
+                        succ.add(dis.nextInt());
+                    }
+                }
+
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
-            return data;
         }
+
     }
 
+
+    @RunWith(Parameterized.class)
+    public static class TestDigraphComplexity {
+        final Instance instance;
+
+
+        @Parameterized.Parameters(name = "{0}")
+        public static Collection data() {
+            LinkedList<Object[]> coll = new LinkedList<>();
+            for (int i = 0; i < 4; i++) {
+                String name = "data/graphs.DigraphImplementation/in_comp_dig_" + i;
+                String reverseName = "data/graphs.DigraphImplementation/in_comp_rev_" + i;
+                coll.add(new Object[]{name, new Instance(name, reverseName)});
+            }
+            return coll;
+        }
+
+
+        public TestDigraphComplexity(String name, Instance instance) {
+            this.instance = instance;
+        }
+
+        public void assertEqualsIterable(Iterable<Integer> one, Iterable<Integer> two) {
+            ArrayList<Integer> oneList = new ArrayList<>();
+            for (int i : one) {
+                oneList.add(i);
+            }
+            ArrayList<Integer> twoList = new ArrayList<>();
+            for (int i : two) {
+                twoList.add(i);
+            }
+            Integer[] oneArray = oneList.toArray(new Integer[0]);
+            Arrays.sort(oneArray);
+            Integer[] twoArray = twoList.toArray(new Integer[0]);
+            Arrays.sort(twoArray);
+            assertArrayEquals("same adjacent nodes", oneArray, twoArray);
+        }
+
+        @Test
+        @Grade(value = 50)
+        public void sameGraphTest() {
+            Digraph studentGraph = new DigraphImplem(instance.V);
+            for (int i = 0; i < instance.V; i++) {
+                List<Integer> successors = instance.expectedAdj.get(i);
+                for (int j = 0; j < successors.size(); j++) {
+                    studentGraph.addEdge(i, successors.get(j));
+                }
+            }
+            assertEqualsGraph(studentGraph, false);
+            assertEqualsGraph(studentGraph.reverse(), true);
+        }
+
+        public void assertEqualsGraph(Digraph digraph, boolean reverse) {
+            assertEquals("same #nodes", digraph.V(), instance.V);
+            assertEquals("same #edges", digraph.E(), instance.E);
+            if (!reverse) {
+                for (int i = 0; i < instance.V; i++) {
+                    assertEqualsIterable(digraph.adj(i), instance.expectedAdj.get(i));
+                }
+            } else {
+                for (int i = 0; i < instance.V; i++) {
+                    assertEqualsIterable(digraph.adj(i), instance.expectedReverseAdj.get(i));
+                }
+            }
+
+        }
+
+    }
+
+    @RunWith(Parameterized.class)
+    public static class TestDigraphRandom {
+        final Instance instance;
+
+
+        @Parameterized.Parameters(name = "{0}")
+        public static Collection data() {
+            LinkedList<Object[]> coll = new LinkedList<>();
+            for (int i = 0; i < 6; i++) {
+                String name = "data/graphs.DigraphImplementation/in_rand_dig_" + i;
+                String reverseName = "data/graphs.DigraphImplementation/in_rand_rev_" + i;
+                coll.add(new Object[]{name, new Instance(name, reverseName)});
+            }
+            return coll;
+        }
+
+
+        public TestDigraphRandom(String name, Instance instance) {
+            this.instance = instance;
+        }
+
+        public void assertEqualsIterable(Iterable<Integer> one, Iterable<Integer> two) {
+            ArrayList<Integer> oneList = new ArrayList<>();
+            for (int i : one) {
+                oneList.add(i);
+            }
+            ArrayList<Integer> twoList = new ArrayList<>();
+            for (int i : two) {
+                twoList.add(i);
+            }
+            Integer[] oneArray = oneList.toArray(new Integer[0]);
+            Arrays.sort(oneArray);
+            Integer[] twoArray = twoList.toArray(new Integer[0]);
+            Arrays.sort(twoArray);
+            assertArrayEquals("same adjacent nodes", oneArray, twoArray);
+        }
+
+        @Test
+        @Grade(value = 50)
+        public void sameGraphTest() {
+            Digraph studentGraph = new DigraphImplem(instance.V);
+            for (int i = 0; i < instance.V; i++) {
+                List<Integer> successors = instance.expectedAdj.get(i);
+                for (int j = 0; j < successors.size(); j++) {
+                    studentGraph.addEdge(i, successors.get(j));
+                }
+            }
+            assertEqualsGraph(studentGraph, false);
+            assertEqualsGraph(studentGraph.reverse(), true);
+        }
+
+        public void assertEqualsGraph(Digraph digraph, boolean reverse) {
+            assertEquals("same #nodes", digraph.V(), instance.V);
+            assertEquals("same #edges", digraph.E(), instance.E);
+            if (!reverse) {
+                for (int i = 0; i < instance.V; i++) {
+                    assertEqualsIterable(digraph.adj(i), instance.expectedAdj.get(i));
+                }
+            } else {
+                for (int i = 0; i < instance.V; i++) {
+                    assertEqualsIterable(digraph.adj(i), instance.expectedReverseAdj.get(i));
+                }
+            }
+        }
+    }
 }
