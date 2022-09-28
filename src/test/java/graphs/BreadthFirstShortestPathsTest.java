@@ -140,13 +140,13 @@ public class BreadthFirstShortestPathsTest {
 
 
     @RunWith(Parameterized.class)
-    public static class TestParameterizedSimple{
+    public static class TestParameterizedSimple {
         @Parameterized.Parameters(name = "{0}")
         public static Collection data() {
-            LinkedList<Object []> coll = new LinkedList<>();
+            LinkedList<Object[]> coll = new LinkedList<>();
             for (int i = 0; i < 15; i++) {
-                String name = "data/graphs.BreadthFirstShortestPaths/in_1_"+i;
-                coll.add(new Object[] {name, new Instance(name)});
+                String name = "data/graphs.BreadthFirstShortestPaths/in_1_" + i;
+                coll.add(new Object[]{name, new Instance(name)});
             }
             return coll;
         }
@@ -160,7 +160,7 @@ public class BreadthFirstShortestPathsTest {
         @Grade(value = 1, cpuTimeout = 1000)
         public void test() throws Exception {
             BreadthFirstShortestPaths bfs = new BreadthFirstShortestPaths(instance.graph, instance.sources);
-            for(int i = 0; i < instance.destinations.size(); i++){
+            for (int i = 0; i < instance.destinations.size(); i++) {
                 int dest = instance.destinations.get(i);
                 int sol = instance.solutions.get(i);
                 assertEquals(bfs.distTo(dest), sol);
@@ -187,24 +187,24 @@ public class BreadthFirstShortestPathsTest {
                     String[] base_info = line.split(" ");
                     graph = new Graph(Integer.parseInt(base_info[0]));
                     int E = Integer.parseInt(base_info[1]);
-                    for(int i = 0; i<2*E; i++){
+                    for (int i = 0; i < 2 * E; i++) {
                         line = dis.nextLine();
                         String[] edge = line.split(" ");
                         graph.addEdge(Integer.parseInt(edge[0]), Integer.parseInt(edge[1]));
                     }
                     int nSources = dis.nextInt();
                     sources = new ArrayList<>();
-                    for(int i = 0; i<nSources; i++){
+                    for (int i = 0; i < nSources; i++) {
                         sources.add(dis.nextInt());
                     }
                     int nDest = dis.nextInt();
                     destinations = new ArrayList<>();
-                    for(int i = 0; i<nDest; i++){
+                    for (int i = 0; i < nDest; i++) {
                         destinations.add(dis.nextInt());
                     }
                     solutions = new ArrayList<>();
                     int nSolutions = dis.nextInt();
-                    for(int i = 0; i<nSolutions; i++){
+                    for (int i = 0; i < nSolutions; i++) {
                         solutions.add(dis.nextInt());
                     }
 
@@ -218,16 +218,14 @@ public class BreadthFirstShortestPathsTest {
 
     }
 
-
-
     @RunWith(Parameterized.class)
-    public static class TestParameterizedLarge{
+    public static class TestParameterizedLarge {
         @Parameterized.Parameters(name = "{0}")
         public static Collection data() {
-            LinkedList<Object []> coll = new LinkedList<>();
+            LinkedList<Object[]> coll = new LinkedList<>();
             for (int i = 0; i < 4; i++) {
-                String name = "data/graphs.BreadthFirstShortestPaths/in_2_"+i;
-                coll.add(new Object[] {name, new Instance(name)});
+                String name = "data/graphs.BreadthFirstShortestPaths/in_2_" + i;
+                coll.add(new Object[]{name, new Instance(name)});
             }
             return coll;
         }
@@ -240,9 +238,8 @@ public class BreadthFirstShortestPathsTest {
         @Test
         @Grade(value = 1, cpuTimeout = 1000)
         public void test() throws Exception {
-            Graph g = instance.graph;
             BreadthFirstShortestPaths bfs = new BreadthFirstShortestPaths(instance.graph, instance.sources);
-            for(int i = 0; i < instance.destinations.size(); i++){
+            for (int i = 0; i < instance.destinations.size(); i++) {
                 int dest = instance.destinations.get(i);
                 int sol = instance.solutions.get(i);
                 assertEquals(bfs.distTo(dest), sol);
@@ -256,7 +253,6 @@ public class BreadthFirstShortestPathsTest {
         static class Instance {
 
             Graph graph;
-            int from;
             List<Integer> sources;
             List<Integer> destinations;
             List<Integer> solutions;
@@ -269,24 +265,24 @@ public class BreadthFirstShortestPathsTest {
                     String[] base_info = line.split(" ");
                     graph = new Graph(Integer.parseInt(base_info[0]));
                     int E = Integer.parseInt(base_info[1]);
-                    for(int i = 0; i<2*E; i++){
+                    for (int i = 0; i < 2 * E; i++) {
                         line = dis.nextLine();
                         String[] edge = line.split(" ");
                         graph.addEdge(Integer.parseInt(edge[0]), Integer.parseInt(edge[1]));
                     }
                     int nSources = dis.nextInt();
                     sources = new ArrayList<>();
-                    for(int i = 0; i<nSources; i++){
+                    for (int i = 0; i < nSources; i++) {
                         sources.add(dis.nextInt());
                     }
                     int nDest = dis.nextInt();
                     destinations = new ArrayList<>();
-                    for(int i = 0; i<nDest; i++){
+                    for (int i = 0; i < nDest; i++) {
                         destinations.add(dis.nextInt());
                     }
                     solutions = new ArrayList<>();
                     int nSolutions = dis.nextInt();
-                    for(int i = 0; i<nSolutions; i++){
+                    for (int i = 0; i < nSolutions; i++) {
                         solutions.add(dis.nextInt());
                     }
 
@@ -299,7 +295,6 @@ public class BreadthFirstShortestPathsTest {
         }
 
     }
-
 
 
 }
