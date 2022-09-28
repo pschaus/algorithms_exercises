@@ -6,12 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 public class ConnectedComponentsInstanceGenerator {
-
 
     public static void main(String[] args) {
         int [] nNodes = new int[]{600, 220, 105, 10, 42, 450, 90};
@@ -58,9 +54,7 @@ public class ConnectedComponentsInstanceGenerator {
             e.printStackTrace();
         }
 
-
     }
-
 
 
     public static Graph generateRandomGraph(int n, int nEdges) {
@@ -93,8 +87,5 @@ public class ConnectedComponentsInstanceGenerator {
         }
         return g;
     }
-
-
-
 
 }
