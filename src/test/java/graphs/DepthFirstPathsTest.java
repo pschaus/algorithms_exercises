@@ -2,7 +2,6 @@ package graphs;
 
 import com.github.guillaumederval.javagrading.Grade;
 import org.junit.Test;
-import utils.Graph;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -12,7 +11,7 @@ public class DepthFirstPathsTest {
     @Grade(value = 25)
     public void testSimple() {
         String message = "Test [0-1, 0-2, 0-3, 0-4] with 1 as source";
-        Graph graph = new Graph(5);
+        DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(5);
 
         graph.addEdge(0, 1);
         graph.addEdge(0, 2);
@@ -32,7 +31,7 @@ public class DepthFirstPathsTest {
     @Grade(value = 25)
     public void testDisconnected() {
         String message = "Test [0-1, 1-2, 3-4] with 1 as source";
-        Graph graph = new Graph(5);
+        DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(5);
 
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);
@@ -50,7 +49,7 @@ public class DepthFirstPathsTest {
     @Grade(value = 25)
     public void testDiconnectedBis() {
         String message = "Test [0-1, 1-2, 3-4,4-5,5-6,5-7,7-8, 9-10,10-11,11-12] with 8 as source";
-        Graph graph = new Graph(13);
+        DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(13);
 
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);
@@ -85,7 +84,7 @@ public class DepthFirstPathsTest {
     @Grade(value = 25)
     public void testLoop() {
         String message = "Test [0-1, 1-2, 2-3, 3-4, 4-0] with 0 as source";
-        Graph graph = new Graph(6);
+        DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(6);
 
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);

@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import utils.Graph;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,7 +22,7 @@ public class BreadthFirstShortestPathsTest {
         @Grade(value = 20)
         public void testSimple() {
             String message = "Test [0-1, 0-2, 0-3, 0-4] with [1] as sources";
-            Graph graph = new Graph(5);
+            BreadthFirstShortestPaths.Graph graph = new BreadthFirstShortestPaths.Graph(5);
 
             graph.addEdge(0, 1);
             graph.addEdge(0, 2);
@@ -43,7 +42,7 @@ public class BreadthFirstShortestPathsTest {
         @Grade(value = 20)
         public void testDisconnected() {
             String message = "Test [0-1, 1-2, 3-4] with [1] as sources";
-            Graph graph = new Graph(5);
+            BreadthFirstShortestPaths.Graph graph = new BreadthFirstShortestPaths.Graph(5);
 
             graph.addEdge(0, 1);
             graph.addEdge(1, 2);
@@ -61,7 +60,7 @@ public class BreadthFirstShortestPathsTest {
         @Grade(value = 20)
         public void testLoop() {
             String message = "Test [0-1, 1-2, 2-3, 3-4, 4-5, 5-0] with [0] as sources";
-            Graph graph = new Graph(6);
+            BreadthFirstShortestPaths.Graph graph = new BreadthFirstShortestPaths.Graph(6);
 
             graph.addEdge(0, 1);
             graph.addEdge(1, 2);
@@ -83,7 +82,7 @@ public class BreadthFirstShortestPathsTest {
         @Grade(value = 20)
         public void testMultipleSources() {
             String message = "Test [0-1, 1-2, 2-3, 3-4, 4-5] with [1, 5] as sources";
-            Graph graph = new Graph(6);
+            BreadthFirstShortestPaths.Graph graph = new BreadthFirstShortestPaths.Graph(6);
 
             graph.addEdge(0, 1);
             graph.addEdge(1, 2);
@@ -104,7 +103,7 @@ public class BreadthFirstShortestPathsTest {
         @Grade(value = 20)
         public void testMultipleSourcesDisconnected() {
             String message = "Test [0-1, 1-2, 3-4, 4-5] with [0, 2] as sources";
-            Graph graph = new Graph(6);
+            BreadthFirstShortestPaths.Graph graph = new BreadthFirstShortestPaths.Graph(6);
 
             graph.addEdge(0, 1);
             graph.addEdge(1, 2);
@@ -120,7 +119,7 @@ public class BreadthFirstShortestPathsTest {
             assertEquals(message, Integer.MAX_VALUE, bfs.distTo(5));
 
             message = "Test [0-1, 1-2, 3-4, 4-5] with [0, 3] as sources";
-            graph = new Graph(6);
+            graph = new BreadthFirstShortestPaths.Graph(6);
 
             graph.addEdge(0, 1);
             graph.addEdge(1, 2);
@@ -173,7 +172,7 @@ public class BreadthFirstShortestPathsTest {
 
         static class Instance {
 
-            Graph graph;
+            BreadthFirstShortestPaths.Graph graph;
             int from;
             List<Integer> sources;
             List<Integer> destinations;
@@ -185,7 +184,7 @@ public class BreadthFirstShortestPathsTest {
                     Scanner dis = new Scanner(new FileInputStream(file));
                     String line = dis.nextLine();
                     String[] base_info = line.split(" ");
-                    graph = new Graph(Integer.parseInt(base_info[0]));
+                    graph = new BreadthFirstShortestPaths.Graph(Integer.parseInt(base_info[0]));
                     int E = Integer.parseInt(base_info[1]);
                     for (int i = 0; i < 2 * E; i++) {
                         line = dis.nextLine();
@@ -252,7 +251,7 @@ public class BreadthFirstShortestPathsTest {
 
         static class Instance {
 
-            Graph graph;
+            BreadthFirstShortestPaths.Graph graph;
             List<Integer> sources;
             List<Integer> destinations;
             List<Integer> solutions;
@@ -263,7 +262,7 @@ public class BreadthFirstShortestPathsTest {
                     Scanner dis = new Scanner(new FileInputStream(file));
                     String line = dis.nextLine();
                     String[] base_info = line.split(" ");
-                    graph = new Graph(Integer.parseInt(base_info[0]));
+                    graph = new BreadthFirstShortestPaths.Graph(Integer.parseInt(base_info[0]));
                     int E = Integer.parseInt(base_info[1]);
                     for (int i = 0; i < 2 * E; i++) {
                         line = dis.nextLine();

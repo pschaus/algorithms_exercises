@@ -1,7 +1,5 @@
 package graphs;
 
-import utils.Digraph;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -15,14 +13,14 @@ public class DigraphInstanceGenerator {
         int [] nNodes = new int[]{10, 20, 30, 50, 100, 200};
         for (int i = 0; i < nNodes.length; i++) {
             Digraph randomGraph = generateRandomDigraph(nNodes[i]);
-            writeInstance("data/graphs.DigraphImplementation/in_rand_dig_"+i, randomGraph);
-            writeInstance("data/graphs.DigraphImplementation/in_rand_rev_"+i, randomGraph.reverse());
+            writeInstance("data/graphs.Digraph/in_rand_dig_"+i, randomGraph);
+            writeInstance("data/graphs.Digraph/in_rand_rev_"+i, randomGraph.reverse());
         }
         nNodes = new int[]{10000, 5000, 7500, 12500};
         for (int i = 0; i < nNodes.length; i++) {
             Digraph randomGraph = generateWeirdComplexGraphs(nNodes[i]);
-            writeInstance("data/graphs.DigraphImplementation/in_comp_dig_"+i, randomGraph);
-            writeInstance("data/graphs.DigraphImplementation/in_comp_rev_"+i, randomGraph.reverse());
+            writeInstance("data/graphs.Digraph/in_comp_dig_"+i, randomGraph);
+            writeInstance("data/graphs.Digraph/in_comp_rev_"+i, randomGraph.reverse());
         }
     }
 
@@ -57,7 +55,7 @@ public class DigraphInstanceGenerator {
 
         boolean modulo = rand.nextBoolean();
 
-        Digraph digraph = new DigraphImplem(n);
+        Digraph digraph = new Digraph(n);
 
         if(modulo) {
             for (int i = 0; i < n; i++) {
@@ -77,7 +75,7 @@ public class DigraphInstanceGenerator {
     public static Digraph generateRandomDigraph(int n) {
         Random r1 = new Random();
         Random r2 = new Random(r1.nextInt(4));
-        Digraph digraph = new DigraphImplem(n);
+        Digraph digraph = new Digraph(n);
         boolean[][] matrix = new boolean[n][n];
         for (int k = 0; k < n*2; k++) {
             int v = r2.nextInt(n);
