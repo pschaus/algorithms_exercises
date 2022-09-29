@@ -7,8 +7,6 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 // END STRIP
 
-import utils.BSTNode;
-
 /**
  * In this exercise, we are interested in implementing an iterator (BSTIterator) for a Binary Search Tree (BST).
  * The iterator must traverse the tree in-order. This means that for each node, the left sub-tree is visited, then the node and finally the right sub-tree.
@@ -44,7 +42,7 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
     }
 
     /**
-     * Returns the size of the a subtree of the tree
+     * Returns the size the subtree rooted at node
      *
      * @param node the root of the subtree
      */
@@ -139,4 +137,80 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
         }
         // END STRIP
     }
+
+    class BSTNode<K extends Comparable<K>> {
+
+        private BSTNode<K> left;
+        private BSTNode<K> right;
+        private K key;
+        private int size;
+
+        public BSTNode(K key) {
+            this.left = null;
+            this.right = null;
+            this.key = key;
+            this.size = 0;
+        }
+
+        public BSTNode(K key, int size) {
+            this.left = null;
+            this.right = null;
+            this.key = key;
+            this.size = size;
+        }
+
+        public BSTNode<K> getLeft() {
+            return this.left;
+        }
+
+        @SuppressWarnings("unchecked")
+        public void setLeft(BSTNode<K> node) {
+            this.left = node;
+        }
+
+        public BSTNode<K> getRight() {
+            return this.right;
+        }
+
+        @SuppressWarnings("unchecked")
+        public void setRight(BSTNode<K> node) {
+            this.right = node;
+        }
+
+        public K getKey() {
+            return this.key;
+        }
+
+        public void setKey(K newKey) {
+            this.key = newKey;
+        }
+
+        public int getSize() {
+            return this.size;
+        }
+
+        public void setSize(int newSize) {
+            this.size = newSize;
+        }
+
+        /**
+         * Adds a new value in the subtree rooted a this node
+         */
+        public void add(K key) {
+            if (key.compareTo(this.key) > 0) {
+                if (this.right == null) {
+                    this.right = new BSTNode<>(key);
+                } else {
+                    this.right.add(key);
+                }
+            } else {
+                if (this.left == null) {
+                    this.left = new BSTNode<>(key);
+                } else {
+                    this.left.add(key);
+                }
+            }
+        }
+    }
 }
+
