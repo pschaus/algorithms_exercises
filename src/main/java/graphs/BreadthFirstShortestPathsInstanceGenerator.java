@@ -1,7 +1,5 @@
 package graphs;
 
-import utils.Graph;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,7 +32,7 @@ public class BreadthFirstShortestPathsInstanceGenerator {
 
 
 
-            Graph g = generateRandomGraph(nNodes, nEdges);
+            BreadthFirstShortestPaths.Graph g = generateRandomGraph(nNodes, nEdges);
 
             BreadthFirstShortestPaths bfs = new BreadthFirstShortestPaths(g, sources);
             int[] solutions = new int[nDest];
@@ -61,7 +59,7 @@ public class BreadthFirstShortestPathsInstanceGenerator {
 
 
 
-            Graph g = generateRandomGraph(nNodes, nEdges);
+            BreadthFirstShortestPaths.Graph g = generateRandomGraph(nNodes, nEdges);
 
             BreadthFirstShortestPaths bfs = new BreadthFirstShortestPaths(g, sources);
             int[] solutions = new int[nDest];
@@ -75,9 +73,9 @@ public class BreadthFirstShortestPathsInstanceGenerator {
     }
 
 
-    public static Graph generateRandomGraph(int n, int nEdges) {
+    public static BreadthFirstShortestPaths.Graph generateRandomGraph(int n, int nEdges) {
 
-        Graph randomGraph = new Graph(n);
+        BreadthFirstShortestPaths.Graph randomGraph = new BreadthFirstShortestPaths.Graph(n);
 
         for (int i = 0; i < nEdges; i++) {
             int v = (int) (randomGraph.V() * Math.random());
@@ -88,7 +86,7 @@ public class BreadthFirstShortestPathsInstanceGenerator {
         return randomGraph;
     }
 
-    public static void writeInstance(String file, Graph graph, List<Integer> sources, List<Integer> dest, int[] solution) {
+    public static void writeInstance(String file, BreadthFirstShortestPaths.Graph graph, List<Integer> sources, List<Integer> dest, int[] solution) {
 
         int V = graph.V();
         int E = graph.E();

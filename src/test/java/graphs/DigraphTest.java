@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import utils.Digraph;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,7 +14,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Enclosed.class)
-public class DigraphImplemTest {
+public class DigraphTest {
 
     static class Instance {
 
@@ -77,8 +76,8 @@ public class DigraphImplemTest {
         public static Collection data() {
             LinkedList<Object[]> coll = new LinkedList<>();
             for (int i = 0; i < 4; i++) {
-                String name = "data/graphs.DigraphImplementation/in_comp_dig_" + i;
-                String reverseName = "data/graphs.DigraphImplementation/in_comp_rev_" + i;
+                String name = "data/graphs.Digraph/in_comp_dig_" + i;
+                String reverseName = "data/graphs.Digraph/in_comp_rev_" + i;
                 coll.add(new Object[]{name, new Instance(name, reverseName)});
             }
             return coll;
@@ -108,7 +107,7 @@ public class DigraphImplemTest {
         @Test
         @Grade(value = 50)
         public void sameGraphTest() {
-            Digraph studentGraph = new DigraphImplem(instance.V);
+            Digraph studentGraph = new Digraph(instance.V);
             for (int i = 0; i < instance.V; i++) {
                 List<Integer> successors = instance.expectedAdj.get(i);
                 for (int j = 0; j < successors.size(); j++) {
@@ -145,8 +144,8 @@ public class DigraphImplemTest {
         public static Collection data() {
             LinkedList<Object[]> coll = new LinkedList<>();
             for (int i = 0; i < 6; i++) {
-                String name = "data/graphs.DigraphImplementation/in_rand_dig_" + i;
-                String reverseName = "data/graphs.DigraphImplementation/in_rand_rev_" + i;
+                String name = "data/graphs.Digraph/in_rand_dig_" + i;
+                String reverseName = "data/graphs.Digraph/in_rand_rev_" + i;
                 coll.add(new Object[]{name, new Instance(name, reverseName)});
             }
             return coll;
@@ -176,7 +175,7 @@ public class DigraphImplemTest {
         @Test
         @Grade(value = 50)
         public void sameGraphTest() {
-            Digraph studentGraph = new DigraphImplem(instance.V);
+            Digraph studentGraph = new Digraph(instance.V);
             for (int i = 0; i < instance.V; i++) {
                 List<Integer> successors = instance.expectedAdj.get(i);
                 for (int j = 0; j < successors.size(); j++) {

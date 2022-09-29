@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import utils.Graph;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -104,7 +103,7 @@ public class ConnectedComponentsTest {
 
     static class Instance {
 
-        Graph graph;
+        ConnectedComponents.Graph graph;
 
         int solutions;
 
@@ -114,7 +113,7 @@ public class ConnectedComponentsTest {
                 Scanner dis = new Scanner(new FileInputStream(file));
                 String line = dis.nextLine();
                 String[] base_info = line.split(" ");
-                graph = new Graph(Integer.parseInt(base_info[0]));
+                graph = new ConnectedComponents.Graph(Integer.parseInt(base_info[0]));
                 int E = Integer.parseInt(base_info[1]);
                 for (int i = 0; i < 2 * E; i++) {
                     line = dis.nextLine();

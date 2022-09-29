@@ -1,15 +1,14 @@
 package graphs;
-import utils.Digraph;
 
 // BEGIN STRIP
 import java.util.ArrayList;
 // END STRIP
 
 /**
- *Implement the Digraph.java interface in the DigraphImplem.java class using an adjacency list
+ *Implement the Digraph.java interface in the Digraph.java class using an adjacency list
  * data structure to represent directed graphs.
  */
-public class DigraphImplem implements Digraph {
+public class Digraph {
 
     // BEGIN STRIP
     private int V;
@@ -18,7 +17,7 @@ public class DigraphImplem implements Digraph {
 
     // END STRIP
 
-    public DigraphImplem(int V) {
+    public Digraph(int V) {
         // TODO
         // BEGIN STRIP
         this.V = V;
@@ -58,7 +57,7 @@ public class DigraphImplem implements Digraph {
     public void addEdge(int v, int w) {
         // TODO
         // BEGIN STRIP
-        ArrayList current_successors = adj.get(v);
+        ArrayList current_successors = this.adj.get(v);
         current_successors.add(w);
         E++;
         // END STRIP
@@ -82,7 +81,7 @@ public class DigraphImplem implements Digraph {
     public Digraph reverse() {
         // TODO
         // BEGIN STRIP
-        Digraph R = new DigraphImplem(V);
+        Digraph R = new Digraph(V);
         for (int v = 0; v < V; v++) {
             for (int w : adj(v)) {
                 R.addEdge(w,v);
