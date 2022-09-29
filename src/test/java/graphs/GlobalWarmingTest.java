@@ -1,7 +1,5 @@
 package graphs;
 
-import utils.Point;
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -43,10 +41,10 @@ public class GlobalWarmingTest {
 
             GlobalWarming globalWarming = new GlobalWarming(altitude, waterLevel);
             assertEquals(4, globalWarming.nbIslands());
-            Point p1 = new Point(1, 0);
-            Point p2 = new Point(3, 1);
-            Point p3 = new Point(1, 3);
-            Point p4 = new Point(0, 0);
+            GlobalWarming.Point p1 = new GlobalWarming.Point(1, 0);
+            GlobalWarming.Point p2 = new GlobalWarming.Point(3, 1);
+            GlobalWarming.Point p3 = new GlobalWarming.Point(1, 3);
+            GlobalWarming.Point p4 = new GlobalWarming.Point(0, 0);
             assertTrue(globalWarming.onSameIsland(p1, p2));
             assertFalse(globalWarming.onSameIsland(p1, p3));
             assertFalse(globalWarming.onSameIsland(p1, p4));
@@ -78,7 +76,7 @@ public class GlobalWarmingTest {
         @GradeFeedback(message = "Check the complexity of your algorithm", onTimeout=true)
         public void test()  throws Exception {
             assertEquals(instance.nbIsland, instance.globalWarming.nbIslands());
-            Point [] queries = instance.queries;
+            GlobalWarming.Point [] queries = instance.queries;
             assertEquals(instance.queriesAnswers[0], instance.globalWarming.onSameIsland(queries[0], queries[0]));
             for (int i = 0; i < queries.length - 1; i++) {
                 assertEquals(instance.queriesAnswers[i+1], instance.globalWarming.onSameIsland(queries[i], queries[i+1]));
@@ -127,7 +125,7 @@ public class GlobalWarmingTest {
     }
 
     static class Instance {
-        Point [] queries;
+        GlobalWarming.Point [] queries;
         boolean [] queriesAnswers;
         GlobalWarming globalWarming;
         int [][] altitude;
@@ -146,9 +144,9 @@ public class GlobalWarmingTest {
                 }
                 this.waterLevel = scan.nextInt();
                 this.globalWarming = new GlobalWarming(this.altitude, this.waterLevel);
-                this.queries = new Point[scan.nextInt()];
+                this.queries = new GlobalWarming.Point[scan.nextInt()];
                 for (int i = 0; i < this.queries.length; i++) {
-                    this.queries[i] = new Point(scan.nextInt(), scan.nextInt());
+                    this.queries[i] = new GlobalWarming.Point(scan.nextInt(), scan.nextInt());
                 }
                 this.nbIsland = scan.nextInt();
                 this.queriesAnswers = new boolean[this.queries.length];

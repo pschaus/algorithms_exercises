@@ -1,7 +1,5 @@
 package graphs;
 
-import utils.Point;
-
 import java.util.Random;
 import java.io.PrintWriter;
 import java.io.FileOutputStream;
@@ -17,7 +15,7 @@ public class GlobalWarmingGenerator {
             for (int instance_id = 0; instance_id < 100; instance_id++) {
                 int waterLevel = 100 + r.nextInt(500);
                 int [][] altitude = randomAltitude(grid_size, r, waterLevel);
-                Point [] queries = randomQueries(grid_size, 100, r);
+                GlobalWarming.Point [] queries = randomQueries(grid_size, 100, r);
                 String file = "data/graphs.GlobalWarming/in_" + grid_size + "_" + instance_id;
                 writeInstance(file, altitude, waterLevel, queries);
             }
@@ -39,15 +37,15 @@ public class GlobalWarmingGenerator {
         return altitude;
     }
 
-    private static Point[] randomQueries(int grid_size, int number, Random r) {
-        Point[] queries = new Point[number];
+    private static GlobalWarming.Point[] randomQueries(int grid_size, int number, Random r) {
+        GlobalWarming.Point[] queries = new GlobalWarming.Point[number];
         for (int i = 0; i < number; i++) {
-            queries[i] = new Point(r.nextInt(grid_size), r.nextInt(grid_size));
+            queries[i] = new GlobalWarming.Point(r.nextInt(grid_size), r.nextInt(grid_size));
         }
         return queries;
     }
 
-    private static void writeInstance(String file, int [][] altitude, int waterLevel, Point [] queries) {
+    private static void writeInstance(String file, int [][] altitude, int waterLevel, GlobalWarming.Point [] queries) {
         try {
             PrintWriter p = new PrintWriter(new FileOutputStream(file));
             p.println(altitude.length);
@@ -58,7 +56,7 @@ public class GlobalWarmingGenerator {
             }
             p.println(waterLevel);
             p.println(queries.length);
-            for (Point query : queries) {
+            for (GlobalWarming.Point query : queries) {
                 p.println(query.getX());
                 p.println(query.getY());
             }
