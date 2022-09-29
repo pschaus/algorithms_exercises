@@ -25,7 +25,7 @@ def get_dir_from_exercices(exs):
     return course_name + '_'.join(exs)
 
 def get_packages():
-    return [f for f in os.listdir(source_dir) if os.path.isdir(os.path.join(source_dir, f)) and f != 'utils']
+    return [f for f in os.listdir(source_dir) if os.path.isdir(os.path.join(source_dir, f))]
 
 def get_exercises(package):
     """Get the list of exercises from the source directory"""
@@ -128,10 +128,6 @@ def create_exercise_task(package, exercise):
     shutil.copy(os.path.join('zips', package, exercise + '.zip'),
             os.path.join(exercise_dir, 'public', f'{exercise}.zip'))
 
-    # Copy the utils package
-    shutil.copytree(os.path.join(source_dir, 'utils'),
-            os.path.join(exercise_dir, 'utils'));
-
     # If some data exists for this task, copy them
     data_directory = os.path.join('data', f'{package}.{exercise}')
     if os.path.exists(data_directory):
@@ -183,9 +179,6 @@ def create_stripped_project():
             os.path.join(directory, 'libs'))
     shutil.copyfile(os.path.join(script_dir, 'pom.xml'),
             os.path.join(directory, 'pom.xml'))
-    # Copy the utils package
-    shutil.copytree(os.path.join(source_dir, 'utils'),
-            os.path.join(stripped_src, 'utils'));
 
 def make_archives():
     # This functions creates the archives containing the maven projects for the exercises
@@ -205,13 +198,11 @@ def make_archives():
         _safe_mkdir(os.path.join(directory, package), delete=True)
         for exercise in exercises[package]:
             zip_file = zipfile.ZipFile(os.path.join(directory, package, exercise + '.zip'), "w")
-            zip_file.write(get_archive_path(os.path.join(base_dir, 'pom.xml')))
-            zip_file.write(get_archive_path(os.path.join(base_src, package, f'{exercise}.java')))
-            zip_file.write(get_archive_path(os.path.join(base_test, package, f'{exercise}Test.java')))
+            zip_file.write(get_archive_path(os.path.join(base_dir, 'pom.xml')), arcname=os.path.join(exercise, 'pom.xml'))
+            zip_file.write(get_archive_path(os.path.join(base_src, package, f'{exercise}.java')), arcname=os.path.join(exercise, 'src', 'main', 'java', f'{exercise}.java'))
+            zip_file.write(get_archive_path(os.path.join(base_test, package, f'{exercise}Test.java')), arcname=os.path.join(exercise, 'src', 'test', 'java', f'{exercise}Test.java'))
             for lib in os.listdir(os.path.join(base_dir, 'libs')):
-                zip_file.write(get_archive_path(os.path.join(base_dir, 'libs', lib)))
-            for file in os.listdir(os.path.join(base_src, 'utils')):
-                zip_file.write(get_archive_path(os.path.join(base_src, 'utils', file)))
+                zip_file.write(get_archive_path(os.path.join(base_dir, 'libs', lib)), arcname=os.path.join(exercise, 'libs', lib))
             zip_file.close()
 
 if __name__ == '__main__':
