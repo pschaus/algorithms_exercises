@@ -1,6 +1,6 @@
 package strings;
 
-import utils.HuffmanNode;
+
 
 // BEGIN STRIP
 import java.util.PriorityQueue;
@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
 
 /**
  * This class is used to construct a Huffman trie from frequencies of letters (in unicode or ASCII).
- * As a reminder, in an Huffman trie nodes are weighted (see the `utils.HuffmanNode` class) by
+ * As a reminder, in an Huffman trie nodes are weighted (see the `HuffmanNode` class) by
  * the frequencies of the character (if lead node) or the sum of the frequencies of its children
  * (if internal node).
  * For example, let us assume that we have the following letters with their associated frequencies:
@@ -51,5 +51,55 @@ public class Huffman {
         return queue.poll();
         // END STRIP
         // STUDENT return null;
+    }
+}
+
+class HuffmanNode implements Comparable<HuffmanNode> {
+
+    private final int ch;
+    private final int freq;
+    private HuffmanNode left;
+    private HuffmanNode right;
+
+    public HuffmanNode(int ch, int freq, HuffmanNode left, HuffmanNode right) {
+        this.ch = ch;
+        this.freq = freq;
+        this.left = left;
+        this.right = right;
+    }
+
+    public HuffmanNode getLeft() {
+        return this.left;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setLeft(HuffmanNode node) {
+        this.left = node;
+    }
+
+    public HuffmanNode getRight() {
+        return this.right;
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setRight(HuffmanNode node) {
+        this.right = node;
+    }
+
+    @Override
+    public int compareTo(HuffmanNode node) {
+        return this.freq - node.freq;
+    }
+
+    public int getFrequency() {
+        return this.freq;
+    }
+
+    public int getChar() {
+        return this.ch;
+    }
+
+    public boolean isLeaf() {
+        return this.left == null && this.right == null;
     }
 }

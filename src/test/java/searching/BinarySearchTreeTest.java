@@ -1,7 +1,5 @@
 package searching;
 
-import utils.BSTNode;
-
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import com.github.guillaumederval.javagrading.Grade;
@@ -14,7 +12,6 @@ import org.junit.runner.RunWith;
 import java.util.TreeSet;
 // BEGIN STRIP
 import java.util.Collection;
-import java.util.LinkedList;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,7 +35,7 @@ public class BinarySearchTreeTest {
             int [] values = new int []{12, 8, 18, 3, 11, 14, 20, 9, 15};
             int [] inputs = new int []{11, 14, 9, 4, 16, 10, 19, 21, 30, 40};
 
-            BSTNode<Integer> root = new BSTNode<>(values[0]);
+            BinarySearchTree.BSTNode<Integer> root = new BinarySearchTree.BSTNode<>(values[0]);
             correct.add(values[0]);
             for (int i = 0; i < values.length; i++) {
                 root.add(values[i]);
@@ -81,7 +78,7 @@ public class BinarySearchTreeTest {
     }
 
     static class Instance {
-        BSTNode<Integer> root;
+        BinarySearchTree.BSTNode<Integer> root;
         TreeSet<Integer> correct;
         int query;
 
@@ -94,7 +91,7 @@ public class BinarySearchTreeTest {
                     input[i] = scan.nextInt();
                 }
                 this.query = scan.nextInt();
-                this.root = new BSTNode<>(input[0]);
+                this.root = new BinarySearchTree.BSTNode<>(input[0]);
                 this.correct = new TreeSet<>();
                 this.correct.add(input[0]);
                 for (int i = 1; i < input.length; i++) {

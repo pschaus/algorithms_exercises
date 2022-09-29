@@ -1,13 +1,9 @@
 package strings;
 
-import utils.HuffmanNode;
-
 import java.util.Random;
-import java.lang.Math;
 import java.io.PrintWriter;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class HuffmanGenerator {
 
