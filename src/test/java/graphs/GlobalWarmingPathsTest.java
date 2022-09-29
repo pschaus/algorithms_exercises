@@ -2,8 +2,6 @@ package graphs;
 
 
 import org.junit.Test;
-import utils.GlobalWarming;
-import utils.Point;
 
 import java.util.List;
 import java.util.Random;
@@ -44,7 +42,7 @@ public class GlobalWarmingPathsTest {
 
     @Test
     public void testShortestPathExam() {
-        List<Point> path = new GlobalWarmingPaths(getExamMatrix(), 3).shortestPath(new Point(1, 0), new Point(3, 1));
+        List<GlobalWarmingPaths.Point> path = new GlobalWarmingPaths(getExamMatrix(), 3).shortestPath(new GlobalWarmingPaths.Point(1, 0), new GlobalWarmingPaths.Point(3, 1));
         assertTrue( path != null && path.size() == 4 && validPath(getExamMatrix(),3,point(1,0),point(3,1),path) );
     }
 
@@ -60,8 +58,8 @@ public class GlobalWarmingPathsTest {
     }
 
 
-    public static Point point(int x, int y) {
-        return new Point(x,y);
+    public static GlobalWarmingPaths.Point point(int x, int y) {
+        return new GlobalWarmingPaths.Point(x,y);
     }
 
     @Test
@@ -72,7 +70,7 @@ public class GlobalWarmingPathsTest {
         int [][] matrix = getSimpleMatrix();
         GlobalWarmingPaths warming = new GlobalWarmingPaths(matrix,0);
 
-        List<Point> path1 = warming.shortestPath(point(1,1),point(1,1));
+        List<GlobalWarmingPaths.Point> path1 = warming.shortestPath(point(1,1),point(1,1));
 
         if (!validPath(matrix,0,point(1,1),point(1,1),path1)) {
             System.out.println("1::error in shortestPath");
@@ -93,7 +91,7 @@ public class GlobalWarmingPathsTest {
             }
         }
 
-        List<Point> path2 = warming.shortestPath(point(4,5),point(1,7));
+        List<GlobalWarmingPaths.Point> path2 = warming.shortestPath(point(4,5),point(1,7));
         if (!validPath(matrix,0,point(4,5),point(1,7),path2)) {
             System.out.println("4::error in shortestPath, path not valid");
             return false;
@@ -122,7 +120,7 @@ public class GlobalWarmingPathsTest {
                 for (int j = 0; j < 50-3; j++) {
                     if (matrix[i][j] > level && matrix[i][j+1] > level && matrix[i][j+2] > level) {
 
-                        List<Point> path = g1.shortestPath(point(i,j),point(i,j+2));
+                        List<GlobalWarmingPaths.Point> path = g1.shortestPath(point(i,j),point(i,j+2));
 
                         if (path.size() != 3 && !validPath(matrix,level,point(i,j),point(i,j+2),path)) {
                             return false;
@@ -134,7 +132,7 @@ public class GlobalWarmingPathsTest {
         int [][] matrix = getSimpleMatrix();
         GlobalWarmingPaths warming = new GlobalWarmingPaths(matrix,0);
 
-        List<Point> path2 = warming.shortestPath(point(4,5),point(1,7));
+        List<GlobalWarmingPaths.Point> path2 = warming.shortestPath(point(4,5),point(1,7));
         if (!validPath(matrix,0,point(4,5),point(1,7),path2)) {
             return false;
         }
@@ -146,8 +144,8 @@ public class GlobalWarmingPathsTest {
     }
 
 
-    public boolean validPath(int [][] matrix, int level, Point p1, Point p2, List<Point> path) {
-        for (Point p: path) {
+    public boolean validPath(int [][] matrix, int level, GlobalWarmingPaths.Point p1, GlobalWarmingPaths.Point p2, List<GlobalWarmingPaths.Point> path) {
+        for (GlobalWarmingPaths.Point p: path) {
             if (matrix[p.getX()][p.getY()] <= level) return false;
         }
         for (int i = 0; i < path.size()-1; i++) {
@@ -162,7 +160,7 @@ public class GlobalWarmingPathsTest {
     }
 
 
-    public boolean neighbors(Point p1,Point p2) {
+    public boolean neighbors(GlobalWarmingPaths.Point p1,GlobalWarmingPaths.Point p2) {
         return Math.abs(p1.getX() - p2.getX()) + Math.abs(p1.getY() - p2.getY()) == 1;
     }
 
@@ -173,7 +171,7 @@ public class GlobalWarmingPathsTest {
 
         // do some computation here
         long t0 = System.currentTimeMillis();
-        GlobalWarming g = new GlobalWarmingPaths(matrix,1000000 );
+        GlobalWarmingPaths g = new GlobalWarmingPaths(matrix,1000000 );
         long t1 = System.currentTimeMillis();
         System.out.println("time constructor:"+(t1-t0));
     }
