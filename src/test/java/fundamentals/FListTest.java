@@ -2,7 +2,6 @@ package fundamentals;
 
 import com.github.guillaumederval.javagrading.Grade;
 import org.junit.Test;
-import sorting.Union;
 
 import java.util.*;
 
