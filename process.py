@@ -199,8 +199,8 @@ def make_archives():
         for exercise in exercises[package]:
             zip_file = zipfile.ZipFile(os.path.join(directory, package, exercise + '.zip'), "w")
             zip_file.write(get_archive_path(os.path.join(base_dir, 'pom.xml')), arcname=os.path.join(exercise, 'pom.xml'))
-            zip_file.write(get_archive_path(os.path.join(base_src, package, f'{exercise}.java')), arcname=os.path.join(exercise, 'src', 'main', 'java', f'{exercise}.java'))
-            zip_file.write(get_archive_path(os.path.join(base_test, package, f'{exercise}Test.java')), arcname=os.path.join(exercise, 'src', 'test', 'java', f'{exercise}Test.java'))
+            zip_file.write(get_archive_path(os.path.join(base_src, package, f'{exercise}.java')), arcname=os.path.join(exercise, 'src', 'main', 'java', f'{package}', f'{exercise}.java'))
+            zip_file.write(get_archive_path(os.path.join(base_test, package, f'{exercise}Test.java')), arcname=os.path.join(exercise, 'src', 'test', 'java', f'{package}', f'{exercise}Test.java'))
             for lib in os.listdir(os.path.join(base_dir, 'libs')):
                 zip_file.write(get_archive_path(os.path.join(base_dir, 'libs', lib)), arcname=os.path.join(exercise, 'libs', lib))
             zip_file.close()
