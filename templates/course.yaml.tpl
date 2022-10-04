@@ -5,7 +5,15 @@ admins:
 - pschaus
 - Harold
 - aldubray
-tutors: []
+tutors:
+- lunelis
+- sotlet
+- Louis_Valkenberg
+- timothy
+- steveny
+- lepouttre
+- thernandez
+- cpacko
 groups_student_choice: false
 allow_unregister: true
 allow_preview: false
