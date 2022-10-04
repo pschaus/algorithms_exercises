@@ -1,5 +1,5 @@
-accessible: false
-name: '[LINFO1121_NEW] Algorithmique et structures de données'
+accessible: true
+name: '[LINFO1121] Algorithmique et structures de données'
 description: ''
 admins:
 - pschaus
