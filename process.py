@@ -203,6 +203,10 @@ def make_archives():
             zip_file.write(get_archive_path(os.path.join(base_test, package, f'{exercise}Test.java')), arcname=os.path.join(exercise, 'src', 'test', 'java', f'{package}', f'{exercise}Test.java'))
             for lib in os.listdir(os.path.join(base_dir, 'libs')):
                 zip_file.write(get_archive_path(os.path.join(base_dir, 'libs', lib)), arcname=os.path.join(exercise, 'libs', lib))
+            if os.path.exists(f'data/{package}.{exercise}'):
+                for data_file in os.listdir(os.path.join('data', f'{package}.{exercise}')):
+                    name = os.path.join('data', f'{package}.{exercise}', data_file)
+                    zip_file.write(name, arcname = os.path.join(exercise, name))
             zip_file.close()
 
 if __name__ == '__main__':
