@@ -29,6 +29,17 @@ public class ClosestPairTest {
         return (result[0] == firstExpected && result[1] == secondExpected) || (result[0] == secondExpected && result[1] == firstExpected);
     }
 
+    private static boolean inArray(int [] input, int [] res) {
+        boolean a = false;
+        boolean b = false;
+        for (int v : input) {
+            a |= (v == res[0]);
+            b |= (v == res[1]);
+            if (a && b) return true;
+        }
+        return false;
+    }
+
     public static class TestNotParameterized {
 
         @Test
@@ -40,18 +51,6 @@ public class ClosestPairTest {
             assertTrue(isExpectedArray(ClosestPair.closestPair(a, 13), 1, 10));
             assertTrue(isExpectedArray(ClosestPair.closestPair(a, 140), 75, 75));
             assertTrue(isExpectedArray(ClosestPair.closestPair(a, 170), 18, 151));
-        }
-
-
-        public boolean inArray(int [] input, int [] res) {
-            boolean a = false;
-            boolean b = false;
-            for (int v : input) {
-                a |= (v == res[0]);
-                b |= (v == res[1]);
-                if (a && b) return true;
-            }
-            return false;
         }
 
 
@@ -189,8 +188,8 @@ public class ClosestPairTest {
         @Test
         @Grade(value=1, cpuTimeout=1000)
         public void test() {
-            int [] r = ClosestPair.closestPair(this.instance.input, this.instance.query);
-            assertTrue(isExpectedArray(r, this.instance.result[0], this.instance.result[1]));
+            int [] r = ClosestPair.closestPair(this.instance.input.clone(), this.instance.query);
+            assertTrue(r[0] + r[1] == this.instance.result[0] + this.instance.result[1] && inArray(this.instance.input, r));
         }
     }
 
