@@ -26,7 +26,7 @@ jobs:
           MY_SSH_KEY: ${{ secrets.MY_SSH_KEY }}
           #KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
         run: |
-          echo "generate commit in minicp and hide solutions..."
+          echo "generate commit in algorithm_exercises and hide solutions..."
           echo "config git ..."
           git config --global user.name github-actions
           git config --global user.email pschaus@users.noreply.github.com
@@ -53,7 +53,12 @@ jobs:
           cp -r libs algorithms_exercises_students/.
           cp -r data algorithms_exercises_students/.
           cd algorithms_exercises_students
-          git add -A
-          git commit -m "generated at $(date)"
-          GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no" git push
+          # git diff --exit-code is the normal git diff command but return 0 if there are no changes, or 1 if there are
+          # This avoid crashing when we do a commit on something that is not pushed on the student repo
+          if ! git diff --exit-code >> /dev/null;
+          then
+            git add -A
+            git commit -m "generated at $(date)"
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -vvvv -o StrictHostKeyChecking=no" git push
+          fi
           cd ..
