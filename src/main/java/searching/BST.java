@@ -20,8 +20,24 @@ public class BST {
 
     protected Node root;
 
-    public  BST() {
+    public BST() {
 
+    }
+
+    public BST(Node r) {
+        root = r;
+    }
+
+    private Node put(Node x, int key) {
+        if (x == null) return new Node(null, null, key);
+        if (key < x.key) x.left = put(x.left, key);
+        else if (key > x.key) x.right = put(x.right, key);
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    public void put(int key) {
+        root = put(root, key);
     }
 
     /**

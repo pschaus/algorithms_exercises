@@ -1,5 +1,7 @@
 package searching;
 
+import java.util.Random;
+
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -10,7 +12,7 @@ import com.github.guillaumederval.javagrading.GradeFeedback;
 
 
 @RunWith(Enclosed.class)
-public class BSTTest {
+public class BSTTest{
 
     public static class TestNotParameterized {
 
@@ -128,17 +130,63 @@ public class BSTTest {
             new BST.Node(null,new BST.Node(new BST.Node(new BST.Node(null,null,618),null,671),new BST.Node(null,null,984),828),28),
             new BST.Node(null,new BST.Node(null,new BST.Node(new BST.Node(new BST.Node(null,null,555),null,647),null,672),483),304)    };
 
-            @Test
-            @Grade(value = 1, cpuTimeout = 1000)
-            public void testEqual5() {
-                for(int i = 0; i < bst5.length; i++) {
-                    BST teacher = new BST();
-                    teacher.root = bst5[i];
-                    int[] preOrder = teacher.preorderWrite();
-                    BST student = new BST(preOrder);
-                    assertEquals(teacher, student);
-                }
+        @Test
+        @Grade(value = 1, cpuTimeout = 1000)
+        public void testEqual5() {
+            for(int i = 0; i < bst5.length; i++) {
+                BST teacher = new BST();
+                teacher.root = bst5[i];
+                int[] preOrder = teacher.preorderWrite();
+                BST student = new BST(preOrder);
+                assertEquals(teacher, student);
             }
+        }
+
+        public static BST randomBst(int n, Random rand) {
+            BST bst = new BST();
+            for (int i = 0; i < n; i++) {
+                bst.put(rand.nextInt(1000));
+            }
+            return bst;
+        }
+
+        
+        @Test
+        @Grade(value = 1, cpuTimeout = 1000)
+        @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example", onFail=true)
+        public void testRandom() {
+            Random rand = new Random(0);
+    
+            for (int i = 0; i < 1000; i++) {
+                BST teacher = randomBst(20,rand);
+                int [] preOrder = teacher.preorderWrite();
+                BST student = new BST(preOrder);
+                assertEquals(teacher, student);
+            }
+        }
+
+        public static BST.Node longBst(int n) {
+            if (n == 0) {
+                return null;
+            } else {
+                return new BST.Node(longBst(n-1),null,n);
+            }
+        }
+
+        @Test
+        @Grade(value = 1, cpuTimeout = 2000)
+        @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example", onFail=true)
+        @GradeFeedback(message = "Check the complexity of your algorithm", onTimeout=true)
+        public void testComplexity() {
+            BST teacher = new BST(longBst(4000));
+            teacher.put(5005);
+            teacher.put(5007);
+            teacher.put(5002);
+
+            int [] preOrder = teacher.preorderWrite();
+            BST student = new BST(preOrder);
+            assertEquals(teacher, student);
+        }
     }
     
 }
