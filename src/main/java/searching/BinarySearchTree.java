@@ -35,7 +35,7 @@ public class BinarySearchTree {
      */
     public static Integer ceil(BSTNode<Integer> root, int value) {
         // BEGIN STRIP
-        return tail_ceil(root, value, null);
+        return tailCeil(root, value, null);
         // END STRIP
         // STUDENT return null;
     }
@@ -49,7 +49,7 @@ public class BinarySearchTree {
      * @param value the value we want to ceil
      * @param currentBest the current best value found for the ceiling
      */
-    private static Integer tail_ceil(BSTNode<Integer> root, int value, Integer currentBest) {
+    private static Integer tailCeil(BSTNode<Integer> root, int value, Integer currentBest) {
         if (root == null) {
             return currentBest;
         }
@@ -63,14 +63,14 @@ public class BinarySearchTree {
             // we currently have or the value of the current node or one of its
             // descendant
             if (currentBest == null || nodeValue < currentBest) {
-                return tail_ceil(root.getLeft(), value, nodeValue);
+                return tailCeil(root.getLeft(), value, nodeValue);
             } else {
-                return tail_ceil(root.getLeft(), value, currentBest);
+                return tailCeil(root.getLeft(), value, currentBest);
             }
         } else {
             // In this case the value of the node is lower than the value we
             // want to ceil, thus value must be in the right subtree.
-            return tail_ceil(root.getRight(), value, currentBest);
+            return tailCeil(root.getRight(), value, currentBest);
         }
     }
     // END STRIP
