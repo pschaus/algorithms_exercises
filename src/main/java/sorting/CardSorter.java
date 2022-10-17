@@ -46,7 +46,6 @@ public class CardSorter {
         // here, if you followed the invariant proposed above, the list should be sorted!
     }
 
-
 }
 
 class LinkedList {

@@ -88,31 +88,36 @@ public class GlobalWarmingImpl extends GlobalWarming {
         // expected time complexity O(log(n^2))
         // STUDENT return -1;
         // BEGIN STRIP
-        int limit = binarySearch(flattenArray, 0, flattenArray.length - 1, waterLevel);
-        if (limit > -1) {
-            return flattenArray.length - limit;
-        }
-        return 0;
+        // Looks for the smallest index with a value > waterLevel
+        int index = binarySearch(flattenArray, waterLevel);
+        return flattenArray.length - index;
         // END STRIP
     }
 
     // BEGIN STRIP
-    private int binarySearch(int[] arr, int lo, int hi, int x) {
-        int mid = lo + (hi - lo) / 2;
-        if (lo <= hi) {
 
-            if (arr[mid] == x && (mid + 1) < arr.length && arr[mid + 1] > arr[mid]) {
-                return mid + 1;
+    /**
+     *
+     * @param arr
+     * @param x
+     * @return the smallest index with a value > x,
+     *         arr.length if all of them are < x
+     */
+    private int binarySearch(int[] arr, int x) {
+        int lo = 0;
+        int hi = arr.length - 1;
+        if (arr[hi] <= x) return hi + 1;
+        // we know at least one element of the array is > 0,
+        // so the dichotomic search will find it
+        while (true) {
+            int mid = lo + (hi - lo) / 2;
+            if (arr[mid] <= x) {
+                lo = mid + 1;
+            } else { // arr[mid] > x
+                if (mid == 0 || arr[mid - 1] <= x) return mid;
+                hi = mid - 1;
             }
-            if (arr[mid] > x) {
-                return binarySearch(arr, lo, mid - 1, x);
-            }
-            return binarySearch(arr, mid + 1, hi, x);
         }
-        if (mid < arr.length && arr[mid] > x) {
-            return mid;
-        }
-        return -1;
     }
     // END STRIP
 
