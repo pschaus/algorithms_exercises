@@ -2,13 +2,16 @@ package searching;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class BST {
+public class PreorderToBST {
     /* 
-    * We ask you to implement the reconstruction of a BST 
-    * (binary search tree, with the well known properties on the ways keys are stored)
-    * in linear time starting from a preorder output traversal of the BST. 
-    * To simplify things, the BST Node's only contains integer key but no associated value. 
-    * For example, for [10,5,7,14,12] the tree should be like this :
+    * We ask you to implement the reconstruction of a BST starting
+    * from a sequence of keys corresponding to preorder traversal of the BST.
+    *
+    * Your algorithm should execute in linear time (number of keys).
+    * BST Node's only contains integer key but no associated value.
+    *
+    * For example, for the input [10,5,7,14,12] the reconstructed BST should be like this :
+    *
     *                             10
     *                              |
     *                  5 ------------------------ 14
@@ -20,11 +23,11 @@ public class BST {
 
     protected Node root;
 
-    public BST() {
+    public PreorderToBST() {
 
     }
 
-    public BST(Node r) {
+    public PreorderToBST(Node r) {
         root = r;
     }
 
@@ -46,8 +49,8 @@ public class BST {
      * new Node(new Node(null,new Node(null,null,7,1),5,2),new Node(new Node(null,null,12,1),null,14,2),10,5)
      * @param preOrderInput is a valid output obtained using preorderWrite
      */
-    public  BST(int [] preOrderInput) {
-        // no need to change it but you can if you want
+    public PreorderToBST(int [] preOrderInput) {
+        // no need to change it, but you can if you want
         root = preorderRead(preOrderInput,0,Integer.MIN_VALUE,Integer.MAX_VALUE);
     }
 
@@ -55,15 +58,13 @@ public class BST {
         // !!!!!!! TODO !!!!!!!!
         // STUDENT return new Node(null,null,preOrderInput[0]);
         // BEGIN STRIP
-        if(i >= preOrderInput.length)
+        if (i >= preOrderInput.length)
             return null;
-        if(preOrderInput[i] > max || preOrderInput[i] < min)
+        if (preOrderInput[i] > max || preOrderInput[i] < min)
             return null;
-        Node left = preorderRead(preOrderInput, i+1, min, preOrderInput[i]);
-        int a = 0;
-        if(left != null)
-            a += left.size;
-        Node right = preorderRead(preOrderInput, i+1+a, preOrderInput[i], max);
+        Node left = preorderRead(preOrderInput, i + 1, min, preOrderInput[i]);
+        int leftSize = left != null ? left.size : 0;
+        Node right = preorderRead(preOrderInput, i + 1 + leftSize, preOrderInput[i], max);
         return new Node(left, right, preOrderInput[i]);
         // END STRIP
         
@@ -87,7 +88,7 @@ public class BST {
         // this is the test method used to test that the constructor based on preorder is working
         // don't change it
         if (obj != null) {
-            BST other = ((BST) obj);
+            PreorderToBST other = ((PreorderToBST) obj);
             if (root == null) return other.root == null;
             else return root.equals(other.root);
         } else {
