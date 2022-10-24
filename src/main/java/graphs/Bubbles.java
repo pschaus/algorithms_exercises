@@ -5,9 +5,12 @@ import java.util.*;
 // END STRIP
 
 /**
- * Sophie and Marc want to reduce the bubbles that are too big to contain the virus. Help them.
+ * Sophie and Marc want to reduce the bubbles of contacts in the belgian population
+ * to contain an evil virus (weird idea but nevertheless inspired by a true belgian story in 2020, don't ask ...).
  *
- * The Belgian government has imposed on the population to limit contact, via "bubbles".
+ * Help them!
+ *
+ * The Belgian government has imposed on the population to limit the number of contacts, via "bubbles".
  *
  * The principle is quite simple. If you have a (close) contact with someone,
  * You are then in his bubble, and he is in yours.
@@ -41,7 +44,7 @@ import java.util.*;
  * For example, if n=3, in the example above, you could forbid Alice and Carol to see each other, but also
  * Bob and Carol. This removes 2 links (even though Alice and Carol appear twice in the contacts!).
  * But there is a better solution: prevent Alice and Bob from seeing each other, which only removes one link.
- * Finding an algorithm that solves this problem is complex, that's why we give you an algorithm rather vague algorithm:
+ * Finding an algorithm that solves this problem is complex, that's why we give you a rather vague idea of an algorithm:
  *
  * - As long as there are links between two bubbles each "too big", remove one of these links;
  * - Then, as long as there are bubbles that are too big, remove any link connected to one of these bubbles
