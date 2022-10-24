@@ -27,6 +27,18 @@ import java.util.Stack;
  *
  * The BSTNode are generic over their key (the integers in the example above) and implement the 
  * BinaryNode and KeyNode interface available in the utils package.
+ *
+ * Hint: You have two strategies to implement this iterator Fail-Fast and Fail-Safe
+ * https://www.geeksforgeeks.org/fail-fast-fail-safe-iterators-java/
+ *
+ * The Fail-Safe will collect all the keys in a collection and return an iterator on this collection.
+ * The Fail-Fast will lazily return the elements and throw an exception if the BST is modified while iterating on it.
+ *
+ * The advantage of Fail-Fast is that the constructor and iteration is Lazy.
+ * The total cost of iterating will be Theta(n) but the initialization can be O(h).
+ *
+ * It is a good exercise to implement both version.
+ *
  */
 public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements Iterable<Key> {
 
@@ -90,13 +102,13 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
     private class BSTIterator implements Iterator<Key> {
 
         // BEGIN STRIP
-        private BSTNode<Key> current;
         private int size;
+        // Internal stack used to keep track of the ancestors of the current node
         private Stack<BSTNode<Key>> stack;
 
         public BSTIterator() {
             this.stack = new Stack<>();
-            this.current = root;
+            BSTNode<Key> current = root;
             while (current != null) {
                 this.stack.push(current);
                 current = current.getLeft();
@@ -108,12 +120,12 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
 
         @Override
         public boolean hasNext() {
-            // The size of the tree has changed since the creation of the iterator. It means that
-            // the tree has been modified
+            // The size of the tree has changed since the creation of the iterator.
+            // It means that the tree has been modified (safe since no deletion allowed)
             if (root != null && this.size != root.getSize()) {
                 throw new ConcurrentModificationException();
             }
-            return current != null || !this.stack.isEmpty();
+            return !this.stack.isEmpty();
         }
 
         @Override
@@ -124,6 +136,9 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             }
+            // INVARIANT:
+            // Node on top of the stack contains a reference
+            // to the node that should be returned next
             BSTNode<Key> node = this.stack.pop();
             Key key = node.getKey();
             if (node.getRight() != null) {
@@ -194,7 +209,7 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
         }
 
         /**
-         * Adds a new value in the subtree rooted a this node
+         * Adds a new value in the subtree rooted at this node
          */
         public void add(K key) {
             if (key.compareTo(this.key) > 0) {
