@@ -14,7 +14,7 @@ public class RabinKarpTest {
 
 
     @Test
-    @Grade(value= 10)
+    @Grade(value= 1)
     public void basicTest(){
         String[] pat = {"comp","like"};
         String txt = "I like computer science";
@@ -24,7 +24,7 @@ public class RabinKarpTest {
 
 
     @Test
-    @Grade(value= 20)
+    @Grade(value= 1)
     public void wordNotPresentTest(){
         String[] pat = {"Yavin","C-3PO","R2-D2" };
         String txt = "Mais, vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. Moi," +
@@ -45,7 +45,7 @@ public class RabinKarpTest {
 
 
     @Test
-    @Grade(value=20)
+    @Grade(value= 1)
     public void randomWordTest(){
         //int[] seeds = new int[]{42,56,3,9,65,99,23};
         Random rand = new Random(new Random(5).nextInt(7));
@@ -95,7 +95,7 @@ public class RabinKarpTest {
     }
 
     @Test(timeout=50)
-    @Grade(value=50)
+    @Grade(value= 1)
     public void complexityTest(){
         long t0 = System.currentTimeMillis();
         genAllWords("",patSize);

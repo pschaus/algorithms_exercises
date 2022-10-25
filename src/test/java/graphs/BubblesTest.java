@@ -16,7 +16,7 @@ import java.util.*;
 public class BubblesTest {
 
     @Test
-    @Grade(value = 3)
+    @Grade(value = 1)
     public void exampleTest() {
         List<Contact> contacts = Collections.unmodifiableList(Arrays.asList(
                 new Contact("Alice", "Bob"),
@@ -39,7 +39,7 @@ public class BubblesTest {
     }
 
     @Test
-    @Grade(value = 3)
+    @Grade(value = 1)
     public void example2Test() {
         List<Contact> contacts = Collections.unmodifiableList(Arrays.asList(
                 new Contact("Alice", "Bob"),
@@ -63,7 +63,7 @@ public class BubblesTest {
 
 
     @Test
-    @Grade(value = 4)
+    @Grade(value = 1)
     public void randomTest() {
 
         Random random = new Random(90208);
@@ -112,7 +112,7 @@ public class BubblesTest {
 
 
     @Test(timeout = 3000)
-    @Grade(value = 3, cpuTimeout = 2000)
+    @Grade(value = 1, cpuTimeout = 2000)
     public void perfTest() {
         exampleTest();
         example2Test();

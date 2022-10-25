@@ -8,7 +8,7 @@ import static org.junit.Assert.assertFalse;
 public class DepthFirstPathsTest {
 
     @Test
-    @Grade(value = 25)
+    @Grade(value = 1)
     public void testSimple() {
         String message = "Test [0-1, 0-2, 0-3, 0-4] with 1 as source";
         DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(5);
@@ -28,7 +28,7 @@ public class DepthFirstPathsTest {
     }
 
     @Test
-    @Grade(value = 25)
+    @Grade(value = 1)
     public void testDisconnected() {
         String message = "Test [0-1, 1-2, 3-4] with 1 as source";
         DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(5);
@@ -46,7 +46,7 @@ public class DepthFirstPathsTest {
     }
 
     @Test
-    @Grade(value = 25)
+    @Grade(value = 1)
     public void testDiconnectedBis() {
         String message = "Test [0-1, 1-2, 3-4,4-5,5-6,5-7,7-8, 9-10,10-11,11-12] with 8 as source";
         DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(13);

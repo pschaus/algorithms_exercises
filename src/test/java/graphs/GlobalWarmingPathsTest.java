@@ -1,6 +1,7 @@
 package graphs;
 
 
+import com.github.guillaumederval.javagrading.Grade;
 import org.junit.Test;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class GlobalWarmingPathsTest {
 
 
     @Test
+    @Grade(value= 1)
     public void testShortestPathExam() {
         List<GlobalWarmingPaths.Point> path = new GlobalWarmingPaths(getExamMatrix(), 3).shortestPath(new GlobalWarmingPaths.Point(1, 0), new GlobalWarmingPaths.Point(3, 1));
         assertTrue( path != null && path.size() == 4 && validPath(getExamMatrix(),3,point(1,0),point(3,1),path) );
@@ -63,6 +65,7 @@ public class GlobalWarmingPathsTest {
     }
 
     @Test
+    @Grade(value= 1)
     public void testSimpleAll() {
         assertTrue(simpleAll());
     }
@@ -106,6 +109,7 @@ public class GlobalWarmingPathsTest {
     }
 
     @Test
+    @Grade(value= 1)
     public void testCorrectnessShortestPath() {
         assertTrue(correctnessShortestPath());
     }
@@ -166,6 +170,7 @@ public class GlobalWarmingPathsTest {
 
 
     @Test (timeout = 10)
+    @Grade(value= 1)
     public void timeComplexityConstructorCorrect() {
         final int [][] matrix = getRandomMatrix(100,2000000);
 
@@ -177,6 +182,7 @@ public class GlobalWarmingPathsTest {
     }
 
     @Test (timeout = 250)
+    @Grade(value= 1)
     public void timeComplexityShortestPath() {
         final int [][] matrix = getRandomMatrix(70,2000000);
         final GlobalWarmingPaths g = new GlobalWarmingPaths(matrix,1000000 );
