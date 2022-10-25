@@ -22,14 +22,14 @@ public class GlobalWarmingImplTest {
 
     ///tests Methods Correctness
     @Test
-    @Grade(value=10)
+    @Grade(value=1)
     public void testSafePointExam() {
         String message = "safe points returned (should be 14):"+new GlobalWarmingImpl(getExamMatrix()).nbSafePoints(2);
         assertEquals(message, new GlobalWarmingImpl(getExamMatrix()).nbSafePoints(2), 14);
     }
 
     @Test
-    @Grade(value=10)
+    @Grade(value=1)
     public void testSimpleAll() {
         int [][] matrix = getSimpleMatrix();
         GlobalWarming warming = new GlobalWarmingImpl(matrix);
@@ -51,7 +51,7 @@ public class GlobalWarmingImplTest {
     }
 
     @Test
-    @Grade(value=30)
+    @Grade(value=1)
     public void testCorrectnessNbSafePoints() {
         int[][] matrix = getExamMatrix();
         GlobalWarming g1 = new GlobalWarmingImpl(matrix);
@@ -237,7 +237,7 @@ public class GlobalWarmingImplTest {
 
     ///Complexities
     @Test(timeout=300)
-    @Grade(value=20)
+    @Grade(value=1)
     public void timeComplexityConstructorCorrect() {
         final int [][] matrix = getRandomMatrix(1000,2000000);
         final GlobalWarming g = new GlobalWarmingImpl(matrix);
@@ -247,7 +247,7 @@ public class GlobalWarmingImplTest {
     final GlobalWarming gwi = new GlobalWarmingImpl(getRandomMatrix(1000,2000000));
 
     @Test(timeout=50)
-    @Grade(value=30)
+    @Grade(value=1)
     public void timeComplexityNbSafePoints() {
         int max = 0;
         for (int i = 0; i < 1000; i++) {

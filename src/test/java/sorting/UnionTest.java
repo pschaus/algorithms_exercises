@@ -33,7 +33,7 @@ public class UnionTest {
     // END STRIP
 
     @Test
-    @Grade(value = 25)
+    @Grade(value = 1)
     public void testUnits() {
 
         Union.Interval i1 = new Union.Interval(1, 3);
@@ -91,7 +91,7 @@ public class UnionTest {
 
     // BEGIN STRIP
     @Test(timeout = 1000)
-    @Grade(value = 25)
+    @Grade(value = 1)
     public void testRandom2() {
         int[] seeds = new int[]{1, 5, 7, 11, 13};
         Random rand = new java.util.Random(seeds[2]);
@@ -106,7 +106,7 @@ public class UnionTest {
     }
 
     @Test(timeout = 11000)
-    @Grade(value = 50)
+    @Grade(value = 1)
     public void testComplexity() {
         final Union.Interval[] intervals = new Union.Interval[1000000];
         Random rand = new java.util.Random();

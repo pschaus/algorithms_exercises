@@ -11,7 +11,7 @@ import static org.junit.Assert.assertArrayEquals;
 public class MergeSortTest {
 
     @Test
-    @Grade(value = 50)
+    @Grade(value = 1)
     public void testSortOdd()
     {
         String message = "Test [1 4 3 8 6]";
@@ -22,7 +22,7 @@ public class MergeSortTest {
     }
 
     @Test
-    @Grade(value = 50)
+    @Grade(value = 1)
     public void testSortEven()
     {
         String message = "Test [1 9 4 3 8 6]";

@@ -1,5 +1,6 @@
 package strings;
 
+import com.github.guillaumederval.javagrading.Grade;
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -132,6 +133,7 @@ public class LinearProbingHashSTTest {
 
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void testExample() {
         LinearProbingHashST<Integer,String> lp = new LinearProbingHashST<>();
 
@@ -178,6 +180,7 @@ public class LinearProbingHashSTTest {
 
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void getPutWorkingNoResize() {
         Random rand = new Random(728972);
 
@@ -210,6 +213,7 @@ public class LinearProbingHashSTTest {
     }
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void putWorking() {
         Random rand = new Random(228901);
         for (int size = 20; size < 1000; size += 25) {
@@ -245,6 +249,7 @@ public class LinearProbingHashSTTest {
     }
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void putNoResizeWorking() {
         Random rand = new Random(292082);
         for (int size = 20; size < 1000; size += 27) {
@@ -278,6 +283,7 @@ public class LinearProbingHashSTTest {
     }
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void putNoResizeWorking2() {
         Random rand = new Random(292082);
         for (int size = 20; size < 1000; size += 27) {
@@ -313,6 +319,7 @@ public class LinearProbingHashSTTest {
     }
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void getWithoutPutWorking() {
         Random rand = new Random(3980280);
         for (int size = 20; size < 1000; size += 41) {
@@ -347,6 +354,7 @@ public class LinearProbingHashSTTest {
 
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void testCorrectness() {
         Random rand = new Random(1792827);
 
@@ -400,6 +408,7 @@ public class LinearProbingHashSTTest {
     }
 
     @Test(timeout = 5000)
+    @Grade(value= 1)
     public void testCorrectnessMI() {
         Random rand = new Random(1792827);
 
@@ -463,6 +472,7 @@ public class LinearProbingHashSTTest {
     }
 
     @Test(timeout = 10000)
+    @Grade(value= 1)
     public void testComplexity() {
         ThreadMXBean thread = ManagementFactory.getThreadMXBean();
         long cpu = thread.getCurrentThreadCpuTime();

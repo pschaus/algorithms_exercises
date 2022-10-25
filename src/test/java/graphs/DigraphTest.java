@@ -105,7 +105,7 @@ public class DigraphTest {
         }
 
         @Test
-        @Grade(value = 50)
+        @Grade(value = 1)
         public void sameGraphTest() {
             Digraph studentGraph = new Digraph(instance.V);
             for (int i = 0; i < instance.V; i++) {
@@ -173,7 +173,7 @@ public class DigraphTest {
         }
 
         @Test
-        @Grade(value = 50)
+        @Grade(value = 1)
         public void sameGraphTest() {
             Digraph studentGraph = new Digraph(instance.V);
             for (int i = 0; i < instance.V; i++) {

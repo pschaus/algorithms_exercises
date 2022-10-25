@@ -37,7 +37,7 @@ public class MedianTest {
     }
 
     @Test
-    @Grade(value = 30)
+    @Grade(value = 1)
     public void testMedianOk() {
         for (int i = 100; i < 1000; i += 10) {
             int [] input = randomInput(i+1, random);
@@ -47,7 +47,7 @@ public class MedianTest {
     }
 
     @Test
-    @Grade(value = 50, cpuTimeout=500)
+    @Grade(value = 1, cpuTimeout=500)
     public void testComplexityNLogNOk() {
         for (int i = 100; i < 2000000; i += 100000) {
             int [] input = randomInput(i+1, random);

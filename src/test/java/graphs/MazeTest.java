@@ -67,7 +67,7 @@ public class MazeTest {
     public static class TestNotParameterized {
 
         @Test
-        @Grade(value = 10)
+        @Grade(value = 1)
         public void testMaze1a() {
             Iterable<Integer> path = Maze.shortestPath(maze1, 0, 0, 6, 0);
             Integer[] pathArray = toArray(path);
@@ -76,7 +76,7 @@ public class MazeTest {
         }
 
         @Test
-        @Grade(value = 10)
+        @Grade(value = 1)
         public void testMaze1b() {
             // should not have a path
             // unreachable destination
@@ -90,7 +90,7 @@ public class MazeTest {
         }
 
         @Test
-        @Grade(value = 20)
+        @Grade(value = 1)
         public void testMaze1c() {
             Iterable<Integer> path = Maze.shortestPath(maze1, 0, 0, 0, 0);
             Integer[] pathArray = toArray(path);
@@ -99,7 +99,7 @@ public class MazeTest {
         }
 
         @Test
-        @Grade(value = 20)
+        @Grade(value = 1)
         public void testMaze2a() {
             Iterable<Integer> path = Maze.shortestPath(maze2, 0, 0, 1, 6);
             Integer[] pathArray = toArray(path);
@@ -108,7 +108,7 @@ public class MazeTest {
         }
 
         @Test(timeout = 20)
-        @Grade(value = 40)
+        @Grade(value = 1)
         public void testComplexity() {
             int positions[][] = new int[2][2];
             int[][] maze = getMaze("data/graphs.Maze/in_0", 24, 110, positions);
