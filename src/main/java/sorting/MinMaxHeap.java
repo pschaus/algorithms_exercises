@@ -62,6 +62,7 @@ public class MinMaxHeap<Key extends Comparable<Key>> {
             return null;
         return this.content[1];
         // END STRIP
+        // TODO STUDENT return null;
     }
 
     /**
@@ -81,6 +82,7 @@ public class MinMaxHeap<Key extends Comparable<Key>> {
         }
         return k2;
         // END STRIP
+        // TODO STUDENT return null;
     }
 
     /**
