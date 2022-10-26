@@ -113,16 +113,15 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
                 this.stack.push(current);
                 current = current.getLeft();
             }
-            if (root != null) {
-                this.size = root.getSize();
-            }
+            this.size = size();
+
         }
 
         @Override
         public boolean hasNext() {
             // The size of the tree has changed since the creation of the iterator.
             // It means that the tree has been modified (safe since no deletion allowed)
-            if (root != null && this.size != root.getSize()) {
+            if (this.size != size()) {
                 throw new ConcurrentModificationException();
             }
             return !this.stack.isEmpty();
@@ -130,7 +129,7 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
 
         @Override
         public Key next() {
-            if (root != null && this.size != root.getSize()) {
+            if (this.size != size()) {
                 throw new ConcurrentModificationException();
             }
             if (!this.hasNext()) {
