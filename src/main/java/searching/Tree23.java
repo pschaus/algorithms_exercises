@@ -12,6 +12,7 @@ public class Tree23 {
     static Node temp, temp2;
 
     public void put(Integer key, Double value){
+        //TODO
         carry = null;
         root = Node.put(root, key, value);
     }
@@ -29,13 +30,5 @@ public class Tree23 {
         if (root == null) return true;
         return root.isBst(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
-
-    public static void main(String[] args) {
-        Tree23 t = new Tree23();
-        for (int i = 0; i < 10; i++) {
-            t.put(i, (double) i);
-        }
-        System.out.println(t.search(4));
-        System.out.println("Ok");
-    }
+    
 }

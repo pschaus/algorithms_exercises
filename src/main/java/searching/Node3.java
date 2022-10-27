@@ -2,7 +2,7 @@ package searching;
 
 public class Node3 extends Node{
 
-    Integer k1, k2;
+    Integer k1, k2;  // k1 < k2
     Double v1, v2;
     Node left, middle, right;
 
@@ -16,6 +16,13 @@ public class Node3 extends Node{
         this.middle = middle;
     }
 
+    /**
+     *
+     * @param k : a key to compare
+     * @return 0 if k1 < k < k2
+     *        -1 if k < k1
+     *         1 if k > k2
+     */
     public int compare(Integer k){
         if (k.compareTo(k1) > 0 && k.compareTo(k2) < 0) return 0;
         if (k.compareTo(k1) < 0 ) return -1;
@@ -40,6 +47,7 @@ public class Node3 extends Node{
 
     @Override
     public Node put(Integer k, Double v) {
+        //TODO
         int cmp = compare(k);
         if (isLeaf()){
             if (cmp == 0){
