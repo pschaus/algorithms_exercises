@@ -208,9 +208,12 @@ public class MazeTest {
 
             for (int i = 0; i < instance.nQueries; i++) {
                 ArrayList<Integer> query = instance.queries.get(i);
-                Iterable<Integer> path = Maze.shortestPath(maze, query.get(0), query.get(1), query.get(2), query.get(3));
+                int x1 = query.get(0), y1 = query.get(1), x2 = query.get(2), y2 = query.get(3);
+                Iterable<Integer> path = Maze.shortestPath(maze, x1, y1, x2, y2);
                 Integer[] pathArray = toArray(path);
-                assertArrayEquals(pathArray, instance.solutions.get(i).toArray());
+                assertEquals(pathArray.length, instance.solutions.get(i).toArray().length);
+                if (pathArray.length > 0) assertTrue(validPathSourceToDest(x1, y1, x2, y2, maze, path));
+                //assertArrayEquals(pathArray, instance.solutions.get(i).toArray());
             }
         }
         final Instance instance;
