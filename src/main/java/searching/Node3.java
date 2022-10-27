@@ -1,4 +1,4 @@
-package solution;
+package searching;
 
 public class Node3 extends Node{
 

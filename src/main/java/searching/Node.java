@@ -1,4 +1,4 @@
-package solution;
+package searching;
 
 public abstract class Node {
 
