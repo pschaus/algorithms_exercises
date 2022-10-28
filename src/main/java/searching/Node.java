@@ -22,6 +22,7 @@ public abstract class Node {
         //TODO
         if (n==null) return new Node2(k, v, null, null);
         Node temp = n.put(k, v);
+        // carry up to the root node => create an additional height in the tree
         if (Tree23.carry != null) return new Node2(Tree23.carry.key, Tree23.carry.value, Tree23.temp, Tree23.temp2);
         return temp;
     }

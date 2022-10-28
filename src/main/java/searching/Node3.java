@@ -50,43 +50,51 @@ public class Node3 extends Node{
         //TODO
         int cmp = compare(k);
         if (isLeaf()){
+            // create an initial carry
             if (cmp == 0){
+                // the new key is the carry
                 Tree23.temp = new Node2(k1, v1, null, null);
                 Tree23.temp2 = new Node2(k2, v2, null, null);
                 Tree23.carry = new Node2(k, v, null, null);
             }else if (cmp < 0){
+                // the left key is the carry
                 Tree23.temp = new Node2(k, v, null, null);
                 Tree23.temp2 = new Node2(k2, v2, null, null);
                 Tree23.carry = new Node2(k1, v1, null, null);
             }else {
+                // the right key is the carry
                 Tree23.temp = new Node2(k1, v1, null, null);
                 Tree23.temp2 = new Node2(k, v, null, null);
                 Tree23.carry = new Node2(k2, v2, null, null);
             }
             return null;
         }
+        // insert middle
         if (cmp == 0){
             Node n = middle.put(k, v);
+            // carry is not null => continue carry to the parent
             if (Tree23.carry != null){
-                Tree23.temp = new Node2(Tree23.carry.key, Tree23.carry.value, Tree23.temp, Tree23.temp2);
+                Tree23.temp = new Node2(k1, v1, Tree23.temp, Tree23.temp2);
                 Tree23.temp2 = new Node2(k2, v2, middle, right);
-                Tree23.carry = new Node2(k1, v1, null, null);
+                Tree23.carry = new Node2(Tree23.carry.key, Tree23.carry.value, null, null);
                 return null;
             }
             else middle = n;
         }else if(cmp < 0){
+            // insert left
             Node n = left.put(k, v);
+            // carry is not null => continue carry to the parent
             if (Tree23.carry != null){
-                Node temp = Tree23.temp;
-                Node temp2 = Tree23.temp2;
-                Tree23.temp2 = new Node2(k2, v2, temp2, right);
-                Tree23.temp = new Node2(k1,v1, left, temp);
-                Tree23.carry = new Node2(Tree23.carry.key, Tree23.carry.value, null, null);
+                Tree23.temp = new Node2(Tree23.carry.key, Tree23.carry.value, Tree23.temp, Tree23.temp2);
+                Tree23.temp2 = new Node2(k2, v2, middle, right);
+                Tree23.carry = new Node2(k1,v1, null, null);
                 return null;
             }
             else left = n;
         }else{
+            // insert right
             Node n = right.put(k, v);
+            // carry is not null => continue carry to the parent
             if (Tree23.carry != null) {
                 Tree23.temp2 = new Node2(Tree23.carry.key,Tree23.carry.value, Tree23.temp, Tree23.temp2);
                 Tree23.temp = new Node2(k1,v1, left, middle);

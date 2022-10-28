@@ -18,15 +18,22 @@ public class Node2 extends Node{
     public Node put(Integer k, Double v){
         //TODO
         if (isLeaf()) return new Node3(key, k, value, v, null, null, null);
+        // insert left
         if (k.compareTo(key) < 0){
             Node n = left.put(k, v);
             Node2 temp = Tree23.carry;
-            if (temp != null) return new Node3(key, temp.key, value, temp.value, Tree23.temp, Tree23.temp2, right);
+            // if we have a carry => create a 3Node
+            if (temp != null){
+                Node ret = new Node3(key, temp.key, value, temp.value, Tree23.temp, Tree23.temp2, right);
+                Tree23.carry = null;
+                return ret;
+            }
             else left = n;
-
         }else{
+            // insert right
             Node n = right.put(k, v);
             Node2 temp = Tree23.carry;
+            // if we have a carry => create a 3Node
             if (temp != null){
                 Node ret = new Node3(key, temp.key, value, temp.value, left, Tree23.temp, Tree23.temp2);
                 Tree23.carry = null;
