@@ -114,24 +114,20 @@ public class BSTTest {
         @Test(timeout=1000)
         @Grade(value=1)
         public void testIterateAll() {
-            long t0 = System.currentTimeMillis();
             Iterator<Integer> aIter = student.iterator();
             Iterator<Integer> bIter = correct.iterator();
             while (bIter.hasNext()) {
                 assertEquals(bIter.next(),aIter.next());
             }
             assertFalse(aIter.hasNext());
-            long t1 = System.currentTimeMillis();
         }
 
         @Test(timeout=100)
         @Grade(value=1)
         public void testIteratorCreation() {
-            long t0 = System.currentTimeMillis();
             Iterator<Integer> aIter = student.iterator();
             assertTrue(aIter.hasNext());
             assertEquals(correct.first(),aIter.next());
-            long t1 = System.currentTimeMillis();
         }
 
 
@@ -144,7 +140,7 @@ public class BSTTest {
             for (int i = 0; i < 5; i++) {
                 BST<Integer,Integer> a = new BST<>();
                 Set<Integer> b = new TreeSet<>();
-                for (int k = 0; k < 1000000; k++) {
+                for (int k = 0; k < 100000; k++) {
                     int v = r.nextInt();
                     a.put(v,v);
                     b.add(v);
