@@ -57,6 +57,26 @@ public class Mean {
   }
 }
 ```
+After processing it, the file given to the students (alongside a test file) is
+```
+/**
+ * In this exercise we ask you to compute the mean of two numbers, `a` and `b`. You should return an
+ * integer. This means that the mean of 2 and 5 is not 3.5 but 3
+ */
+public class Mean {
+  
+  /**
+   * Returns the integer means of two numbers
+   * @params a The first number in the mean
+   * @params b The second number in the mean
+   * @returns the mean of a and b
+   */
+  public static int mean(int a, int b) {
+    // TODO
+    return 0;
+  }
+}
+```
 
 - The statement is given as comments at the top of the class.
 - The method(s) that the students should implement can be anything and they are free to add additional methods (in our case they submit the whole file for verification)
