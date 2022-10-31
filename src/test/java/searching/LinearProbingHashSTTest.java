@@ -25,7 +25,7 @@ public class LinearProbingHashSTTest {
         assertEquals(4,lp.capacity());
         assertEquals(0,lp.size());
 
-        lp.put(5,"five");
+        lp.put(5, "five");
         assertEquals("five",lp.get(5));
         assertEquals(1,lp.size());
 
@@ -77,16 +77,13 @@ public class LinearProbingHashSTTest {
                 LinearProbingHashST<Integer,String> lp = new LinearProbingHashST<>();
 
                 Random rand = new Random();
-
                 for (int i = 0; i < size; i++) {
                     int v = rand.nextInt();
                     in.add(v);
                     lp.put(v, v + "");
-                    break;
                 }
                 assertTrue(lp.size() >= lp.capacity()/4);
                 assertTrue(lp.size() <= lp.capacity()/2);
-
                 for (int i: in) {
                     assertTrue(lp.contains(i));
                     assertTrue(lp.get(i).equals(i+""));
@@ -102,8 +99,8 @@ public class LinearProbingHashSTTest {
         correctnessTestBis();
     }
 
-    /*@Test(timeout = 1000)
-    @Grade(value=50.0)
+    @Test
+    @Grade(value=50.0, cpuTimeout = 1000)
     public void testComplexity() {
 
         LinearProbingHashST<Integer,String> lp = new LinearProbingHashST<>();
@@ -114,15 +111,15 @@ public class LinearProbingHashSTTest {
             int v = rand.nextInt();
             lp.put(v, v + "");
         }
-        for (int i = 0; i < 100000; i++) {
-            lp.put(i%10000, i%10000 + "");
+        for (int i = 0; i < 10000; i++) {
+            lp.put(i%1000, i%1000 + "");
         }
         for (int i = 0; i < 1000; i++) {
             int v = rand.nextInt();
             lp.put(v, v + "");
         }
 
-    }*/
+    }
 
     //More tests
     private void correctnessTestBis() {
@@ -165,5 +162,4 @@ public class LinearProbingHashSTTest {
         return list;
     }
     
-    //Add other tests as needed
 }

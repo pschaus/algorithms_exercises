@@ -125,7 +125,6 @@ public class LinearProbingHashST<Key, Value> {
 
         if(keys[hash] == null)
             n +=1;
-        System.out.println(hash);
         keys[hash] = key;
         vals[hash] = val;
         // END STRIP
@@ -143,15 +142,11 @@ public class LinearProbingHashST<Key, Value> {
         // STUDENT return null;
 
         //  BEGIN STRIP
-        System.out.println("key = " + key);
         if (key == null) throw new IllegalArgumentException("argument to get() is null");
         for(int i = 0; i < m; i++) {
-            System.out.println((hash(key)+i)%m);
-            System.out.println("keys = " + keys[(hash(key) +i) % m] + " key = "+key);
-            System.out.println(keys[(hash(key) +i) % m] == key);
             if(keys[(hash(key) +i) % m] == null)
                 return null;
-            if (key == keys[(hash(key) +i) % m])
+            if (key.equals(keys[(hash(key) +i) % m]))
                 return vals[(hash(key) +i) % m];
         }
         return null;
