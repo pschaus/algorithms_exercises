@@ -168,24 +168,37 @@ public class PreorderToBSTTest {
         public static PreorderToBST.Node longBst(int n) {
             if (n == 0) {
                 return null;
-            } else {
-                return new PreorderToBST.Node(longBst(n-1),null,n);
             }
+            PreorderToBST.Node root = new PreorderToBST.Node(null,null,n);
+            root.size = n;
+            PreorderToBST.Node current = root;
+            for (int i = n-1; i > 0; i--) {
+                PreorderToBST.Node next = new PreorderToBST.Node(null,null,i);
+                next.size = i;
+                current.left = next;
+                current = next;
+            }
+            return root;
         }
 
-        @Test
-        @Grade(value = 1, cpuTimeout = 2000)
+        @Test(timeout = 2000)
+        @Grade(value = 1, cpuTimeout = 1000)
         @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example", onFail=true)
         @GradeFeedback(message = "Check the complexity of your algorithm", onTimeout=true)
         public void testComplexity() {
-            PreorderToBST teacher = new PreorderToBST(longBst(4000));
-            teacher.put(5005);
-            teacher.put(5007);
-            teacher.put(5002);
+            PreorderToBST teacher = new PreorderToBST(longBst(5000));
+            teacher.put(50005);
+            teacher.put(50007);
+            teacher.put(50002);
 
             int [] preOrder = teacher.preorderWrite();
-            PreorderToBST student = new PreorderToBST(preOrder);
-            assertEquals(teacher, student);
+
+            for (int iter = 0; iter < 100; iter++) {
+                PreorderToBST student = new PreorderToBST(preOrder);
+                boolean same = teacher.equals(student);
+                assertEquals(teacher, student);
+            }
+
         }
     }
     
