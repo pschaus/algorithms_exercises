@@ -2,11 +2,8 @@ package sorting;
 
 
 import com.github.guillaumederval.javagrading.Grade;
-import com.github.guillaumederval.javagrading.GradeFeedback;
-import com.github.guillaumederval.javagrading.GradeFeedbacks;
 import com.github.guillaumederval.javagrading.GradingRunner;
 import com.github.guillaumederval.javagrading.CustomGradingResult;
-import com.github.guillaumederval.javagrading.TestStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -19,7 +16,7 @@ public class CardSorterTest {
 
 
     public void test(int[] array) {
-        LinkedList l = new LinkedList(array);
+        LinkedListImpl l = new LinkedListImpl(array);
 
         CardSorter.sort(l);
 
@@ -42,7 +39,7 @@ public class CardSorterTest {
 
     @Test
     public void testExample() {
-        LinkedList l = new LinkedList(new int[]{7, 8, 2, 22, 102, 1});
+        LinkedListImpl l = new LinkedListImpl(new int[]{7, 8, 2, 22, 102, 1});
         CardSorter.sort(l);
         assertTrue(l.isSorted());
     }
