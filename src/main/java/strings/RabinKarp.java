@@ -6,16 +6,24 @@ import java.util.Hashtable;
  * Author Pierre Schaus
  *
  * We are interested in the Rabin-Karp algorithm.
- * We would like to modify it a bit to determine if a word among a list (all words are of the same length) is present in the text.
- * To do this, you need to modify the Rabin-Karp algorithm which is shown below (page 777 of the book).
- * More precisely, you are asked to modify this class so that it has a constructor of the form:
+ * We would like to modify it a bit to determine
+ * if a word among a list (!!! all words are of the same length !!!)
+ * is present in the text.
+ * To do this, you need to modify the Rabin-Karp
+ * algorithm which is shown below (page 777 of the book).
+ * More precisely, you are asked to modify this class
+ * so that it has a constructor of the form:
  * public RabinKarp(String[] pat)
  *
- * Moreover the search function must return the index of the beginning of the first word (among the pat array) found in the text or
+ * Moreover the search function must return
+ * the index of the beginning of the first
+ * word (among the pat array) found in the text or
  * the size of the text if no word appears in the text.
  *
- * Example: If txt = "Here find interesting exercise for Rabin Karp" and pat={"have", "find", "Karp"}
- * the search function must return 5 because the word "find" present in the text and in the list starts at index 5.
+ * Example: If txt = "Here find interesting
+ * exercise for Rabin Karp" and pat={"have", "find", "Karp"}
+ * the search function must return 5 because
+ * the word "find" present in the text and in the list starts at index 5.
  *
  */
 public class RabinKarp {
