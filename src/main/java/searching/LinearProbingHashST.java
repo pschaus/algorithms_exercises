@@ -1,7 +1,7 @@
 package searching;
 
 /**
- * With the given partiel implementation of LinearProbingHashST, we ask you to 
+ * With the given partial implementation of LinearProbingHashST, we ask you to
  * implement the resize, get and put methods
  * You are not allowed to use already existing classes and methods from Java
  */

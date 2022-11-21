@@ -26,9 +26,9 @@ import java.util.LinkedList;
  *      | _ | 4 | _ | _ | 6 |
  *      | _ | _ | _ | 6 | _ |
  *
- * The goal is to implmets two methods that can answer the following questions:
- *      1) Are to entries on the same island?
- *      2) How many island is there
+ * The goal is to implement two methods that can answer the following questions:
+ *      1) Are two entries on the same island?
+ *      2) How many islands are there
  *
  * Two entries above the water level are connected if they are next to each other on
  * the same row or the same column. They are **not** connected **in diagonal**.
