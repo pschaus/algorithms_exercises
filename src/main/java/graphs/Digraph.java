@@ -5,7 +5,8 @@ import java.util.ArrayList;
 // END STRIP
 
 /**
- *Implement the Digraph.java interface in the Digraph.java class using an adjacency list
+ * Implement the Digraph.java interface in
+ * the Digraph.java class using an adjacency list
  * data structure to represent directed graphs.
  */
 public class Digraph {

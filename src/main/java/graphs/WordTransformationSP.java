@@ -4,15 +4,22 @@ import java.util.*;
 
 
 /**
- * You are asked to implement the WordTransformationSP class which allows to find the shortest path
- * from a string A to another string B (with the certainty that there is a path from A to B).
- * To do this, we define a rotation(x, y) operation that reverses the order of the letters between the x and y positions (not included).
- * For example, with A=``HAMBURGER``, if we do rotation(A, 4, 8), we get HAMBEGRUR. So you can see that the URGE sub-string
- * has been inverted to EGRU and the rest of the string has remained unchanged: HAMB + ECRU + R = HAMBEGRUR.
- * Let's say that a rotation(x, y) has a cost of y-x. For example going from HAMBURGER to HAMBEGRUR costs 8-4 = 4.
+ * You are asked to implement the WordTransformationSP
+ * class which allows to find the shortest path
+ * from a string A to another string B
+ * (with the certainty that there is a path from A to B).
+ * To do this, we define a rotation(x, y) operation that
+ * reverses the order of the letters between the x and y positions (not included).
+ * For example, with A=``HAMBURGER``, if we do rotation(A, 4, 8), we get HAMBEGRUR.
+ * So you can see that the URGE sub-string
+ * has been inverted to EGRU and the rest of the string
+ * has remained unchanged: HAMB + ECRU + R = HAMBEGRUR.
+ * Let's say that a rotation(x, y) has a cost of y-x.
+ * For example going from HAMBURGER to HAMBEGRUR costs 8-4 = 4.
  * The question is what is the minimum cost to reach a string B from A?
  * So you need to implement a public static int minimalCost(String A, String B)
- * function that returns the minimum cost to reach String B from A using the rotation operation.
+ * function that returns the minimum cost to reach String B
+ * from A using the rotation operation.
  */
 public class WordTransformationSP {
 
