@@ -5,8 +5,10 @@ import java.util.*;
 // END STRIP
 
 /**
- * Considering a list containing the relations between train stations (a train leaves the station `from` at `startTime`
- * and arrives at station `to` at `endTime`) and the positions of those stations, a starting station and a starting time,
+ * Considering a list containing the relations between train stations
+ * (a train leaves the station `from` at `startTime`
+ * and arrives at station `to` at `endTime`) and the positions
+ * of those stations, a starting station and a starting time,
  * what is the earliest hour at which you can reach each an accessible station ?
  * <p>
  * You don't have to consider several points :
@@ -25,8 +27,10 @@ import java.util.*;
  * (Ottignies, 10:00 am) : [(LLN, 10:20 am)]
  * }
  * <p>
- * In the above dictionary, the keys are the departure stations and times, and the values are a list of stations that you can reach
- * (if you take a train starting from the key) and the time at which you would reach them.
+ * In the above dictionary, the keys are the departure stations and times,
+ * and the values are a list of stations that you can reach
+ * (if you take a train starting from the key) and the time
+ * at which you would reach them.
  * <p>
  * The list of reacheable stations and the earliest hour you can reach them is :
  * {Bxl-midi : 9:00 am,
@@ -40,25 +44,32 @@ import java.util.*;
  * It is your job, based on your knowledge,
  * to identify, among the appropriate algorithm family, which one is optimal.
  * <p>
- * A clue : as you probably guessed it, it is clearly a graph problem. But it isn't a usual graph :
- * nodes are particular, because they don't represent only a point in the space, but also a point in the time
- * (for example (Bruxelles-midi, 8:48 am)).
- * <p>
- * Don't forget that if I reach Bxl-midi at time i, I can take any train that leaves Bxl-midi at time j >= i.
- * <p>
- * By the way, do you know the function TreeMap.subMap (https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html#subMap-K-boolean-K-boolean-) ?
+ * Some clues :
+ * - As you probably guessed it, it is clearly a graph problem.
+ *   But it isn't a usual graph since nodes are particular.
+ *   Nodes don't represent only a point in the space, but also
+ *   a point in the time (for example (Bruxelles-midi, 8:48 am)).
+ * - Don't forget that if I reach Bxl-midi at time i,
+ *   I can take any train that leaves Bxl-midi at time j >= i.
+ * - Consider the function TreeMap.subMap that might be useful
+ *   (https://docs.oracle.com/javase/8/docs/api/java/util/TreeMap.html#subMap-K-boolean-K-boolean-) ?
  */
 public class Trains {
 
     /** 
-     * Considering given starting station and time, compute the earliest hour at which any accessible station can be reached.
-     * @param relations a list of relations that connect a pair (station, time) (the key) (for example, Bxl-midi, 8:48 am)
-     *                  with a list of trains that leave the station at this time, represented by a list of
-     *                  StationTime objects that gives for each, the destination-station + time those trains arrives.
-     *                  Stations are represented by Strings ("Bxl-midi") and (absolute) time by positive integers.
+     * Considering given starting station and time, compute the earliest hour at which
+     * any accessible station can be reached.
+     * @param relations a list of relations that connect a pair (station, time) (the key)
+     *                  (for example, Bxl-midi, 8:48 am)
+     *                  with a list of trains that leave the station at this time,
+     *                  represented by a list of StationTime objects that gives for each,
+     *                  the destination-station + time those trains arrives.
+     *                  Stations are represented by Strings ("Bxl-midi") and
+     *                  (absolute) time by positive integers.
      *
      * @param startPoint starting station/time
-     * @return a map containing, for each reachable station (key) the earliest hour at which it can be reached.
+     * @return a map containing, for each reachable station (key)
+     *         the earliest hour at which it can be reached.
      *         The map must contain the starting station
      */
     public static Map<String, Integer> reachableEarliest(HashMap<StationTime, LinkedList<StationTime>> relations, StationTime startPoint) {

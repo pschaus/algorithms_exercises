@@ -6,10 +6,14 @@ import java.util.*;
  * Author: Pierre Schaus
  *
  * The first pictures from the James-Webb telescope revealed hyperspace by-passes
- * connecting certain galaxies (much like in the book “The Hitchhiker's Guide to the Galaxy” by Douglas Adams).
- * The telescope is also able to detect certain galaxies that contain habitable planets (called abusively habitable galaxies).
- * NASA asks you to plan an escape route to reach a habitable galaxy if ever the earth were to no longer be.
- * However, each by-pass observed between two galaxies is functional only for a specifi period of time (expressed in years)
+ * connecting certain galaxies (much like in the book
+ * “The Hitchhiker's Guide to the Galaxy” by Douglas Adams).
+ * The telescope is also able to detect certain galaxies that
+ * contain habitable planets (called abusively habitable galaxies).
+ * NASA asks you to plan an escape route to reach a habitable
+ * galaxy if ever the earth were to no longer be.
+ * However, each by-pass observed between two galaxies is
+ * functional only for a specifi period of time (expressed in years)
  * and it is no longer usable once this period has passed.
  * In order to save humanity, we ask you to design an optimal escape plan,
  * to a habitable galaxy using only functional by-passes.
@@ -21,18 +25,23 @@ import java.util.*;
  */
 public class GalaxyPath {
     /**
-     * Hint: Read the first small unit test with 5 galaxies for a small example and its expected solution.
-     *       By reading this example, you will make sure you understand the problem to be solved.
+     * Hint: Read the first small unit test with 5 galaxies for
+     *       a small example and its expected solution.
+     *       By reading this example, you will make sure
+     *       you understand the problem to be solved.
      *
-     * @param graph a n x n matrix matrix,
-     *              each entry i,j represent the expiration date (in years) of the by-passe from galaxy i to j.
+     * @param graph is an n x n matrix,
+     *              each entry i,j represent the expiration date (in years)
+     *              of the by-passe from galaxy i to j.
      *              an entry = 0 means that the by-pass does not exist (no link since the beginning).
-     *              an entry = i > 0 means that the by-pass can be used but before time i, because it will be closed at time i
+     *              an entry = i > 0 means that the by-pass can be used but before time i,
+     *              because it will be closed at time i
      *              Time passes by a year each time you use by-pass to travel.
      *
      * @param source a galaxy id on [0..n-1]
      * @param destinations a set of habitable galaxies (ids taken on on [0..n-1])
-     * @return the shortest (number of years) feasible path in years from the source to a habitable destination galaxy.
+     * @return the shortest (number of years) feasible path in years from the source
+     *         to a habitable destination galaxy.
      *         More formally if P = (n0, n1, ...nk) is a valid path of duration k
      *            iff n1 = source, nk = destination and
      *                for all (ni, ni+1) in P, graph[ni][ni+1] >= i+1

@@ -14,8 +14,8 @@ import java.util.List;
  * return 0;
  * }
  * }
- * Hint: Feel free to add methods or even inner-class (private static class) to help you but don't change the class name or the signature of the numberOfConnectedComponents method.
- * Don't forget to add the imports at the beginning of your code if you use objects from the Java API.
+ * Hint: Feel free to add methods or even inner-class (private static class)
+ *       to help you but don't change the class name or the signature of the numberOfConnectedComponents method.
  *
  *
  */

@@ -75,27 +75,27 @@ public class GlobalWarmingPathsTest {
 
         List<GlobalWarmingPaths.Point> path1 = warming.shortestPath(point(1,1),point(1,1));
 
-        if (!validPath(matrix,0,point(1,1),point(1,1),path1)) {
+        if (!validPath(matrix, 0, point(1, 1), point(1, 1), path1)) {
             System.out.println("1::error in shortestPath");
             return false;
         }
 
-        if (warming.shortestPath(point(9,9),point(9,9)) != null) {
-            if(!warming.shortestPath(point(9,9),point(9,9)).isEmpty()) {
+        if (warming.shortestPath(point(9, 9), point(9, 9)) != null) {
+            if (!warming.shortestPath(point(9, 9), point(9, 9)).isEmpty()) {
                 System.out.println("2::error in shortestPath");
                 return false;
             }
         }
 
-        if (warming.shortestPath(point(0,9),point(9,9)) != null ) {
-            if(!warming.shortestPath(point(0,9),point(9,9)).isEmpty()) {
+        if (warming.shortestPath(point(0, 9), point(9, 9)) != null) {
+            if (!warming.shortestPath(point(0, 9), point(9, 9)).isEmpty()) {
                 System.out.println("3::error in shortestPath");
                 return false;
             }
         }
 
-        List<GlobalWarmingPaths.Point> path2 = warming.shortestPath(point(4,5),point(1,7));
-        if (!validPath(matrix,0,point(4,5),point(1,7),path2)) {
+        List<GlobalWarmingPaths.Point> path2 = warming.shortestPath(point(4, 5), point(1, 7));
+        if (!validPath(matrix, 0, point(4, 5), point(1, 7), path2)) {
             System.out.println("4::error in shortestPath, path not valid");
             return false;
         }
