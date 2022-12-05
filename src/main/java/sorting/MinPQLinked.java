@@ -196,33 +196,66 @@ public class MinPQLinked<Key> {
     private Key removeLastNodeInLastLayer() {
         assert (root!= null && root.left != null);
         Node current = root;
-
         if (size() == 1) {
             root = null;
             return current.value;
         }
-
         current.size--;
         boolean right = true;
         while (current.left != null) {
-            // both left and right are not null
-            if (current.right != null && current.right.size == current.left.size) {
-                current = current.right;
-                right = true;
-            } else {
+            boolean leftComplete = isPowerOfTwo(current.left.size+1);
+            if (!leftComplete || current.right == null) { // left incomplete or right = null
                 current = current.left;
-                right = false;
+            } else { // left complete & current.right != null
+                boolean rightComplete = isPowerOfTwo(current.right.size+1);
+                if (!rightComplete) {
+                    current = current.right;
+                } else {
+                    // left and right are complete
+                    if (current.left.size > current.right.size) {
+                        current = current.left;
+                    } else {
+                        current = current.right;
+                    }
+                }
             }
             current.size--;
         }
-        if (right) {
-            current.parent.right = null;
-        } else {
+        if (current.parent.left == current) {
             current.parent.left = null;
+        } else {
+            current.parent.right = null;
         }
 
         return current.value;
     }
+
+    // alternative method based on binary encoding of last index
+    private Key removeLastNodeInLastLayer1() {
+        // height of the heap = ceil (log_2 (n+1))
+        int h = (int) Math.ceil((Math.log(size()+1) / Math.log(2)));
+        // position of the last node on the last layer
+        int index = size() - ((1 << (h-1)) - 1) - 1;
+        Node current = root;
+        current.size--;
+        for (int i = h-2; i >= 0; i--) {
+            // if i_th bit is 0, follow left otherwise follow right
+            if ((1 << i & index) == 0) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+            current.size--;
+        }
+        Key k = current.value;
+        if (current.parent.left == current) {
+            current.parent.left = null;
+        } else {
+            current.parent.right = null;
+        }
+        return k;
+    }
+
     // END STRIP
 
 
