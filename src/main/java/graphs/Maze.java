@@ -16,7 +16,7 @@ import java.util.LinkedList;
  * We ask you to write a Java code to discover
  * the shortest path between two coordinates
  * on this matrix from (x1, y1) to (x2, y2).
- * The moves can only be vertical or horizontal
+ * The moves can only be vertical (up/down) or horizontal (left/right)
  * (not diagonal), one step at a time.
  * The result of the path is an Iterable of
  * coordinates from the origin to the destination.
@@ -31,6 +31,7 @@ import java.util.LinkedList;
 public class Maze {
     public static Iterable<Integer> shortestPath(int[][] maze, int x1, int y1, int x2, int y2) {
         // TODO
+        // BEGIN STRIP
         // STUDENT return null;
         // BEGIN STRIP
         if (maze[x1][y1] == 1 || maze[x2][y2] == 1) return new LinkedList<>();
@@ -48,26 +49,29 @@ public class Maze {
 
         final int[][] pos = new int[][]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 
-        while (!queue.isEmpty()) {
+        boolean found = false;
+        while (!queue.isEmpty() && !found) {
             int current = queue.remove();
             int currX = row(current, lgy);
             int currY = col(current, lgy);
 
-            if (currX == x2 && currY == y2) {
-                break;
-            }
-
+            // for each neighbors of the current position (up/right/down/left)
             for (int i = 0; i < 4; i++) {
                 int x = pos[i][0];
                 int y = pos[i][1];
                 int neiX = currX + x;
                 int neiY = currY + y;
+                // check we are not going out of the maze or against a wall
                 if ((0 <= neiX && neiX < lgx) && (0 <= neiY && neiY < lgy) && (maze[neiX][neiY] != 1)) {
                     int index = ind(neiX, neiY, lgy);
                     if (!marked[index]) {
                         marked[index] = true;
                         queue.add(index);
                         edgeTo[index] = current;
+                        // check if destination found (optimisation)
+                        if (neiX == x2 && neiY == y2) {
+                            found = true;
+                        }
                     }
                 }
             }
