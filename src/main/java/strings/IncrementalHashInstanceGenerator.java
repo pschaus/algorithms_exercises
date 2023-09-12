@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class IncrementalHashInstanceGenerator {
-    public static void main(String[] args) {
+    public static void main() {
 
         int k = 0;
         for (int i = 0; i < 2; i++,k++) {
@@ -64,10 +64,6 @@ public class IncrementalHashInstanceGenerator {
         catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 
@@ -109,10 +105,7 @@ public class IncrementalHashInstanceGenerator {
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-
         }
     }
 

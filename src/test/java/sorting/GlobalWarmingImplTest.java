@@ -1,8 +1,9 @@
 package sorting;
-import com.github.guillaumederval.javagrading.Grade; /*to be added for grading and test*/
-import org.junit.Test;
 
-import static org.junit.Assert.*;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /*normal import*/
 import java.util.Random;
@@ -11,8 +12,10 @@ import java.util.Random;
 
 /**
  * Created by johnaoga on 22/10/2018.
+ * 
+ * updated to junit5: 11/09/2023
  */
-//@RunWith(Parameterized.class) //For grading
+@Grade
 public class GlobalWarmingImplTest {
 
 
@@ -24,8 +27,7 @@ public class GlobalWarmingImplTest {
     @Test
     @Grade(value=1)
     public void testSafePointExam() {
-        String message = "safe points returned (should be 14):"+new GlobalWarmingImpl(getExamMatrix()).nbSafePoints(2);
-        assertEquals(message, new GlobalWarmingImpl(getExamMatrix()).nbSafePoints(2), 14);
+        assertEquals(new GlobalWarmingImpl(getExamMatrix()).nbSafePoints(2), 14);
     }
 
     @Test
@@ -35,18 +37,15 @@ public class GlobalWarmingImplTest {
         GlobalWarming warming = new GlobalWarmingImpl(matrix);
 
         if (warming.nbSafePoints(-1) != 100) {
-            String message = "error in nbSafePoints";
-            assertTrue(message,false);
+            assertTrue(false);
         }
 
         if (warming.nbSafePoints(0) != 24) {
-            String message = "error in nbSafePoints";
-            assertTrue(message,false);
+            assertTrue(false);
         }
 
         if (warming.nbSafePoints(1) != 0) {
-            String message = "error in nbSafePoints";
-            assertTrue(message,false);
+            assertTrue(false);
         }
     }
 
@@ -57,8 +56,7 @@ public class GlobalWarmingImplTest {
         GlobalWarming g1 = new GlobalWarmingImpl(matrix);
         int[] true_value = {25, 18, 14, 9, 3};
         for (int l = 0; l < 5; l += 1) {
-            String msg = "at " +l+" number should be " + g1.nbSafePoints(l) + " but it's " + true_value[l];
-            assertEquals(msg, true_value[l], g1.nbSafePoints(l));
+            assertEquals(true_value[l], g1.nbSafePoints(l));
         }
         matrix = getExamMatrix2();
         GlobalWarming g2 = new GlobalWarmingImpl(matrix);
@@ -69,8 +67,7 @@ public class GlobalWarmingImplTest {
                 42, 40, 40, 39, 38, 37, 37, 35, 35, 35, 34, 32, 32, 32, 32, 32, 32, 29, 29, 29, 28, 27, 24, 23, 21, 19,
                 19, 19, 18, 17, 16, 16, 15, 14, 12, 10, 10, 9, 9, 9, 8, 7, 7, 5, 2, 2, 1, 1, 0};
         for (int l = 0; l < 150; l += 1) {
-            String msg = "at " +l+" number should be " + g2.nbSafePoints(l) + " but it's " + true_value2[l];
-            assertEquals(msg, true_value2[l], g2.nbSafePoints(l));
+            assertEquals(true_value2[l], g2.nbSafePoints(l));
         }
 
         matrix = getExamMatrix3();
@@ -82,8 +79,7 @@ public class GlobalWarmingImplTest {
                 32, 31, 30, 30, 29, 27, 27, 26, 24, 24, 23, 22, 20, 20, 19, 19, 17, 15, 15, 15, 15, 15, 15, 13, 12, 12,
                 12, 12, 12, 12, 11, 11, 11, 11, 11, 10, 9, 5, 4, 3, 3, 2, 2, 2, 2, 2, 2, 2, 0, 0};
         for(int l = 0; l < 150; l += 1){
-            String msg = "at " +l+" number should be " + g3.nbSafePoints(l) + " but it's " + true_value3[l];
-            assertEquals(msg, true_value3[l], g3.nbSafePoints(l));
+            assertEquals(true_value3[l], g3.nbSafePoints(l));
         }
 
         matrix = getExamMatrix4();
@@ -95,8 +91,7 @@ public class GlobalWarmingImplTest {
                 30, 29, 28, 27, 27, 26, 25, 24, 24, 23, 23, 23, 21, 21, 19, 19, 18, 18, 17, 17, 16, 16, 16, 16, 13, 13,
                 12, 11, 11, 10, 10, 10, 10, 9, 9, 7, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 1, 0, 0};
         for(int l = 0; l < 150; l += 1){
-            String msg = "at " +l+" number should be " + g4.nbSafePoints(l) + " but it's " + true_value4[l];
-            assertEquals(msg, true_value4[l], g4.nbSafePoints(l));
+            assertEquals(true_value4[l], g4.nbSafePoints(l));
         }
 
         matrix = getExamMatrix5();
@@ -108,8 +103,7 @@ public class GlobalWarmingImplTest {
                 31, 30, 29, 28, 28, 26, 26, 24, 24, 24, 22, 22, 20, 19, 19, 18, 18, 17, 17, 16, 15, 14, 13, 13, 11, 11,
                 9, 9, 9, 8, 7, 7, 6, 6, 6, 6, 6, 5, 3, 3, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0};
         for(int l = 0; l < 150; l += 1){
-            String msg = "at " +l+" number should be " + g5.nbSafePoints(l) + " but it's " + true_value5[l];
-            assertEquals(msg, true_value5[l], g5.nbSafePoints(l));
+            assertEquals(true_value5[l], g5.nbSafePoints(l));
         }
 
         matrix = getExamMatrix6();
@@ -121,8 +115,7 @@ public class GlobalWarmingImplTest {
                 36, 35, 34, 33, 33, 33, 32, 32, 32, 32, 32, 29, 25, 25, 25, 23, 22, 20, 19, 18, 16, 16, 15, 14, 14, 14,
                 13, 12, 12, 12, 12, 12, 11, 11, 11, 11, 9, 8, 6, 6, 6, 5, 5, 4, 4, 3, 3, 3, 1, 0};
         for(int l = 0; l < 150; l += 1){
-            String msg = "at " +l+" number should be " + g6.nbSafePoints(l) + " but it's " + true_value6[l];
-            assertEquals(msg, true_value6[l], g6.nbSafePoints(l));
+            assertEquals(true_value6[l], g6.nbSafePoints(l));
         }
     }
 
@@ -236,20 +229,18 @@ public class GlobalWarmingImplTest {
 
 
     ///Complexities
-    @Test(timeout=300)
-    @Grade(value=1)
+    @Test
+    @Grade(value=1, cpuTimeout=300)
     public void timeComplexityConstructorCorrect() {
         final int [][] matrix = getRandomMatrix(1000,2000000);
-        final GlobalWarming g = new GlobalWarmingImpl(matrix);
-
+        new GlobalWarmingImpl(matrix);
     }
 
     final GlobalWarming gwi = new GlobalWarmingImpl(getRandomMatrix(1000,2000000));
 
-    @Test(timeout=50)
-    @Grade(value=1)
+    @Test
+    @Grade(value=1, cpuTimeout=50)
     public void timeComplexityNbSafePoints() {
-        int max = 0;
         for (int i = 0; i < 1000; i++) {
             gwi.nbSafePoints(i*1000);
         }

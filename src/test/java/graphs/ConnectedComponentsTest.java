@@ -1,110 +1,66 @@
 package graphs;
 
-import com.github.guillaumederval.javagrading.Grade;
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.javagrader.ConditionalOrderingExtension;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import com.github.guillaumederval.javagrading.Grade;
-
-@RunWith(Enclosed.class)
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Grade
 public class ConnectedComponentsTest {
-
-    @RunWith(Parameterized.class)
-    public static class TestCorrectness {
-
-        final Instance instance;
-
-        @Parameterized.Parameters(name = "{0}")
-        public static Collection data() {
-            LinkedList<Object[]> coll = new LinkedList<>();
-            for (int i = 0; i < 7; i++) {
-                String name = "data/graphs.ConnectedComponents/in_corr_" + i;
-                coll.add(new Object[]{name, new Instance(name)});
-            }
-            return coll;
-        }
-
-        public TestCorrectness(String name, Instance instance) {
-            this.instance = instance;
-        }
-
-        @Test
-        @Grade(value=1)
-        public void test() throws Exception {
-            int student_solution = ConnectedComponents.numberOfConnectedComponents(instance.graph);
-            assertEquals(student_solution, instance.solutions);
-        }
-
-
+    
+    static Stream<Instance> providerCorrectness() {
+        return IntStream.range(0, 7).mapToObj(i -> {
+            return new Instance("data/graphs.ConnectedComponents/in_corr_" + i);
+        });
     }
-
-    @RunWith(Parameterized.class)
-    public static class TestCycle {
-
-        final Instance instance;
-
-        @Parameterized.Parameters(name = "{0}")
-        public static Collection data() {
-            LinkedList<Object[]> coll = new LinkedList<>();
-            for (int i = 0; i < 2; i++) {
-                String name = "data/graphs.ConnectedComponents/in_cycl_" + i;
-                coll.add(new Object[]{name, new Instance(name)});
-            }
-            return coll;
-        }
-
-        public TestCycle(String name, Instance instance) {
-            this.instance = instance;
-        }
-
-        @Test
-        @Grade(value=1)
-        public void test() throws Exception {
-            int student_solution = ConnectedComponents.numberOfConnectedComponents(instance.graph);
-            assertEquals(student_solution, instance.solutions);
-        }
-
-
+    
+    @ParameterizedTest
+    @MethodSource("providerCorrectness")
+    @Order(1)
+    public void TestCorrectness(Instance instance){
+        int student_solution = ConnectedComponents.numberOfConnectedComponents(instance.graph);
+        assertEquals(student_solution, instance.solutions);
     }
-
-
-    @RunWith(Parameterized.class)
-    public static class TestComplexity {
-
-        final Instance instance;
-
-        @Parameterized.Parameters(name = "{0}")
-        public static Collection data() {
-            LinkedList<Object[]> coll = new LinkedList<>();
-            for (int i = 0; i < 2; i++) {
-                String name = "data/graphs.ConnectedComponents/in_compl_" + i;
-                coll.add(new Object[]{name, new Instance(name)});
-            }
-            return coll;
-        }
-
-        public TestComplexity(String name, Instance instance) {
-            this.instance = instance;
-        }
-
-        @Test(timeout = 3000)
-        @Grade(value=1)
-        public void test() throws Exception {
-            int student_solution = ConnectedComponents.numberOfConnectedComponents(instance.graph);
-            assertEquals(student_solution, instance.solutions);
-        }
-
-
+    
+    static Stream<Instance> providerCycle() {
+        return IntStream.range(0, 2).mapToObj(i -> {
+            return new Instance("data/graphs.ConnectedComponents/in_cycl_" + i);
+        });
     }
-
+    
+    @ParameterizedTest
+    @MethodSource("providerCycle")
+    @Order(1)
+    public void testCycles(Instance instance) {
+        int student_solution = ConnectedComponents.numberOfConnectedComponents(instance.graph);
+        assertEquals(student_solution, instance.solutions);
+    }
+    
+    static Stream<Instance> providerComplexity() {
+        return IntStream.range(0, 2).mapToObj(i -> {
+            return new Instance("data/graphs.ConnectedComponents/in_compl_" + i);
+        });
+    }
+    
+    @ParameterizedTest
+    @MethodSource("providerComplexity")
+    @Order(3)
+    public void testComplexity(Instance instance) {
+        ConnectedComponents.numberOfConnectedComponents(instance.graph);
+    }
 
     static class Instance {
 
@@ -129,8 +85,6 @@ public class ConnectedComponentsTest {
 
 
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

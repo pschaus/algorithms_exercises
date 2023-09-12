@@ -1,80 +1,79 @@
 package searching;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import com.github.guillaumederval.javagrading.Grade;
-import com.github.guillaumederval.javagrading.GradeFeedback;
-import com.github.guillaumederval.javagrading.GradingRunnerWithParametersFactory;
-import org.junit.runners.Parameterized;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.javagrader.ConditionalOrderingExtension;
+import org.javagrader.Grade;
+import org.javagrader.GradeFeedback;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.util.TreeSet;
 // BEGIN STRIP
-import java.util.Collection;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.File;
 import java.util.Scanner;
 import java.util.stream.Stream;
-import java.util.stream.Collectors;
 // END STRIP
 
-@RunWith(Enclosed.class)
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Grade
 public class BinarySearchTreeTest {
 
-    public static class TestNotParameterized {
 
-        @Test
-        @Grade(value=1, cpuTimeout = 1000)
-        @GradeFeedback(message="Sorry, something is wrong with your algorithm. Debug first on this small example", onFail=true)
-        public void  testExample() {
-            TreeSet<Integer> correct = new java.util.TreeSet<>();
-            int [] values = new int []{12, 8, 18, 3, 11, 14, 20, 9, 15};
-            int [] inputs = new int []{11, 14, 9, 4, 16, 10, 19, 21, 30, 40};
+    @Test
+    @Grade(value=1, cpuTimeout = 1000)
+    @GradeFeedback(message="Sorry, something is wrong with your algorithm. Debug first on this small example")
+    @Order(1)
+    public void  testExample() {
+        TreeSet<Integer> correct = new java.util.TreeSet<>();
+        int [] values = new int []{12, 8, 18, 3, 11, 14, 20, 9, 15};
+        int [] inputs = new int []{11, 14, 9, 4, 16, 10, 19, 21, 30, 40};
 
-            BinarySearchTree.BSTNode<Integer> root = new BinarySearchTree.BSTNode<>(values[0]);
-            correct.add(values[0]);
-            for (int i = 0; i < values.length; i++) {
-                root.add(values[i]);
-                correct.add(values[i]);
-            }
+        BinarySearchTree.BSTNode<Integer> root = new BinarySearchTree.BSTNode<>(values[0]);
+        correct.add(values[0]);
+        for (int i = 0; i < values.length; i++) {
+            root.add(values[i]);
+            correct.add(values[i]);
+        }
 
-            for (int i: inputs) {
-                assertEquals(correct.ceiling(i), BinarySearchTree.ceil(root, i));
-            }
-
+        for (int i: inputs) {
+            assertEquals(correct.ceiling(i), BinarySearchTree.ceil(root, i));
         }
     }
-
+    
     // BEGIN STRIP
-    @RunWith(Parameterized.class)
-    @Parameterized.UseParametersRunnerFactory(GradingRunnerWithParametersFactory.class)
-    public static class TestParameterized {
-        
-        @Parameterized.Parameters(name="{0}")
-        public static Collection data() {
-            return Stream.of(new File("data/searching.BinarySearchTree").listFiles())
-                .filter(file -> !file.isDirectory())
-                .map(file -> new Object [] { file.getName(), new Instance(file.getPath()) })
-                .collect(Collectors.toList());
-        }
+    
+    static Stream<Instance> dataProvider() {
+        return Stream.of(new File("data/searching.BinarySearchTree").listFiles())
+            .filter(file -> !file.isDirectory())
+            .map(file -> new Instance(file.getPath()));
+    }
 
-        final Instance instance;
+    @ParameterizedTest
+    @Grade(value = 1, cpuTimeout = 1000)
+    @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example")
+    @MethodSource("dataProvider")
+    @Order(2)
+    public void testRandom(Instance instance)  throws Exception {
+        assertEquals(instance.correct.ceiling(instance.query), BinarySearchTree.ceil(instance.root, instance.query));
+    }
 
-        public TestParameterized(String name, Instance instance) {
-            this.instance = instance;
-        }
-
-        @Test
-        @Grade(value = 1, cpuTimeout = 1000)
-        @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example", onFail=true)
-        @GradeFeedback(message = "Check the complexity of your algorithm", onTimeout=true)
-        public void test()  throws Exception {
-            assertEquals(instance.correct.ceiling(instance.query), BinarySearchTree.ceil(instance.root, instance.query));
-        }
+    @ParameterizedTest
+    @Grade(value = 1, cpuTimeout = 1000)
+    @GradeFeedback(message = "Check the complexity of your algorithm")
+    @MethodSource("dataProvider")
+    @Order(3)
+    public void testComplexity(Instance instance)  throws Exception {
+        assertEquals(instance.correct.ceiling(instance.query), BinarySearchTree.ceil(instance.root, instance.query));
     }
 
     static class Instance {
@@ -99,8 +98,6 @@ public class BinarySearchTreeTest {
                     this.correct.add(input[i]);
                 }
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

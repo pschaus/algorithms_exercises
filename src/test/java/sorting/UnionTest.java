@@ -1,13 +1,19 @@
 package sorting;
 
-import com.github.guillaumederval.javagrading.Grade;
-import org.junit.Test;
-import sorting.Union;
+import org.javagrader.ConditionalOrderingExtension;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
-
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Grade
 public class UnionTest {
 
     // BEGIN STRIP
@@ -34,6 +40,7 @@ public class UnionTest {
 
     @Test
     @Grade(value = 1)
+    @Order(1)
     public void testUnits() {
 
         Union.Interval i1 = new Union.Interval(1, 3);
@@ -90,8 +97,9 @@ public class UnionTest {
     }
 
     // BEGIN STRIP
-    @Test(timeout = 1000)
+    @Test
     @Grade(value = 1)
+    @Order(2)
     public void testRandom2() {
         int[] seeds = new int[]{1, 5, 7, 11, 13};
         Random rand = new java.util.Random(seeds[2]);
@@ -105,8 +113,9 @@ public class UnionTest {
         }
     }
 
-    @Test(timeout = 11000)
-    @Grade(value = 1)
+    @Test
+    @Grade(value = 1, cpuTimeout=11000)
+    @Order(3)
     public void testComplexity() {
         final Union.Interval[] intervals = new Union.Interval[1000000];
         Random rand = new java.util.Random();

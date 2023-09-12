@@ -1,144 +1,138 @@
 package sorting;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import com.github.guillaumederval.javagrading.Grade;
-import com.github.guillaumederval.javagrading.GradeFeedback;
-import com.github.guillaumederval.javagrading.GradingRunnerWithParametersFactory;
-import org.junit.runners.Parameterized;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.javagrader.ConditionalOrderingExtension;
+import org.javagrader.Grade;
+import org.javagrader.GradeFeedback;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Collection;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.File;
 import java.util.Scanner;
 import java.util.stream.Stream;
-import java.util.stream.Collectors;
 
 import java.lang.Math;
 
-@RunWith(Enclosed.class)
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Grade
 public class MinMaxHeapTest {
 
-    public static class TestNotParameterized {
+    @Test
+    @Grade(value=1, cpuTimeout=1000)
+    @GradeFeedback(message="The minimum element is not always at the root of the tree !")
+    @Order(1)
+    public void testExample() {
+        MinMaxHeap<Integer> heap = new MinMaxHeap<>(100);
+        int min;
+        int max;
+        heap.insert(5);
+        min = heap.min();
+        max = heap.max();
+        assertEquals(5, min);
+        assertEquals(5, max);
+        heap.insert(1);
+        min = heap.min();
+        max = heap.max();
+        assertEquals(1, min);
+        assertEquals(5, max);
+        heap.insert(2);
+        min = heap.min();
+        max = heap.max();
+        assertEquals(1, min);
+        assertEquals(5, max);
+        heap.insert(6);
+        min = heap.min();
+        max = heap.max();
+        assertEquals(1, min);
+        assertEquals(6, max);
+        heap.insert(0);
+        min = heap.min();
+        max = heap.max();
+        assertEquals(0, min);
+        assertEquals(6, max);
+    }
+    
+    static Stream<Instance> dataProvider() {
+        return Stream.of(new File("data/sorting.BinaryHeap").listFiles())
+            .filter(file -> !file.isDirectory())
+            .map(file -> new Instance(file.getPath()));
+    }
 
-        @Test
-        @Grade(value=1, cpuTimeout=1000)
-        @GradeFeedback(message="The minimum element is not always at the root of the tree !", onFail=true)
-        public void testExample() {
-            MinMaxHeap<Integer> heap = new MinMaxHeap<>(100);
-            int min;
-            int max;
-            heap.insert(5);
-            min = heap.min();
-            max = heap.max();
-            assertEquals(5, min);
-            assertEquals(5, max);
-            heap.insert(1);
-            min = heap.min();
-            max = heap.max();
-            assertEquals(1, min);
-            assertEquals(5, max);
-            heap.insert(2);
-            min = heap.min();
-            max = heap.max();
-            assertEquals(1, min);
-            assertEquals(5, max);
-            heap.insert(6);
-            min = heap.min();
-            max = heap.max();
-            assertEquals(1, min);
-            assertEquals(6, max);
-            heap.insert(0);
-            min = heap.min();
-            max = heap.max();
-            assertEquals(0, min);
-            assertEquals(6, max);
+    @ParameterizedTest
+    @Grade(value = 1, cpuTimeout = 1000)
+    @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example")
+    @MethodSource("dataProvider")
+    @Order(2)
+    public void testMin(Instance instance)  {
+        MinMaxHeap<Integer> heap = new MinMaxHeap<>(instance.size*2);
+        int min = instance.input[0];
+        for (int value : instance.input) {
+            heap.insert(value);
+            min = Math.min(min, value);
+            int hmin = heap.min();
+            assertEquals(min, hmin);
         }
     }
 
-    @RunWith(Parameterized.class)
-    @Parameterized.UseParametersRunnerFactory(GradingRunnerWithParametersFactory.class)
-    public static class TestParameterized {
-
-        @Parameterized.Parameters(name="{0}")
-        public static Collection data() {
-            return Stream.of(new File("data/sorting.BinaryHeap").listFiles())
-                .filter(file -> !file.isDirectory())
-                .map(file -> new Object [] { file.getName(), new Instance(file.getPath()) })
-                .collect(Collectors.toList());
-        }
-
-        final Instance instance;
-
-        public TestParameterized(String name, Instance instance) {
-            this.instance = instance;
-        }
-
-        @Test
-        @Grade(value = 1, cpuTimeout = 1000)
-        @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example", onFail=true)
-        @GradeFeedback(message = "Check the complexity of your algorithm", onTimeout=true)
-        public void testMin()  throws Exception {
-            MinMaxHeap<Integer> heap = new MinMaxHeap<>(instance.size*2);
-            int min = instance.input[0];
-            int max = instance.input[0];
-            for (int value : instance.input) {
-                heap.insert(value);
-                min = Math.min(min, value);
-                max = Math.max(max, value);
-                int hmin = heap.min();
-                int hmax = heap.max();
-                assertEquals(min, hmin);
-                assertEquals(max, hmax);
-            }
+    @ParameterizedTest
+    @Grade(value = 1, cpuTimeout = 1000)
+    @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example")
+    @MethodSource("dataProvider")
+    @Order(2)
+    public void testMax(Instance instance)  {
+        MinMaxHeap<Integer> heap = new MinMaxHeap<>(instance.size*2);
+        int max = instance.input[0];
+        for (int value : instance.input) {
+            heap.insert(value);
+            max = Math.max(max, value);
+            int hmax = heap.max();
+            assertEquals(max, hmax);
         }
     }
 
-    @RunWith(Parameterized.class)
-    @Parameterized.UseParametersRunnerFactory(GradingRunnerWithParametersFactory.class)
-    public static class TestComplexity {
+    static Stream<Instance> dataProviderComplexity() {
+        return Stream.of(new File("data/sorting.BinaryHeap").listFiles())
+            .filter(file -> !file.isDirectory() && file.getName().startsWith("in_10000"))
+            .map(file -> new Instance(file.getPath()));
+    }
 
-        @Parameterized.Parameters(name="{0}")
-        public static Collection data() {
-            return Stream.of(new File("data/sorting.BinaryHeap").listFiles())
-                .filter(file -> !file.isDirectory() && file.getName().startsWith("in_10000"))
-                .map(file -> new Object [] { file.getName(), new Instance(file.getPath()) })
-                .collect(Collectors.toList());
+    @ParameterizedTest
+    @Grade(value = 1, cpuTimeout = 700)
+    @GradeFeedback(message = "Check the complexity of your swim method")
+    @MethodSource("dataProviderComplexity")
+    @Order(3)
+    public void testSwimComplexity(Instance instance)  {
+        MinMaxHeap<Integer> heap = new MinMaxHeap<>(instance.size*2);
+        for (int value : instance.input) {
+            heap.insert(value);
         }
+    }
 
-        final Instance instance;
+    @ParameterizedTest
+    @Grade(value=1, cpuTimeout=5)
+    @GradeFeedback(message="Your min method is too slow")
+    @MethodSource("dataProviderComplexity")
+    @Order(3)
+    public void testMinComplexity(Instance instance) {
+        instance.heap.min();
+    }
 
-        public TestComplexity(String name, Instance instance) {
-            this.instance = instance;
-        }
-
-        @Test
-        @Grade(value = 1, cpuTimeout = 700)
-        @GradeFeedback(message = "Check the complexity of your algorithm", onTimeout=true)
-        public void testSwim()  throws Exception {
-            MinMaxHeap<Integer> heap = new MinMaxHeap<>(instance.size*2);
-            for (int value : instance.input) {
-                heap.insert(value);
-            }
-        }
-
-        @Test
-        @Grade(value=1, cpuTimeout=5)
-        @GradeFeedback(message="Your min method is too slow", onTimeout=true)
-        public void testMin() {
-            instance.heap.min();
-        }
-
-        @Test
-        @Grade(value=1, cpuTimeout=5)
-        @GradeFeedback(message="Your max method is too slow", onTimeout=true)
-        public void testMax() {
-            instance.heap.max();
-        }
+    @ParameterizedTest
+    @Grade(value=1, cpuTimeout=5)
+    @GradeFeedback(message="Your max method is too slow")
+    @MethodSource("dataProviderComplexity")
+    @Order(3)
+    public void testMaxComplexity(Instance instance) {
+        instance.heap.max();
     }
 
     static class Instance {

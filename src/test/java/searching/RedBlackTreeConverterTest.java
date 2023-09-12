@@ -1,90 +1,98 @@
 package searching;
-import static searching.RedBlackTreeConverter.RBNode;
-import static searching.RedBlackTreeConverter.TwoThreeNode;
-import static searching.RedBlackTreeConverter.Color;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.TreeSet;
+import java.util.stream.Stream;
 
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import com.github.guillaumederval.javagrading.Grade;
-import com.github.guillaumederval.javagrading.GradeFeedback;
-import com.github.guillaumederval.javagrading.GradingRunnerWithParametersFactory;
-import org.junit.runners.Parameterized;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.javagrader.Grade;
+import org.javagrader.GradeFeedback;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import searching.RedBlackTreeConverter.RBNode;
+import searching.RedBlackTreeConverter.TwoThreeNode;
 
-@RunWith(Enclosed.class)
+@Grade(noRestrictedImport = true)
 public class RedBlackTreeConverterTest {
+    
+    static Stream<Arguments> dataProvider() {
+        return Stream.of(
+            Arguments.of( (Object) new String[] {"S", "E", "A", "R", "C", "H", "X", "M", "P", "L"}),
+            Arguments.of( (Object) new String[] {"I", "N", "G", "O", "U", "S", "P", "E", "R", "F", "C", "T"}),
+            Arguments.of( (Object) new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"}, //all black
+            Arguments.of( (Object) new String[] {"E", "A", "I", "M", "D", "F", "L", "G", "B", "K", "H", "C", "J"}),
+            Arguments.of( (Object) new String[] {"pddy", "nfgu", "mpsn", "eujq", "mebt", "lykm", "coai", "jzqj", "gzgq", "bjxr", "muwx", "elfs", "npds", "ucfq", "qsrg", "igue", "mqvt", "zfet", "ylvi", "cyzg"}),
+            Arguments.of( (Object) new String[] {"osky", "sgiy", "acfd", "tlid", "szhe", "hfoo", "npfd", "bwzl", "lapk", "hfmn", "urgr", "xnpb", "hvys", "nhui", "gsqx", "btft", "yjwa", "cwtn", "vrzs", "ipsc"}),
+            Arguments.of( (Object) new String[] {"hnlz", "tagb", "awmk", "pzkm", "vhuz", "rggw", "kvsv", "ecqf", "mvzo", "nkjp", "aylp", "qgsy", "zskx", "ijzy", "sqak", "bioi", "wtez", "eugm", "dozg", "huzg", "bjma", "qsvx", "bsxm", "tked", "njqa", "veep", "zjzs", "qtlh", "eyoi", "qsjg", "izud", "olxq", "wwui", "qdqr", "ljnn", "pveb", "qywv", "lgau", "atqv", "fuab", "vbbu", "znmp", "tsww", "kfuz", "sglt", "vbos", "iyun", "hivz", "ydop", "jufp", "tvzm", "cpaw", "jjmz", "fvnh", "ldzw", "xhtz", "ktyp", "hfqz", "kurg", "mevb", "uhtz", "tiul", "esez", "tadv", "upts", "mnrp", "szig", "wiot", "zona", "dmth", "zazg", "szei", "nrng", "ezvu", "npom", "hymp", "nzar", "usif", "ezrd", "tvrh", "dpqs", "dbid", "oxtm", "eare", "jzoy", "egjc", "dsrw", "yzwn", "vnqf", "kyvm", "uerw", "lwkz", "emfh", "abvu", "tsyv", "bxgi", "jdlo", "tryi", "iaup", "lsqi"}),
+            Arguments.of( (Object) new String[] {"mcej", "swyh", "ozgd", "dmwa", "vxav", "xyec", "todw", "uhtr", "gvvq", "digz", "kaja", "ejdf", "zfja", "ftff", "gloa", "uxpa", "ihqh", "ozum", "sbzt", "dxfw", "vjxq", "qplc", "odkc", "ifak", "vhyq", "xrww", "crdh", "qmvs", "qvim", "mnul", "guif", "caoe", "zpkc", "varw", "pdim", "foom", "eusi", "nxuv", "xygi", "zybu", "arhm", "bjjj", "emzf", "powq", "zmce", "snep", "jega", "hguv", "bbys", "fkqc", "rrsm", "nqtx", "qpxu", "ijng", "zrhw", "zezz", "odvt", "drye", "mbbr", "pypv", "jaru", "dpnj", "sstm", "xvoq", "siqp", "plpz", "fcge", "issf", "nzci", "ptgu", "vxoc", "rawd", "ashp", "tixk", "gxch", "fzek", "pslo", "bzhe", "fyrc", "syru", "bwzr", "xxad", "kfre", "raqk", "yaqj", "dlel", "cfsg", "ncfo", "gswj", "mkyu", "gles", "bdfd", "nrkn", "fwup", "wrak", "seyw", "fuvm", "hjyw", "mlbe", "laaf", "wmfv", "qfsl", "bazk", "agba", "zceq", "gyct", "lmho", "koot", "bagl", "fxmc", "dkok", "waxx", "wwsu", "hpwx", "mbxa", "mdyc", "ihkc", "qswu", "hrva", "gtky", "yxdd", "vxie", "zbzi", "ftkk", "didk", "hkqi", "ouoc", "lsdy", "euwo", "sork", "bjkh", "ozep", "ysiw", "uvvo", "mcpi", "oouq", "vsll", "ttho", "cmpe", "yxrk", "rczo", "fgnh", "cujb", "iyuw", "snsn", "gnke", "kgqr", "yzxe", "ucze", "syoa", "ijmq", "mujg", "ydwb", "zrzo", "icdj", "ijmy", "tbbq", "okos", "ptmh", "fqwo", "oglg", "qelu", "ngvc", "kcbn", "eftf", "jyjn", "tvvv", "ewbu", "nfar", "uwgw", "qjqi", "dfoj", "jrau", "lxyj", "hlay", "qfih", "tlyv", "jhtk", "qkxx", "uxdo", "chla", "xmwb", "llbz", "jxja", "msvv", "trnn", "wuzn", "sgjm", "dpqb", "alrh", "dkuz", "ejii", "aaxv", "yfpx", "imsm", "voyx", "fnpu", "srcp", "qdkx", "iyfj", "egch", "wlbq", "vsvi", "lncr", "odxc", "mfel", "rqgm", "pter", "bqan", "ljxj", "wmsx", "dmud", "qhjv", "ruko", "ekig", "gopd", "bdcj", "tqez", "kmea", "tyhx", "tnoe", "bdro", "lorr", "uwel", "ubli", "irbk", "ylnw", "nbjd", "upua", "flro", "ufyx", "nsmg", "aeyj", "eoes", "dsqt", "npye", "wimq", "esgs", "ynaj", "gorc", "dmes", "ezbz", "pomx", "eipb", "rigb", "vvar", "njcf", "rqqc", "oyzk", "yxim", "hpmf", "ezrw", "oodu", "ggal", "dues", "cftp", "dsyd", "zort", "yozr", "hxjw", "skyt", "goai", "nggt", "ceuv", "lcek", "ubgy", "tmat", "fipl", "adzw", "iqcf", "lekq", "aavm", "ksfg", "mlnn", "usbn", "sgav", "feps", "tpwa", "vodp", "tewr", "wxdi", "nfcc", "euis", "kxwk", "jogc", "xlpq", "bdwl", "yzmx", "qaya", "czem", "rktg", "qdut", "zewo", "zfoc", "ezfl", "shsx", "ggqd", "jrhi", "azyx", "kdxo", "buly", "rvgr", "qhff", "wapx", "nmgw", "qvdq", "vgad", "fyzd", "wjqb", "ljks", "gdsi", "gekn", "bror", "emuw", "nfwn", "aqga", "qakr", "uzcy", "bdvi", "alwo", "ggnh", "czfj", "danq", "aaup", "zveb", "vlcy", "jqep", "dpja", "qlij", "ikvx", "wyqu", "ggcp", "kxjp", "mxpz", "eotv", "yfwn", "njiy", "glde", "ywok", "xnaj", "aflj", "uufp", "jzba", "qkxj", "vysi", "ilkd", "afgt", "lrcx", "ezwx", "svhy", "tclb", "naub", "qkeh", "svib", "vmmu", "qdip", "jjnz", "mnhy", "utmx", "twgz", "rxvz", "tdfp", "ycrp", "zbur", "ywtd", "uzpm", "bbnj", "wkfd", "hfdq", "jmky", "svdj", "gohw", "nwim", "uzxd", "npdb", "ipfl", "zsij", "bthe", "flsc", "xxwv", "tsip", "rkat", "dnil", "wmtv", "hluo", "knra", "smkd", "ehuj", "rkas", "dipn", "hhlu", "ziim", "kqek", "zeqy", "iqmj", "uaoq", "egmp", "lytq", "frwd", "xehu", "iovr", "nire", "pppk", "khwu", "pfhd", "cdsz", "jxua", "ekon", "dbnl", "hhwa", "mzao", "npds", "hqln", "pkwi", "unjz", "jcot", "bckf", "zlsh", "vhgn", "eect", "qhhb", "qjbq", "tvdi", "bjua", "cnzf", "tcpf", "bvba", "sfbz", "kddx", "dczn", "fmmp", "shlk", "kqiq", "zkcs", "hdxe", "kjkt", "wgfq", "twac", "myyl", "ywju", "rune", "awlm", "gipf", "vcni", "evzn", "hxtg", "gzyv", "okoq", "dxaf", "tvvu", "fhzc", "mvdr", "itep", "iyhd", "vhyl", "qrkw", "pijr", "qyxm", "qsns", "tzjl", "zasd", "jsja", "rnme", "tube", "hrvr", "sypm", "ihjm", "gise", "clol", "ydnv", "fdqw", "gfyu", "aqjb", "qikn", "zcmu", "clzl", "ofza", "itds", "xppv", "ebsr", "umoo", "hqsw", "yans", "nrtl", "wlly", "puve", "zonc", "polk", "ysss", "apeu", "nugy", "npff", "gjpk", "jxmc", "jekx", "efgr", "ovid", "ztsv", "ymxu", "hjmm", "rnvl", "tsqf", "bipa", "lqxr", "lder", "vhvk", "bmbb", "pseu", "ioko", "xoaq", "efbi", "bfan", "xeka", "nltd", "wbmk", "wjdg", "ofzv", "hsbt", "wykz", "urwj", "tuob", "laul", "esiu", "zwqy", "ppmg", "obmm", "ojmi", "peqn", "kman", "bzei", "iluf", "dyed", "tnzc", "pksh", "ivgu", "rknv", "bcbo", "ymaz", "ahqb", "blxl", "enpm", "guan", "vqih", "lvmx", "ryey", "pttj", "xnyc", "ydqm", "uxig", "nbah", "sxdb", "wmyh", "emsg", "gofc", "fqly", "hxfj", "yaof", "epmq", "ocpk", "kuax", "kfvq", "dpxy", "nsxd", "xnln", "gnpx", "kxll", "lqxt", "ncbg", "xdwg", "slgz", "ljzn", "icrk", "ppgo", "ofxd", "ftuh", "tvfa", "zqpl", "vuyl", "upnx", "icpn", "kfzk", "ahuv", "tpwy", "fmvu", "hwta", "owtw", "glyu", "tyst", "pibo", "qxac", "okzl", "evyl", "edaw", "jaun", "anqy", "kpxi", "nerv", "oaoy", "gprq", "omsy", "kakz", "tlrc", "auhc", "aqes", "frcp", "lupn", "xxgx", "rtkm", "sufx", "qggj", "cbjz", "jhjh", "ucju", "spgm", "nhzt", "zkdy", "xxwt", "oxko", "zxrg", "wtvn", "xshr", "frix", "jcct", "juiv", "tsow", "ihdk", "efma", "zvxg", "xyee", "vnzv", "bylw", "gtft", "qbmx", "wcxu", "wcse", "sotz", "icla", "hqqy", "nkeu", "pqvx", "weoc", "pfpr", "qgio", "wpwe", "udmf", "vitm", "faxr", "cfhg", "ldaq", "wlys", "lyzg", "midi", "xxlr", "biby", "akit", "ukcb", "tkiu", "hdyb", "ssrl", "xfwm", "hhmw", "bspq", "rxhb", "ldfs", "uthw", "wimy", "ltsc", "mnxr", "gyju", "kppl", "vxkx", "ldgf", "rddv", "yiga", "dkmc", "ynnc", "uccg", "cejg", "jomh", "ipvk", "cawj", "ifet", "vprz", "frkc", "mghy", "igcr", "uzkc", "dwgs", "dvad", "gasp", "fjyf", "zrcj", "gwtm", "mzih", "gvlj", "ndya", "xpoj", "cffj", "savi", "ykes", "ctgu", "lpub", "qvue", "wntb", "yfog", "vqcm", "ukxr", "fxhx", "zpjy", "qkjg", "fnau", "ahvq", "emju", "ikbh", "qdob", "huqq", "erlc", "mxwr", "gqik", "wmkw", "wxxv", "vczz", "wjgt", "quyi", "zqqs", "ihqz", "rkhy", "nhpz", "junb", "tylk", "rdlm", "qqxh", "sryn", "ozbn", "aqdl", "gvpz", "ncnl", "hfmw", "nomb", "uvqw", "rlip", "azxs", "lnjm", "onpk", "nean", "ihdg", "ysgx", "cpty", "ganq", "qlff", "lcrn", "tuov", "lwzc", "jien", "ydsp", "mvkj", "yofq", "tkbb", "ihlk", "arzp", "tlwo", "cbbo", "ummq", "kkeb", "mtno", "qmqu", "xmqt", "maiv", "bxce", "rgem", "gczi", "prmh", "kypz", "bsqn", "dugk", "zzkz", "gcgc", "hebi", "ftas", "tyla", "shtk", "rdyu", "ixfx", "enkm", "trnv", "qlio", "crud", "wbpk", "bxry", "warm", "lpwg", "ylcx", "zfew", "sqxa", "jsxp", "gbwp", "duro", "ompk", "mkuy", "zlgb", "kyrp", "tevf", "onqw", "hldt", "qzdo", "ugwc", "uvjp", "kwxb", "eijg", "wpmz", "dosu", "tnhx", "oqdv", "fuon", "wdlg", "amgo", "revc", "oybt", "xujg", "vfxk", "qzqe", "zhzy", "ival", "iiiw", "andy", "eqdj", "tosy", "ilpf", "dein", "coll", "vpmp", "ygtq", "tfgx", "jqqf", "imsj", "ppnn", "wlnv", "fuer", "zsrs", "hvjp", "ofkj", "qfka", "vyoy", "gzmf", "sssj", "hafc", "hiux", "nlna", "amel", "mjqv", "ydjd", "pbda", "iiiz", "cqck", "syqa", "ihoy", "zlox", "npfv", "aquw", "swdu", "asix", "makp", "vcng", "wnbr", "cscu", "xlpt", "zpcp", "dsgn", "rzpd", "hobh", "esnf", "dnvk", "xiwg", "dfhs", "aisl", "efuu", "aaxq", "fgdv", "sknw", "uisg", "jqjc", "dspe", "vdga", "udmm", "iyng", "qhsc", "pmvu", "nnxq", "yvbb", "ryyo", "ztdz", "qfbq", "vzqa", "qpja", "ihhk", "xsdg", "gcdk", "khwa", "lpna", "nwfu", "edzy", "uvyi", "knlh", "axtt", "mqaf", "wkkm", "ezxa", "fvha", "ekyz", "hjnu", "sdte", "msuw", "oydk", "hdhk", "jlad", "wers", "xaxi", "szhf", "hmnp", "kqwd", "keyf", "znwx", "pepf", "zgot", "ssno", "ygep", "rgyw", "azax", "oaok", "totw", "mrxb", "saph", "sfwn", "pneo", "fkiv", "dvgd", "mdrz", "lubg", "azaz", "elcv", "xmfw", "bojg", "mruq", "tgez", "eich", "ynsf", "udsc", "nnjw", "frty", "xjpn", "busb", "nlte", "kdap", "xqum", "ltwo", "enfh", "slaf", "rned", "ohde", "fwse", "mfhq", "bisl", "raln", "vnog", "aiwb", "fysp", "vknn", "gmwn", "pstu", "simi", "pqah", "qlzg", "odfl", "ynvv", "pjag", "bavn", "tjmd", "flug", "bfqo", "swbr", "ffef", "hsxa", "jutm", "gryr", "tdpt", "wpjp", "uvah", "hnpv", "njvw", "jjtt", "hidk", "vxzz", "ytyz", "noak", "thqo", "kmqu", "hzwi", "bvij", "lzul", "aesb"}))
+        );
+    }
 
-    @RunWith(Parameterized.class)
-    @Parameterized.UseParametersRunnerFactory(GradingRunnerWithParametersFactory.class)
-    public static class TestParameterized {
-
-        @Parameterized.Parameters(name="{0}")
-        public static Collection data() {
-            return Arrays.asList(new Object[][] {
-                            { "Ex1", new String[] {"S", "E", "A", "R", "C", "H", "X", "M", "P", "L"} },
-                            { "Ex2", new String[] {"I", "N", "G", "O", "U", "S", "P", "E", "R", "F", "C", "T"} },
-                            { "AllBlack", new String[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"} }, //all black
-                            { "Ex3", new String[] {"E", "A", "I", "M", "D", "F", "L", "G", "B", "K", "H", "C", "J"} },
-                            { "Small1", new String[] {"pddy", "nfgu", "mpsn", "eujq", "mebt", "lykm", "coai", "jzqj", "gzgq", "bjxr", "muwx", "elfs", "npds", "ucfq", "qsrg", "igue", "mqvt", "zfet", "ylvi", "cyzg"}},
-                            { "Small2", new String[] {"osky", "sgiy", "acfd", "tlid", "szhe", "hfoo", "npfd", "bwzl", "lapk", "hfmn", "urgr", "xnpb", "hvys", "nhui", "gsqx", "btft", "yjwa", "cwtn", "vrzs", "ipsc"}},
-                            { "Long1", new String[] {"hnlz", "tagb", "awmk", "pzkm", "vhuz", "rggw", "kvsv", "ecqf", "mvzo", "nkjp", "aylp", "qgsy", "zskx", "ijzy", "sqak", "bioi", "wtez", "eugm", "dozg", "huzg", "bjma", "qsvx", "bsxm", "tked", "njqa", "veep", "zjzs", "qtlh", "eyoi", "qsjg", "izud", "olxq", "wwui", "qdqr", "ljnn", "pveb", "qywv", "lgau", "atqv", "fuab", "vbbu", "znmp", "tsww", "kfuz", "sglt", "vbos", "iyun", "hivz", "ydop", "jufp", "tvzm", "cpaw", "jjmz", "fvnh", "ldzw", "xhtz", "ktyp", "hfqz", "kurg", "mevb", "uhtz", "tiul", "esez", "tadv", "upts", "mnrp", "szig", "wiot", "zona", "dmth", "zazg", "szei", "nrng", "ezvu", "npom", "hymp", "nzar", "usif", "ezrd", "tvrh", "dpqs", "dbid", "oxtm", "eare", "jzoy", "egjc", "dsrw", "yzwn", "vnqf", "kyvm", "uerw", "lwkz", "emfh", "abvu", "tsyv", "bxgi", "jdlo", "tryi", "iaup", "lsqi"}},
-                            { "Long2", new String[] {"mcej", "swyh", "ozgd", "dmwa", "vxav", "xyec", "todw", "uhtr", "gvvq", "digz", "kaja", "ejdf", "zfja", "ftff", "gloa", "uxpa", "ihqh", "ozum", "sbzt", "dxfw", "vjxq", "qplc", "odkc", "ifak", "vhyq", "xrww", "crdh", "qmvs", "qvim", "mnul", "guif", "caoe", "zpkc", "varw", "pdim", "foom", "eusi", "nxuv", "xygi", "zybu", "arhm", "bjjj", "emzf", "powq", "zmce", "snep", "jega", "hguv", "bbys", "fkqc", "rrsm", "nqtx", "qpxu", "ijng", "zrhw", "zezz", "odvt", "drye", "mbbr", "pypv", "jaru", "dpnj", "sstm", "xvoq", "siqp", "plpz", "fcge", "issf", "nzci", "ptgu", "vxoc", "rawd", "ashp", "tixk", "gxch", "fzek", "pslo", "bzhe", "fyrc", "syru", "bwzr", "xxad", "kfre", "raqk", "yaqj", "dlel", "cfsg", "ncfo", "gswj", "mkyu", "gles", "bdfd", "nrkn", "fwup", "wrak", "seyw", "fuvm", "hjyw", "mlbe", "laaf", "wmfv", "qfsl", "bazk", "agba", "zceq", "gyct", "lmho", "koot", "bagl", "fxmc", "dkok", "waxx", "wwsu", "hpwx", "mbxa", "mdyc", "ihkc", "qswu", "hrva", "gtky", "yxdd", "vxie", "zbzi", "ftkk", "didk", "hkqi", "ouoc", "lsdy", "euwo", "sork", "bjkh", "ozep", "ysiw", "uvvo", "mcpi", "oouq", "vsll", "ttho", "cmpe", "yxrk", "rczo", "fgnh", "cujb", "iyuw", "snsn", "gnke", "kgqr", "yzxe", "ucze", "syoa", "ijmq", "mujg", "ydwb", "zrzo", "icdj", "ijmy", "tbbq", "okos", "ptmh", "fqwo", "oglg", "qelu", "ngvc", "kcbn", "eftf", "jyjn", "tvvv", "ewbu", "nfar", "uwgw", "qjqi", "dfoj", "jrau", "lxyj", "hlay", "qfih", "tlyv", "jhtk", "qkxx", "uxdo", "chla", "xmwb", "llbz", "jxja", "msvv", "trnn", "wuzn", "sgjm", "dpqb", "alrh", "dkuz", "ejii", "aaxv", "yfpx", "imsm", "voyx", "fnpu", "srcp", "qdkx", "iyfj", "egch", "wlbq", "vsvi", "lncr", "odxc", "mfel", "rqgm", "pter", "bqan", "ljxj", "wmsx", "dmud", "qhjv", "ruko", "ekig", "gopd", "bdcj", "tqez", "kmea", "tyhx", "tnoe", "bdro", "lorr", "uwel", "ubli", "irbk", "ylnw", "nbjd", "upua", "flro", "ufyx", "nsmg", "aeyj", "eoes", "dsqt", "npye", "wimq", "esgs", "ynaj", "gorc", "dmes", "ezbz", "pomx", "eipb", "rigb", "vvar", "njcf", "rqqc", "oyzk", "yxim", "hpmf", "ezrw", "oodu", "ggal", "dues", "cftp", "dsyd", "zort", "yozr", "hxjw", "skyt", "goai", "nggt", "ceuv", "lcek", "ubgy", "tmat", "fipl", "adzw", "iqcf", "lekq", "aavm", "ksfg", "mlnn", "usbn", "sgav", "feps", "tpwa", "vodp", "tewr", "wxdi", "nfcc", "euis", "kxwk", "jogc", "xlpq", "bdwl", "yzmx", "qaya", "czem", "rktg", "qdut", "zewo", "zfoc", "ezfl", "shsx", "ggqd", "jrhi", "azyx", "kdxo", "buly", "rvgr", "qhff", "wapx", "nmgw", "qvdq", "vgad", "fyzd", "wjqb", "ljks", "gdsi", "gekn", "bror", "emuw", "nfwn", "aqga", "qakr", "uzcy", "bdvi", "alwo", "ggnh", "czfj", "danq", "aaup", "zveb", "vlcy", "jqep", "dpja", "qlij", "ikvx", "wyqu", "ggcp", "kxjp", "mxpz", "eotv", "yfwn", "njiy", "glde", "ywok", "xnaj", "aflj", "uufp", "jzba", "qkxj", "vysi", "ilkd", "afgt", "lrcx", "ezwx", "svhy", "tclb", "naub", "qkeh", "svib", "vmmu", "qdip", "jjnz", "mnhy", "utmx", "twgz", "rxvz", "tdfp", "ycrp", "zbur", "ywtd", "uzpm", "bbnj", "wkfd", "hfdq", "jmky", "svdj", "gohw", "nwim", "uzxd", "npdb", "ipfl", "zsij", "bthe", "flsc", "xxwv", "tsip", "rkat", "dnil", "wmtv", "hluo", "knra", "smkd", "ehuj", "rkas", "dipn", "hhlu", "ziim", "kqek", "zeqy", "iqmj", "uaoq", "egmp", "lytq", "frwd", "xehu", "iovr", "nire", "pppk", "khwu", "pfhd", "cdsz", "jxua", "ekon", "dbnl", "hhwa", "mzao", "npds", "hqln", "pkwi", "unjz", "jcot", "bckf", "zlsh", "vhgn", "eect", "qhhb", "qjbq", "tvdi", "bjua", "cnzf", "tcpf", "bvba", "sfbz", "kddx", "dczn", "fmmp", "shlk", "kqiq", "zkcs", "hdxe", "kjkt", "wgfq", "twac", "myyl", "ywju", "rune", "awlm", "gipf", "vcni", "evzn", "hxtg", "gzyv", "okoq", "dxaf", "tvvu", "fhzc", "mvdr", "itep", "iyhd", "vhyl", "qrkw", "pijr", "qyxm", "qsns", "tzjl", "zasd", "jsja", "rnme", "tube", "hrvr", "sypm", "ihjm", "gise", "clol", "ydnv", "fdqw", "gfyu", "aqjb", "qikn", "zcmu", "clzl", "ofza", "itds", "xppv", "ebsr", "umoo", "hqsw", "yans", "nrtl", "wlly", "puve", "zonc", "polk", "ysss", "apeu", "nugy", "npff", "gjpk", "jxmc", "jekx", "efgr", "ovid", "ztsv", "ymxu", "hjmm", "rnvl", "tsqf", "bipa", "lqxr", "lder", "vhvk", "bmbb", "pseu", "ioko", "xoaq", "efbi", "bfan", "xeka", "nltd", "wbmk", "wjdg", "ofzv", "hsbt", "wykz", "urwj", "tuob", "laul", "esiu", "zwqy", "ppmg", "obmm", "ojmi", "peqn", "kman", "bzei", "iluf", "dyed", "tnzc", "pksh", "ivgu", "rknv", "bcbo", "ymaz", "ahqb", "blxl", "enpm", "guan", "vqih", "lvmx", "ryey", "pttj", "xnyc", "ydqm", "uxig", "nbah", "sxdb", "wmyh", "emsg", "gofc", "fqly", "hxfj", "yaof", "epmq", "ocpk", "kuax", "kfvq", "dpxy", "nsxd", "xnln", "gnpx", "kxll", "lqxt", "ncbg", "xdwg", "slgz", "ljzn", "icrk", "ppgo", "ofxd", "ftuh", "tvfa", "zqpl", "vuyl", "upnx", "icpn", "kfzk", "ahuv", "tpwy", "fmvu", "hwta", "owtw", "glyu", "tyst", "pibo", "qxac", "okzl", "evyl", "edaw", "jaun", "anqy", "kpxi", "nerv", "oaoy", "gprq", "omsy", "kakz", "tlrc", "auhc", "aqes", "frcp", "lupn", "xxgx", "rtkm", "sufx", "qggj", "cbjz", "jhjh", "ucju", "spgm", "nhzt", "zkdy", "xxwt", "oxko", "zxrg", "wtvn", "xshr", "frix", "jcct", "juiv", "tsow", "ihdk", "efma", "zvxg", "xyee", "vnzv", "bylw", "gtft", "qbmx", "wcxu", "wcse", "sotz", "icla", "hqqy", "nkeu", "pqvx", "weoc", "pfpr", "qgio", "wpwe", "udmf", "vitm", "faxr", "cfhg", "ldaq", "wlys", "lyzg", "midi", "xxlr", "biby", "akit", "ukcb", "tkiu", "hdyb", "ssrl", "xfwm", "hhmw", "bspq", "rxhb", "ldfs", "uthw", "wimy", "ltsc", "mnxr", "gyju", "kppl", "vxkx", "ldgf", "rddv", "yiga", "dkmc", "ynnc", "uccg", "cejg", "jomh", "ipvk", "cawj", "ifet", "vprz", "frkc", "mghy", "igcr", "uzkc", "dwgs", "dvad", "gasp", "fjyf", "zrcj", "gwtm", "mzih", "gvlj", "ndya", "xpoj", "cffj", "savi", "ykes", "ctgu", "lpub", "qvue", "wntb", "yfog", "vqcm", "ukxr", "fxhx", "zpjy", "qkjg", "fnau", "ahvq", "emju", "ikbh", "qdob", "huqq", "erlc", "mxwr", "gqik", "wmkw", "wxxv", "vczz", "wjgt", "quyi", "zqqs", "ihqz", "rkhy", "nhpz", "junb", "tylk", "rdlm", "qqxh", "sryn", "ozbn", "aqdl", "gvpz", "ncnl", "hfmw", "nomb", "uvqw", "rlip", "azxs", "lnjm", "onpk", "nean", "ihdg", "ysgx", "cpty", "ganq", "qlff", "lcrn", "tuov", "lwzc", "jien", "ydsp", "mvkj", "yofq", "tkbb", "ihlk", "arzp", "tlwo", "cbbo", "ummq", "kkeb", "mtno", "qmqu", "xmqt", "maiv", "bxce", "rgem", "gczi", "prmh", "kypz", "bsqn", "dugk", "zzkz", "gcgc", "hebi", "ftas", "tyla", "shtk", "rdyu", "ixfx", "enkm", "trnv", "qlio", "crud", "wbpk", "bxry", "warm", "lpwg", "ylcx", "zfew", "sqxa", "jsxp", "gbwp", "duro", "ompk", "mkuy", "zlgb", "kyrp", "tevf", "onqw", "hldt", "qzdo", "ugwc", "uvjp", "kwxb", "eijg", "wpmz", "dosu", "tnhx", "oqdv", "fuon", "wdlg", "amgo", "revc", "oybt", "xujg", "vfxk", "qzqe", "zhzy", "ival", "iiiw", "andy", "eqdj", "tosy", "ilpf", "dein", "coll", "vpmp", "ygtq", "tfgx", "jqqf", "imsj", "ppnn", "wlnv", "fuer", "zsrs", "hvjp", "ofkj", "qfka", "vyoy", "gzmf", "sssj", "hafc", "hiux", "nlna", "amel", "mjqv", "ydjd", "pbda", "iiiz", "cqck", "syqa", "ihoy", "zlox", "npfv", "aquw", "swdu", "asix", "makp", "vcng", "wnbr", "cscu", "xlpt", "zpcp", "dsgn", "rzpd", "hobh", "esnf", "dnvk", "xiwg", "dfhs", "aisl", "efuu", "aaxq", "fgdv", "sknw", "uisg", "jqjc", "dspe", "vdga", "udmm", "iyng", "qhsc", "pmvu", "nnxq", "yvbb", "ryyo", "ztdz", "qfbq", "vzqa", "qpja", "ihhk", "xsdg", "gcdk", "khwa", "lpna", "nwfu", "edzy", "uvyi", "knlh", "axtt", "mqaf", "wkkm", "ezxa", "fvha", "ekyz", "hjnu", "sdte", "msuw", "oydk", "hdhk", "jlad", "wers", "xaxi", "szhf", "hmnp", "kqwd", "keyf", "znwx", "pepf", "zgot", "ssno", "ygep", "rgyw", "azax", "oaok", "totw", "mrxb", "saph", "sfwn", "pneo", "fkiv", "dvgd", "mdrz", "lubg", "azaz", "elcv", "xmfw", "bojg", "mruq", "tgez", "eich", "ynsf", "udsc", "nnjw", "frty", "xjpn", "busb", "nlte", "kdap", "xqum", "ltwo", "enfh", "slaf", "rned", "ohde", "fwse", "mfhq", "bisl", "raln", "vnog", "aiwb", "fysp", "vknn", "gmwn", "pstu", "simi", "pqah", "qlzg", "odfl", "ynvv", "pjag", "bavn", "tjmd", "flug", "bfqo", "swbr", "ffef", "hsxa", "jutm", "gryr", "tdpt", "wpjp", "uvah", "hnpv", "njvw", "jjtt", "hidk", "vxzz", "ytyz", "noak", "thqo", "kmqu", "hzwi", "bvij", "lzul", "aesb"}}
-                    });
+    @ParameterizedTest
+    @Grade(value = 10, cpuTimeout = 300)
+    @GradeFeedback(message="Your tree does not contains all the initial keys")
+    @MethodSource("dataProvider")
+    public void checkContent(String [] keys) {
+        TwoThreeNode<String> root = null;
+        for (String key : keys) {
+            root = insert(root, key, key.length());
         }
+        RBTChecker<String> checker = new RBTChecker<>(RedBlackTreeConverter.convert(root), root);
+        assertTrue(checker.checkKeys(keys));
+    }
 
-        final String [] keys;
-        RBTChecker<String> checker;
-        
-
-        public TestParameterized(String _ignored, String [] keys) {
-            this.keys = keys;
-            TwoThreeNode<String> root = null;
-            for (String key : keys) {
-                root = insert(root, key, key.length());
-            }
-            this.checker = new RBTChecker<>(RedBlackTreeConverter.convert(root), root);
+    @ParameterizedTest
+    @Grade(value = 10, cpuTimeout = 300)
+    @GradeFeedback(message="Your tree is not a BST")
+    @MethodSource("dataProvider")
+    public void checkBST(String [] keys) {
+        TwoThreeNode<String> root = null;
+        for (String key : keys) {
+            root = insert(root, key, key.length());
         }
+        RBTChecker<String> checker = new RBTChecker<>(RedBlackTreeConverter.convert(root), root);
+        assertTrue(checker.isBST());
+    }
 
-        @Test
-        @Grade(value = 10, cpuTimeout = 300)
-        @GradeFeedback(message="Your tree does not contains all the initial keys")
-        public void checkContent() {
-            assertTrue(checker.checkKeys(keys));
+    @ParameterizedTest
+    @Grade(value = 10, cpuTimeout = 300)
+    @GradeFeedback(message="The size of the nodes in the tree are wrong")
+    @MethodSource("dataProvider")
+    public void checkSize(String [] keys) {
+        TwoThreeNode<String> root = null;
+        for (String key : keys) {
+            root = insert(root, key, key.length());
         }
+        RBTChecker<String> checker = new RBTChecker<>(RedBlackTreeConverter.convert(root), root);
+        assertTrue(checker.isSizeConsistent());
+    }
 
-        @Test
-        @Grade(value = 10, cpuTimeout = 300)
-        @GradeFeedback(message="Your tree is not a BST")
-        public void checkBST() {
-            assertTrue(checker.isBST());
+    @ParameterizedTest
+    @Grade(value = 10, cpuTimeout = 300)
+    @GradeFeedback(message="Your RedBlackTree is not a 2-3 tree")
+    @MethodSource("dataProvider")
+    public void check23(String []  keys) {
+        TwoThreeNode<String> root = null;
+        for (String key : keys) {
+            root = insert(root, key, key.length());
         }
+        RBTChecker<String> checker = new RBTChecker<>(RedBlackTreeConverter.convert(root), root);
+        assertTrue(checker.is23());
+    }
 
-        @Test
-        @Grade(value = 10, cpuTimeout = 300)
-        @GradeFeedback(message="The size of the nodes in the tree are wrong")
-        public void checkSize() {
-            assertTrue(checker.isSizeConsistent());
+    @ParameterizedTest
+    @Grade(value = 10, cpuTimeout = 300)
+    @GradeFeedback(message="Your tree is not balanced")
+    @MethodSource("dataProvider")
+    public void checkBalanced(String [] keys) {
+        TwoThreeNode<String> root = null;
+        for (String key : keys) {
+            root = insert(root, key, key.length());
         }
-
-        @Test
-        @Grade(value = 10, cpuTimeout = 300)
-        @GradeFeedback(message="Your RedBlackTree is not a 2-3 tree")
-        public void check23() {
-            assertTrue(checker.is23());
-        }
-
-        @Test
-        @Grade(value = 10, cpuTimeout = 300)
-        @GradeFeedback(message="Your tree is not balanced")
-        public void checkBalanced() {
-            assertTrue(checker.isBalanced());
-        }
-
+        RBTChecker<String> checker = new RBTChecker<>(RedBlackTreeConverter.convert(root), root);
+        assertTrue(checker.isBalanced());
     }
 
     // ---- UTILIIIES FOR THE TESTS ----- //
@@ -235,11 +243,9 @@ public class RedBlackTreeConverterTest {
 
     private static class RBTChecker<Key extends Comparable<Key>> {
         private RBNode<Key> root;
-        private TwoThreeNode<Key> root23;
 
         public RBTChecker(RBNode<Key> root, TwoThreeNode<Key> root23) {
             this.root = root;
-            this.root23 = root23;
         }
 
         /**
@@ -297,38 +303,6 @@ public class RedBlackTreeConverterTest {
             return isSizeConsistent(node.leftChild) && isSizeConsistent(node.rightChild);
         }
 
-        /**
-         * Returns the rank of the key, that is the number if keys in the tree
-         * strictly less than `key`
-         */
-        public int rank(Key key) {
-            if (key == null) {
-                throw new IllegalArgumentException("parameter of rank() is null");
-            }
-            return rank(root, key);
-        }
-
-        public int rank(RBNode<Key> node, Key key) {
-            if (node == null) {
-                return 0;
-            }
-            int cmp = key.compareTo(node.key);
-            if (cmp < 0) {
-                // If searched key is less than the node key, then all keys which are smaller
-                // than key are in the left subtree
-                return rank(node.leftChild, key);
-            } else if (cmp > 0) {
-                // if the searched key is higher than the nodes key, then all nodes in the left
-                // subtree are already known to be smaller. But there might still have some in the
-                // right subtree.
-                // The + 1 account for the node which is itself less than the key
-                return 1 + node.leftChild.size + rank(node.rightChild, key);
-            } else {
-                // The node have the same key, only the left subtree have smaller key
-                return node.leftChild.size;
-            }
-        }
-
         private void collectNodes(ArrayList<Key> l, RBNode<Key> root) {
             if (root != null) {
                 collectNodes(l, root.leftChild);
@@ -337,19 +311,6 @@ public class RedBlackTreeConverterTest {
             }
         }
         
-        /**
-         * Check that the rank are consistents in the tree
-         */
-        public boolean isRankConsistent() {
-            ArrayList<Key> keys = new ArrayList<>();
-            collectNodes(keys, root);
-            for (int i = 0; i < keys.size(); i++) {
-                if (rank(keys.get(i)) != i)
-                    return false;
-            }
-            return true;
-        }
-
         public boolean is23() {
             return is23(root);
         }
@@ -379,12 +340,8 @@ public class RedBlackTreeConverterTest {
          * Returns true if and only if the tree is balanced
          */
         public boolean isBalanced() {
-            int expectedBlack = 0;
             RBNode<Key> node = root;
             while (node != null) {
-                if (node.isBlack()) {
-                    expectedBlack ++;
-                }
                 node = node.leftChild;
             }
             /*
@@ -407,23 +364,6 @@ public class RedBlackTreeConverterTest {
                     t(s, root.rightChild, cur);
                 }
             }
-        }
-
-        /**
-         * Checks the number of black links from root to every of its leaves.
-         * The method expects to find `blackToSee` number of black links. Thus
-         * if a leaf is reached and `blackToSee` is 0, the visited branch is correct
-         *
-         * @param root The root of the checked subtree
-         * @param blackToSee the number of expected black links from root to every of its leaf
-         * @return true if and only if the subtree rooted at root is balanced
-         */
-        private boolean isBalanced(RBNode<Key> root, int blackToSee) {
-            if (root == null) {
-                return blackToSee == 0;
-            }
-            int stillToSee = root.isBlack() ? blackToSee - 1 : blackToSee;
-            return isBalanced(root.leftChild, stillToSee) && isBalanced(root.rightChild, stillToSee);
         }
 
         /**

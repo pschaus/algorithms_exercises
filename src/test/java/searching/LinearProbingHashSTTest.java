@@ -1,20 +1,21 @@
 package searching;
 
-import org.junit.Test;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.github.guillaumederval.javagrading.Grade;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * This is just a limited number of tests provided for convenience
  * Don't hesitate to extend it with other tests
  */
+@Grade
 public class LinearProbingHashSTTest {
 
 
@@ -72,7 +73,6 @@ public class LinearProbingHashSTTest {
             for (int k = 0; k < 10; k++) {
 
                 Set<Integer> in = new HashSet<>();
-                Set<Integer> out = new HashSet<>();
 
                 LinearProbingHashST<Integer,String> lp = new LinearProbingHashST<>();
 
