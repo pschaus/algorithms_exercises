@@ -1,14 +1,13 @@
 package sorting;
 
-import com.github.guillaumederval.javagrading.Grade;
-import org.junit.Test;
-import sorting.Median;
-
-import static org.junit.Assert.*;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Random;
 import java.util.Arrays;
 
+@Grade
 public class MedianTest {
 
     private final Random random = new Random(635654);
@@ -42,7 +41,7 @@ public class MedianTest {
         for (int i = 100; i < 1000; i += 10) {
             int [] input = randomInput(i+1, random);
             Median.Vector v = vectorFromInput(input);
-            assertEquals("correct median value computed", getMedian(input), Median.median(v, 0, v.size() - 1));
+            assertEquals(getMedian(input), Median.median(v, 0, v.size() - 1));
         }
     }
 

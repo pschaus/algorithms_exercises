@@ -1,20 +1,27 @@
 package strings;
 
-import org.junit.Test;
-import com.github.guillaumederval.javagrading.Grade;
-
-
+import org.javagrader.ConditionalOrderingExtension;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Random;
 
 import static java.lang.Math.min;
-import static org.junit.Assert.assertEquals;
 
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Grade
 public class RabinKarpTest {
 
 
     @Test
     @Grade(value= 1)
+    @Order(1)
     public void basicTest(){
         String[] pat = {"comp","like"};
         String txt = "I like computer science";
@@ -25,6 +32,7 @@ public class RabinKarpTest {
 
     @Test
     @Grade(value= 1)
+    @Order(1)
     public void wordNotPresentTest(){
         String[] pat = {"Yavin","C-3PO","R2-D2" };
         String txt = "Mais, vous savez, moi je ne crois pas qu'il y ait de bonne ou de mauvaise situation. Moi," +
@@ -46,6 +54,7 @@ public class RabinKarpTest {
 
     @Test
     @Grade(value= 1)
+    @Order(1)
     public void randomWordTest(){
         //int[] seeds = new int[]{42,56,3,9,65,99,23};
         Random rand = new Random(new Random(5).nextInt(7));
@@ -94,10 +103,10 @@ public class RabinKarpTest {
         }
     }
 
-    @Test(timeout=50)
-    @Grade(value= 1)
+    @Test
+    @Grade(value= 1, cpuTimeout=50)
+    @Order(2)
     public void complexityTest(){
-        long t0 = System.currentTimeMillis();
         genAllWords("",patSize);
         RabinKarp rc = new RabinKarp(this.patterns);
 
@@ -109,11 +118,6 @@ public class RabinKarpTest {
                 "  ca ll ed  i ts  h as h  va lu e;  f or  e xa mp le ,  we  m ig ht  h av e  ha sh (h el lo )= 5.  T";
 
         assertEquals(txt.length(),rc.search(txt));
-
-        long t1 = System.currentTimeMillis();
-        System.out.println("Spent time = "+(t1-t0));
-
-
     }
 
 

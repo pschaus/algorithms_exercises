@@ -1,19 +1,21 @@
 package graphs;
 
-import org.junit.Test;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 import graphs.Trains.*;
-import com.github.guillaumederval.javagrading.Grade;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertEquals;
 
+@Grade
 public class TrainsTest {
+
     HashMap<StationTime, LinkedList<StationTime>> simpleExample1() {
         HashMap<StationTime, LinkedList<StationTime>> relations = new HashMap<>();
         
@@ -78,20 +80,29 @@ public class TrainsTest {
         relations.put(new StationTime("F", 730), new LinkedList<>(Arrays.asList(new StationTime("E", 1004))));
         return relations;
     }
+    
+    private boolean containsElements(Set<String> container, String ... elements) {
+        for (String element : elements) {
+            if (!container.contains(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Test
     @Grade(value=4)
     public void exampleTest() {
         Map<String, Integer> out = Trains.reachableEarliest(simpleExample1(), new StationTime("Bxl-midi", 5));
         assertEquals(7, out.size());
-        assertThat(out.keySet(), allOf(
-                hasItem("Ostende"),
-                hasItem("Charleroi"),
-                hasItem("Blankenberg"),
-                hasItem("Bxl-midi"),
-                hasItem("Bruges"),
-                hasItem("Paris"),
-                hasItem("Namur")
+        assertTrue(containsElements(out.keySet(),
+                "Ostende",
+                "Charleroi",
+                "Blankenberg",
+                "Bxl-midi",
+                "Bruges",
+                "Paris",
+                "Namur"
         ));
         assertEquals(out.get("Ostende"), (Integer)25);
         assertEquals(out.get("Charleroi"), (Integer)16);
@@ -107,11 +118,11 @@ public class TrainsTest {
     public void example2Test() {
         Map<String, Integer> out = Trains.reachableEarliest(simpleExample1(), new StationTime("Bruges", 5));
         assertEquals(4, out.size());
-        assertThat(out.keySet(), allOf(
-                hasItem("Ostende"),
-                hasItem("Blankenberg"),
-                hasItem("Bruges"),
-                hasItem("Namur")
+        assertTrue(containsElements(out.keySet(),
+                "Ostende",
+                "Blankenberg",
+                "Bruges",
+                "Namur"
         ));
         assertEquals(out.get("Ostende"), (Integer)14);
         assertEquals(out.get("Blankenberg"), (Integer)16);
@@ -124,13 +135,13 @@ public class TrainsTest {
     public void lessSimple1Test() {
         Map<String, Integer> out = Trains.reachableEarliest(lessSimpleExample(), new StationTime("A", 5));
         assertEquals(6, out.size());
-        assertThat(out.keySet(), allOf(
-                hasItem("A"),
-                hasItem("B"),
-                hasItem("C"),
-                hasItem("D"),
-                hasItem("E"),
-                hasItem("F")
+        assertTrue(containsElements(out.keySet(),
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F"
         ));
         assertEquals(out.get("A"), (Integer)5);
         assertEquals(out.get("B"), (Integer)1117);
@@ -145,12 +156,12 @@ public class TrainsTest {
     public void lessSimple2Test() {
         Map<String, Integer> out = Trains.reachableEarliest(lessSimpleExample(), new StationTime("B", 500));
         assertEquals(5, out.size());
-        assertThat(out.keySet(), allOf(
-                hasItem("B"),
-                hasItem("C"),
-                hasItem("D"),
-                hasItem("E"),
-                hasItem("F")
+        assertTrue(containsElements(out.keySet(),
+                "B",
+                "C",
+                "D",
+                "E",
+                "F"
         ));
         assertEquals(out.get("B"), (Integer)500);
         assertEquals(out.get("C"), (Integer)881);
@@ -164,19 +175,19 @@ public class TrainsTest {
     public void lessSimple3Test() {
         Map<String, Integer> out = Trains.reachableEarliest(lessSimpleExample(), new StationTime("B", 0));
         assertEquals(6, out.size());
-        assertThat(out.keySet(), allOf(
-                hasItem("A"),
-                hasItem("B"),
-                hasItem("C"),
-                hasItem("D"),
-                hasItem("E"),
-                hasItem("F")
+        assertTrue(containsElements(out.keySet(),
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F"
         ));
-                assertEquals(out.get("A"), (Integer)520);
-                assertEquals(out.get("B"), (Integer)0);
-                assertEquals(out.get("C"), (Integer)585);
-                assertEquals(out.get("D"), (Integer)1095);
-                assertEquals(out.get("E"), (Integer)579);
-                assertEquals(out.get("F"), (Integer)1127);
+        assertEquals(out.get("A"), (Integer)520);
+        assertEquals(out.get("B"), (Integer)0);
+        assertEquals(out.get("C"), (Integer)585);
+        assertEquals(out.get("D"), (Integer)1095);
+        assertEquals(out.get("E"), (Integer)579);
+        assertEquals(out.get("F"), (Integer)1127);
     }
 }

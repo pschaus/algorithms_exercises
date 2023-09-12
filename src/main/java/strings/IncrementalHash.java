@@ -1,13 +1,5 @@
 package strings;
 
-import com.github.guillaumederval.javagrading.Grade;
-import com.github.guillaumederval.javagrading.GradeFeedback;
-import org.junit.Test;
-
-import java.util.Random;
-
-import static org.junit.Assert.assertEquals;
-
 /**
  * Author: Pierre Schaus
  *

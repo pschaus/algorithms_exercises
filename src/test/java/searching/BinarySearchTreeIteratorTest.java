@@ -1,22 +1,23 @@
 package searching;
 
-import searching.BinarySearchTreeIterator;
+import org.javagrader.ConditionalOrderingExtension;
+import org.javagrader.Grade;
+import org.javagrader.GradeFeedback;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import com.github.guillaumederval.javagrading.Grade;
-import com.github.guillaumederval.javagrading.GradeFeedback;
-import com.github.guillaumederval.javagrading.GradingRunnerWithParametersFactory;
-import org.junit.runners.Parameterized;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 
 import java.util.Iterator;
 // BEGIN STRIP
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -25,113 +26,97 @@ import java.util.ConcurrentModificationException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.File;
 import java.util.Scanner;
 import java.util.stream.Stream;
-import java.util.stream.Collectors;
 // END STRIP
 
-@RunWith(Enclosed.class)
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Grade
 public class BinarySearchTreeIteratorTest {
 
-    public static class TestNotParameterized {
-        @Test
-        @Grade(value=1, cpuTimeout = 1000)
-        @GradeFeedback(message="Sorry, something is wrong with your algorithm. Debug first on this small example", onFail=true)
-        public void  testExample() {
-            BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
-            int [] values = new int []{12, 8, 18, 3, 11, 14, 20, 9, 15};
-            for (int v : values) {
-                tree.put(v);
-            }
-            Integer [] output = new Integer []{3, 8, 9, 11, 12, 14, 15, 18, 20};
-
-            Iterator<Integer> iter = tree.iterator();
-            for (int i = 0; i < output.length; i++) {
-                assertTrue(iter.hasNext());
-                assertEquals(output[i], iter.next());
-            }
-            assertTrue(!iter.hasNext());
+    @Test
+    @Grade(value=1, cpuTimeout = 1000)
+    @GradeFeedback(message="Sorry, something is wrong with your algorithm. Debug first on this small example")
+    public void  testExample() {
+        BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
+        int [] values = new int []{12, 8, 18, 3, 11, 14, 20, 9, 15};
+        for (int v : values) {
+            tree.put(v);
         }
+        Integer [] output = new Integer []{3, 8, 9, 11, 12, 14, 15, 18, 20};
 
-        // BEGIN STRIP
-
-        @Test(expected=NoSuchElementException.class)
-        @Grade(value=1, cpuTimeout = 1000)
-        @GradeFeedback(message="", onFail=true)
-        public void testEmptyTree() {
-            BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
-            Iterator<Integer> iterator = tree.iterator();
-            assertFalse(iterator.hasNext());
-            iterator.next();
+        Iterator<Integer> iter = tree.iterator();
+        for (int i = 0; i < output.length; i++) {
+            assertTrue(iter.hasNext());
+            assertEquals(output[i], iter.next());
         }
-
-        @Test(expected=ConcurrentModificationException.class)
-        @Grade(value=1, cpuTimeout = 1000)
-        @GradeFeedback(message="", onFail=true)
-        public void testModificationHasNext() {
-            BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
-            tree.put(3);
-            tree.put(4);
-            tree.put(5);
-            Iterator<Integer> iterator = tree.iterator();
-            int x = iterator.next();
-            tree.put(7);
-            iterator.hasNext();
-        }
-
-        @Test(expected=ConcurrentModificationException.class)
-        @Grade(value=1, cpuTimeout = 1000)
-        @GradeFeedback(message="", onFail=true)
-        public void testModificationNext() {
-            BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
-            tree.put(3);
-            tree.put(4);
-            tree.put(5);
-            Iterator<Integer> iterator = tree.iterator();
-            int x = iterator.next();
-            tree.put(7);
-            iterator.next();
-        }
-
-        // END STRIP
+        assertTrue(!iter.hasNext());
     }
 
     // BEGIN STRIP
-    @RunWith(Parameterized.class)
-    @Parameterized.UseParametersRunnerFactory(GradingRunnerWithParametersFactory.class)
-    public static class TestParameterized {
-        
-        @Parameterized.Parameters(name="{0}")
-        public static Collection data() {
-            return Stream.of(new File("data/searching.BinarySearchTree").listFiles())
-                .filter(file -> !file.isDirectory())
-                .map(file -> new Object [] { file.getName(), new Instance(file.getPath()) })
-                .collect(Collectors.toList());
-        }
 
-        final Instance instance;
-
-        public TestParameterized(String name, Instance instance) {
-            this.instance = instance;
-        }
-
-        @Test
-        @Grade(value = 1, cpuTimeout = 1000)
-        @GradeFeedback(message = "Sorry, something is wrong with your algorithm. Hint: debug on the small example", onFail=true)
-        @GradeFeedback(message = "Check the complexity of your algorithm", onTimeout=true)
-        public void test()  throws Exception {
-            Iterator<Integer> iterator = instance.tree.iterator();
-            for (int i = 0; i < instance.expected.length; i++) {
-                assertTrue(iterator.hasNext());
-                assertEquals((Integer) instance.expected[i], iterator.next());
-            }
-            assertTrue(!iterator.hasNext());
-        }
+    @Test
+    @Grade(value=1, cpuTimeout = 1000)
+    @GradeFeedback(message="You do not raise a NoSuchElementException when the iterator is empty and we try to get the next element")
+    @Order(1)
+    public void testEmptyTree() {
+        BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
+        Iterator<Integer> iterator = tree.iterator();
+        assertFalse(iterator.hasNext());
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
-    static class Instance {
+    @Test
+    @Grade(value=1, cpuTimeout = 1000)
+    @GradeFeedback(message="You do not raise a ConcurrentModificationException when the tree is modified during iteration and hasNext is called")
+    @Order(1)
+    public void testModificationHasNext() {
+        BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
+        tree.put(3);
+        tree.put(4);
+        tree.put(5);
+        Iterator<Integer> iterator = tree.iterator();
+        iterator.next();
+        tree.put(7);
+        assertThrows(ConcurrentModificationException.class, () -> iterator.hasNext());
+    }
+
+    @Test
+    @Grade(value=1, cpuTimeout = 1000)
+    @GradeFeedback(message="You do not raise a ConcurrentModificationException when the tree is modified during iteration and next is called")
+    @Order(1)
+    public void testModificationNext() {
+        BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
+        tree.put(3);
+        tree.put(4);
+        tree.put(5);
+        Iterator<Integer> iterator = tree.iterator();
+        iterator.next();
+        tree.put(7);
+        assertThrows(ConcurrentModificationException.class, () -> iterator.next());
+    }
+    
+    static Stream<Instance> dataProvider() {
+        return Stream.of(new File("data/searching.BinarySearchTree").listFiles())
+            .filter(file -> !file.isDirectory())
+            .map(file -> new Instance(file.getPath()));
+    }
+    
+    @ParameterizedTest
+    @Grade(value = 1, cpuTimeout = 1000)
+    @MethodSource("dataProvider")
+    public void testParameterized(Instance instance) {
+        Iterator<Integer> iterator = instance.tree.iterator();
+        for (int i = 0; i < instance.expected.length; i++) {
+            assertTrue(iterator.hasNext());
+            assertEquals((Integer) instance.expected[i], iterator.next());
+        }
+        assertTrue(!iterator.hasNext());
+    }
+
+    private static class Instance {
         BinarySearchTreeIterator<Integer> tree = new BinarySearchTreeIterator<>();
         int [] expected;
 
@@ -155,11 +140,8 @@ public class BinarySearchTreeIteratorTest {
                 scan.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
 }
-
 

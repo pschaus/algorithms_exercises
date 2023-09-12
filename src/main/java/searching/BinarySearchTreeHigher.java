@@ -1,9 +1,5 @@
 package searching;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Stack;
-
 /**
  * With the given partial implementation of a Binary Search Tree,
  * we ask you to implement the following methods :
@@ -26,10 +22,6 @@ public class BinarySearchTreeHigher<Key extends Comparable<Key>, Value> {
             this.key = key;
             this.val = val;
             this.size = size;
-        }
-
-        public int getSize() {
-            return size;
         }
     }
 

@@ -1,108 +1,79 @@
 package fundamentals;
 
-import com.github.guillaumederval.javagrading.Grade;
-import com.github.guillaumederval.javagrading.GradingRunnerWithParametersFactory;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import org.javagrader.Grade;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.EmptyStackException;
-import java.util.function.Supplier;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
-@Parameterized.UseParametersRunnerFactory(GradingRunnerWithParametersFactory.class)
+@Grade
 public class StackTest {
-
-    @Parameterized.Parameters
-    public static Supplier<Stack>[] data() {
-        return new Supplier[]{
-                () -> new LinkedStack<>(),
-                () -> new ArrayStack<>(),
-        };
+    
+    private static Stream<Stack<Integer>> stackProvider() {
+        return Stream.of(
+            new ArrayStack<>(),
+            new LinkedStack<>()
+        );
     }
 
-    @Parameterized.Parameter
-    public Supplier<Stack> stackFactory;
-
-    @Test
+    @ParameterizedTest
     @Grade
-    public void testEmpty() {
-        String message = "Test of empty;";
-        Stack<String> stack = stackFactory.get();
-        stack.push("test");
+    @MethodSource("stackProvider")
+    public void testEmpty(Stack<Integer> stack) {
+        stack.push(0);
         stack.pop();
-        assertTrue(message, stack.empty());
+        assertTrue(stack.empty());
     }
 
-    @Test
+    @ParameterizedTest
     @Grade
-    public void testNotEmpty() {
-        String message = "Test of empty;";
-        Stack<String> stack = stackFactory.get();
-        stack.push("test");
-        assertFalse(message, stack.empty());
+    @MethodSource("stackProvider")
+    public void testNotEmpty(Stack<Integer> stack) {
+        stack.push(0);
+        assertFalse(stack.empty());
     }
 
 
-    @Test
+    @ParameterizedTest
     @Grade
-    public void testPeek() {
-        String message = "Test of peek;";
-        Stack<String> stack = stackFactory.get();
-        stack.push("elem");
-        assertEquals(message, "elem", stack.peek());
-        assertFalse(message, stack.empty());
+    @MethodSource("stackProvider")
+    public void testPeek(Stack<Integer> stack) {
+        stack.push(10);
+        assertEquals(10, stack.peek());
     }
 
-    @Test
+    @ParameterizedTest
     @Grade
-    public void testMultiplePush() {
-        String message = "Test of push (multiple);";
-        Stack<Integer> stack = stackFactory.get();
-
+    @MethodSource("stackProvider")
+    public void testMultiplePush(Stack<Integer> stack) {
         for (int i = 0; i <= 100; i++) {
-            //assertEquals(message, i, stack.push(i));
             stack.push(i);
         }
 
         for (int i = 100; i >= 0; i--) {
-            assertEquals(message, i, (int) stack.pop());
+            assertEquals(i, (int) stack.pop());
         }
 
-        assertTrue(message, stack.empty());
+        assertTrue(stack.empty());
     }
 
-    @Test
+    @ParameterizedTest
     @Grade
-    public void testPopException() {
-        String message = "Test of pop when empty;";
-        Stack<String> stack = stackFactory.get();
-
-        try {
-            stack.pop();
-            fail(message);
-        } catch (EmptyStackException e) {
-            // Ok
-        }
+    @MethodSource("stackProvider")
+    public void testPopException(Stack<Integer> stack) {
+        assertThrows(EmptyStackException.class, () -> { stack.pop(); });
     }
 
-    @Test
+    @ParameterizedTest
     @Grade
-    public void testPeekException() {
-        String message = "Test of peek when empty;";
-        Stack<String> stack = stackFactory.get();
-
-        try {
-            stack.peek();
-            fail(message);
-        } catch (EmptyStackException e) {
-            // Ok
-        }
+    @MethodSource("stackProvider")
+    public void testPeekException(Stack<Integer> stack) {
+        assertThrows(EmptyStackException.class, () -> { stack.peek(); });
     }
 }
 

@@ -1,16 +1,18 @@
 package graphs;
 
-import com.github.guillaumederval.javagrading.Grade;
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import org.javagrader.Grade;
+import org.javagrader.GradeFeedback;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@Grade
 public class DepthFirstPathsTest {
 
     @Test
     @Grade(value = 1)
+    @GradeFeedback(message="Test [0-1, 0-2, 0-3, 0-4] with 1 as source")
     public void testSimple() {
-        String message = "Test [0-1, 0-2, 0-3, 0-4] with 1 as source";
         DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(5);
 
         graph.addEdge(0, 1);
@@ -20,17 +22,17 @@ public class DepthFirstPathsTest {
 
         DepthFirstPaths dfs = new DepthFirstPaths(graph, 1);
 
-        assertTrue(message, dfs.hasPathTo(0));
-        assertTrue(message, dfs.hasPathTo(1));
-        assertTrue(message, dfs.hasPathTo(2));
-        assertTrue(message, dfs.hasPathTo(3));
-        assertTrue(message, dfs.hasPathTo(4));
+        assertTrue(dfs.hasPathTo(0));
+        assertTrue(dfs.hasPathTo(1));
+        assertTrue(dfs.hasPathTo(2));
+        assertTrue(dfs.hasPathTo(3));
+        assertTrue(dfs.hasPathTo(4));
     }
 
     @Test
     @Grade(value = 1)
+    @GradeFeedback(message="Test [0-1, 1-2, 3-4] with 1 as source")
     public void testDisconnected() {
-        String message = "Test [0-1, 1-2, 3-4] with 1 as source";
         DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(5);
 
         graph.addEdge(0, 1);
@@ -39,16 +41,16 @@ public class DepthFirstPathsTest {
 
         DepthFirstPaths dfs = new DepthFirstPaths(graph, 1);
 
-        assertTrue(message, dfs.hasPathTo(0));
-        assertTrue(message, dfs.hasPathTo(2));
-        assertFalse(message, dfs.hasPathTo(3));
-        assertFalse(message, dfs.hasPathTo(4));
+        assertTrue(dfs.hasPathTo(0));
+        assertTrue(dfs.hasPathTo(2));
+        assertFalse(dfs.hasPathTo(3));
+        assertFalse(dfs.hasPathTo(4));
     }
 
     @Test
     @Grade(value = 1)
+    @GradeFeedback(message="Test [0-1, 1-2, 3-4,4-5,5-6,5-7,7-8, 9-10,10-11,11-12] with 8 as source")
     public void testDiconnectedBis() {
-        String message = "Test [0-1, 1-2, 3-4,4-5,5-6,5-7,7-8, 9-10,10-11,11-12] with 8 as source";
         DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(13);
 
         graph.addEdge(0, 1);
@@ -64,26 +66,26 @@ public class DepthFirstPathsTest {
 
         DepthFirstPaths dfs = new DepthFirstPaths(graph, 8);
 
-        assertFalse(message, dfs.hasPathTo(0));
-        assertFalse(message, dfs.hasPathTo(1));
-        assertFalse(message, dfs.hasPathTo(2));
+        assertFalse(dfs.hasPathTo(0));
+        assertFalse(dfs.hasPathTo(1));
+        assertFalse(dfs.hasPathTo(2));
 
-        assertTrue(message, dfs.hasPathTo(3));
-        assertTrue(message, dfs.hasPathTo(4));
-        assertTrue(message, dfs.hasPathTo(5));
-        assertTrue(message, dfs.hasPathTo(6));
-        assertTrue(message, dfs.hasPathTo(7));
+        assertTrue(dfs.hasPathTo(3));
+        assertTrue(dfs.hasPathTo(4));
+        assertTrue(dfs.hasPathTo(5));
+        assertTrue(dfs.hasPathTo(6));
+        assertTrue(dfs.hasPathTo(7));
 
-        assertFalse(message, dfs.hasPathTo(9));
-        assertFalse(message, dfs.hasPathTo(10));
-        assertFalse(message, dfs.hasPathTo(11));
-        assertFalse(message, dfs.hasPathTo(12));
+        assertFalse(dfs.hasPathTo(9));
+        assertFalse(dfs.hasPathTo(10));
+        assertFalse(dfs.hasPathTo(11));
+        assertFalse(dfs.hasPathTo(12));
     }
 
     @Test
     @Grade(value = 25)
+    @GradeFeedback(message="Test [0-1, 1-2, 2-3, 3-4, 4-0] with 0 as source")
     public void testLoop() {
-        String message = "Test [0-1, 1-2, 2-3, 3-4, 4-0] with 0 as source";
         DepthFirstPaths.Graph graph = new DepthFirstPaths.Graph(6);
 
         graph.addEdge(0, 1);
@@ -94,7 +96,7 @@ public class DepthFirstPathsTest {
 
         DepthFirstPaths dfs = new DepthFirstPaths(graph, 0);
 
-        assertTrue(message, dfs.hasPathTo(4));
+        assertTrue(dfs.hasPathTo(4));
     }
 
 }

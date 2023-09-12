@@ -1,21 +1,24 @@
 package fundamentals;
 
-import com.github.guillaumederval.javagrading.Grade;
-import org.junit.Test;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
 
+@Grade
 public class FListTest {
 
 
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     @Grade(value = 1)
     public void testNil() {
         FList<Integer> list = FList.nil();
-        list.head();
+        assertThrows(IllegalArgumentException.class, () -> { list.head(); });
     }
 
     @Test

@@ -1,14 +1,21 @@
 package graphs;
 
+import org.javagrader.ConditionalOrderingExtension;
+import org.javagrader.Grade;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.github.guillaumederval.javagrading.Grade;
-import org.junit.Test;
 
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.*;
-
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Grade
 public class GlobalWarmingPathsTest {
 
     final int [] seeds = new int[]{0,7,13};
@@ -43,6 +50,7 @@ public class GlobalWarmingPathsTest {
 
     @Test
     @Grade(value= 1)
+    @Order(1)
     public void testShortestPathExam() {
         List<GlobalWarmingPaths.Point> path = new GlobalWarmingPaths(getExamMatrix(), 3).shortestPath(new GlobalWarmingPaths.Point(1, 0), new GlobalWarmingPaths.Point(3, 1));
         assertTrue( path != null && path.size() == 4 && validPath(getExamMatrix(),3,point(1,0),point(3,1),path) );
@@ -66,9 +74,11 @@ public class GlobalWarmingPathsTest {
 
     @Test
     @Grade(value= 1)
+    @Order(2)
     public void testSimpleAll() {
         assertTrue(simpleAll());
     }
+
     public boolean simpleAll() {
         int [][] matrix = getSimpleMatrix();
         GlobalWarmingPaths warming = new GlobalWarmingPaths(matrix,0);
@@ -76,32 +86,27 @@ public class GlobalWarmingPathsTest {
         List<GlobalWarmingPaths.Point> path1 = warming.shortestPath(point(1,1),point(1,1));
 
         if (!validPath(matrix, 0, point(1, 1), point(1, 1), path1)) {
-            System.out.println("1::error in shortestPath");
             return false;
         }
 
         if (warming.shortestPath(point(9, 9), point(9, 9)) != null) {
             if (!warming.shortestPath(point(9, 9), point(9, 9)).isEmpty()) {
-                System.out.println("2::error in shortestPath");
                 return false;
             }
         }
 
         if (warming.shortestPath(point(0, 9), point(9, 9)) != null) {
             if (!warming.shortestPath(point(0, 9), point(9, 9)).isEmpty()) {
-                System.out.println("3::error in shortestPath");
                 return false;
             }
         }
 
         List<GlobalWarmingPaths.Point> path2 = warming.shortestPath(point(4, 5), point(1, 7));
         if (!validPath(matrix, 0, point(4, 5), point(1, 7), path2)) {
-            System.out.println("4::error in shortestPath, path not valid");
             return false;
         }
 
         if (path2.size() != 8) {
-            System.out.println("error in shortestPath, not correct length");
             System.out.println(path2.size());
             return false;
         }
@@ -110,6 +115,7 @@ public class GlobalWarmingPathsTest {
 
     @Test
     @Grade(value= 1)
+    @Order(3)
     public void testCorrectnessShortestPath() {
         assertTrue(correctnessShortestPath());
     }
@@ -169,20 +175,16 @@ public class GlobalWarmingPathsTest {
     }
 
 
-    @Test (timeout = 10)
-    @Grade(value= 1)
+    @Test
+    @Grade(value= 1, cpuTimeout=10)
+    @Order(4)
     public void timeComplexityConstructorCorrect() {
         final int [][] matrix = getRandomMatrix(100,2000000);
-
-        // do some computation here
-        long t0 = System.currentTimeMillis();
-        GlobalWarmingPaths g = new GlobalWarmingPaths(matrix,1000000 );
-        long t1 = System.currentTimeMillis();
-        System.out.println("time constructor:"+(t1-t0));
+        new GlobalWarmingPaths(matrix,1000000 );
     }
 
-    @Test (timeout = 250)
-    @Grade(value= 1)
+    @Grade(value= 1, cpuTimeout=250)
+    @Order(5)
     public void timeComplexityShortestPath() {
         final int [][] matrix = getRandomMatrix(70,2000000);
         final GlobalWarmingPaths g = new GlobalWarmingPaths(matrix,1000000 );
