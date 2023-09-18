@@ -1,5 +1,6 @@
 package searching;
 
+import org.javagrader.Allow;
 import org.javagrader.ConditionalOrderingExtension;
 import org.javagrader.Grade;
 import org.junit.jupiter.api.MethodOrderer;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.params.provider.Arguments;
 
 
 import java.util.*;
@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 @Grade
 public class BinarySearchTreeHigherTest {
     
-    private static final Random random = new Random();
+    private static final Random random = new Random(699645);
     
     @Test
     @Grade(value=5)
@@ -50,7 +50,7 @@ public class BinarySearchTreeHigherTest {
 
     }
     
-    static Stream<Arguments> dataProvider() {
+    static Stream<Instance> dataProvider() {
         return IntStream.range(0, 50).mapToObj(i -> {
             BinarySearchTreeHigher<Integer,Integer> tree = new BinarySearchTreeHigher<>();
             TreeSet<Integer> set = new TreeSet<>();
@@ -63,7 +63,7 @@ public class BinarySearchTreeHigherTest {
                 min = Math.min(min, v);
                 max = Math.max(max, v);
             }
-            return Arguments.of((Object) new Instance(tree, set, min, max));
+            return new Instance(tree, set, min, max);
         });
     }
 
@@ -71,14 +71,16 @@ public class BinarySearchTreeHigherTest {
     @ParameterizedTest
     @MethodSource("dataProvider")
     @Order(1)
+    @Allow("all")
     public void testRandomMin(Instance instance) {
-        assertEquals( instance.set.first(), instance.tree.minKey());
+        assertEquals(instance.set.first(), instance.tree.minKey());
     }
 
     @Grade(value=1)
     @ParameterizedTest
     @MethodSource("dataProvider")
     @Order(1)
+    @Allow("all")
     public void testRandomHigher(Instance instance) {
         for (int i = 0; i < 5; i++) {
             int v = random.nextInt((instance.max - instance.min) + 1) + instance.min;
@@ -86,35 +88,42 @@ public class BinarySearchTreeHigherTest {
         }
     }
 
-    static Stream<Instance> dataProviderComplexity() {
-        return IntStream.range(0, 5).mapToObj(i -> {
-            BinarySearchTreeHigher<Integer,Integer> tree = new BinarySearchTreeHigher<>();
-            int min = Integer.MAX_VALUE;
-            int max = Integer.MIN_VALUE;
-            for (int k = 0; k < 100000; k++) {
-                int v = random.nextInt();
-                tree.put(v,v);
-                min = Math.min(min, v);
-                max = Math.max(max, v);
-            }
-            return new Instance(tree, null, min, max);
-        });
+    static IntStream dataProviderComplexity() {
+        return IntStream.range(0, 5);
     }
     
     @ParameterizedTest
     @Grade(value=1, cpuTimeout=100)
     @MethodSource("dataProviderComplexity")
     @Order(2)
-    public void testMinKeyComplexity(Instance instance) {
-        instance.tree.minKey();
+    public void testMinKeyComplexity(Integer i) {
+        BinarySearchTreeHigher<Integer,Integer> tree = new BinarySearchTreeHigher<>();
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int k = 0; k < 100000; k++) {
+            int v = random.nextInt();
+            tree.put(v,v);
+            min = Math.min(min, v);
+            max = Math.max(max, v);
+        }
+        tree.minKey();
     }
 
     @ParameterizedTest
     @Grade(value=1, cpuTimeout=100)
     @MethodSource("dataProviderComplexity")
     @Order(2)
-    public void testhigherComplexity(Instance instance) {
-        instance.tree.higherKey(instance.min + (instance.max - instance.min)/2);
+    public void testhigherComplexity(Integer i) {
+        BinarySearchTreeHigher<Integer,Integer> tree = new BinarySearchTreeHigher<>();
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int k = 0; k < 100000; k++) {
+            int v = random.nextInt();
+            tree.put(v,v);
+            min = Math.min(min, v);
+            max = Math.max(max, v);
+        }
+        tree.higherKey(min + (max - min)/2);
     }
     
     private static class Instance {
