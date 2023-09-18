@@ -45,6 +45,7 @@ public class TrainsTest {
         return relations;
     }
 
+    // BEGIN STRIP
     HashMap<StationTime, LinkedList<StationTime>> lessSimpleExample() {
         HashMap<StationTime, LinkedList<StationTime>> relations = simpleExample1();
         relations.put(new StationTime("A", 1), new LinkedList<>(Arrays.asList(new StationTime("D", 199),new StationTime("F", 381),new StationTime("D", 199))));
@@ -80,6 +81,7 @@ public class TrainsTest {
         relations.put(new StationTime("F", 730), new LinkedList<>(Arrays.asList(new StationTime("E", 1004))));
         return relations;
     }
+    // END STRIP
     
     private boolean containsElements(Set<String> container, String ... elements) {
         for (String element : elements) {
@@ -130,6 +132,7 @@ public class TrainsTest {
         assertEquals(out.get("Namur"), (Integer)30);
     }
 
+    // BEGIN STRIP
     @Test
     @Grade(value=2)
     public void lessSimple1Test() {
@@ -150,6 +153,7 @@ public class TrainsTest {
         assertEquals(out.get("E"), (Integer)690);
         assertEquals(out.get("F"), (Integer)615);
     }
+
 
     @Test
     @Grade(value=2)
@@ -190,4 +194,5 @@ public class TrainsTest {
         assertEquals(out.get("E"), (Integer)579);
         assertEquals(out.get("F"), (Integer)1127);
     }
+    // END STRIP
 }

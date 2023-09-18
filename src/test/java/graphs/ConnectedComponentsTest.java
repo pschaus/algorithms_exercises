@@ -4,23 +4,41 @@ import org.javagrader.ConditionalOrderingExtension;
 import org.javagrader.Grade;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// BEGIN STRIP
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+// END STRIP
 
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Grade
 public class ConnectedComponentsTest {
-    
+
+    @Test
+    @Order(0)
+    public void simpleTest(){
+        ConnectedComponents.Graph graph = new ConnectedComponents.Graph(6);
+
+        graph.addEdge(0, 1);
+        graph.addEdge(1, 2);
+        graph.addEdge(3, 4);
+        graph.addEdge(4, 5);
+
+        int cc = ConnectedComponents.numberOfConnectedComponents(graph);
+        assertEquals(2, cc);
+    }
+
+    // BEGIN STRIP
     static Stream<Instance> providerCorrectness() {
         return IntStream.range(0, 7).mapToObj(i -> {
             return new Instance("data/graphs.ConnectedComponents/in_corr_" + i);
@@ -89,4 +107,5 @@ public class ConnectedComponentsTest {
             }
         }
     }
+    // END STRIP
 }

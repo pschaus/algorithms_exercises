@@ -14,13 +14,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+// BEGIN STRIP
 import java.util.EmptyStackException;
+// END STRIP
 
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Grade
 public class StackWithTwoQueuesTest {
-    
+
+    @Test
+    @Grade(value=1)
+    @Order(0)
+    public void simpleTest(){
+        StackWithTwoQueues<Integer> stack = new StackWithTwoQueues<>();
+        for (int i = 0; i < 10; i++) {
+            stack.push(i);
+        }
+        assertFalse(stack.empty());
+        for (int i = 9; i >= 0; i--) {
+            assertEquals(i, (int) stack.pop());
+        }
+        assertTrue(stack.empty());
+    }
+
+    // BEGIN STRIP
     @Test
     @Grade(value=1)
     @Order(1)
@@ -92,4 +110,5 @@ public class StackWithTwoQueuesTest {
             stack.push(i);
         }
     }
+    // END STRIP
 }

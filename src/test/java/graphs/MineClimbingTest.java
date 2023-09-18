@@ -11,12 +11,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.*;
+// BEGIN STRIP
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+// END STRIP
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Grade
@@ -99,7 +100,8 @@ public class MineClimbingTest {
 
         assertEquals(221, MineClimbing.best_distance(map, 3, 3, 0, 0));
     }
-    
+
+    // BEGIN STRIP
     static Stream<Instance> dataProvider() {
         return IntStream.range(0, 100).mapToObj(i -> new Instance("data/graphs.MineClimbing/in_rand_" + i));
     }
@@ -170,5 +172,6 @@ public class MineClimbingTest {
             }
         }
     }
+    // END STRIP
 
 }

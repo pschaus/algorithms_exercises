@@ -31,7 +31,6 @@ import java.util.LinkedList;
 public class Maze {
     public static Iterable<Integer> shortestPath(int[][] maze, int x1, int y1, int x2, int y2) {
         // TODO
-        // BEGIN STRIP
         // STUDENT return null;
         // BEGIN STRIP
         if (maze[x1][y1] == 1 || maze[x2][y2] == 1) return new LinkedList<>();

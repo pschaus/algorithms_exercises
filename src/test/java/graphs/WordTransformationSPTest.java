@@ -4,6 +4,7 @@ import org.javagrader.ConditionalOrderingExtension;
 import org.javagrader.Grade;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,7 +22,22 @@ import java.util.Random;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Grade
 public class WordTransformationSPTest {
-    
+
+    @Grade
+    @Order(0)
+    @Test
+    public void simpleTest() {
+        String s = "abc";
+        String d = "cba";
+        assertEquals(3, WordTransformationSP.minimalCost(s, d));
+
+        String s2 = "HAMBURGER";
+        String d2 = "HAMBEGRUR";
+        assertEquals(4, WordTransformationSP.minimalCost(s2, d2));
+
+    }
+
+    // BEGIN STRIP
     public static final Random random = new Random(12345L);
     
     // For the simple tests, with use words of size 7
@@ -104,8 +120,10 @@ public class WordTransformationSPTest {
         String d = Helpers.shuffle(s);
         WordTransformationSP.minimalCost(s, d);
     }
+    // END STRIP
 }
 
+// BEGIN STRIP
 class Instance {
     public String from;
     public String to;
@@ -118,6 +136,7 @@ class Instance {
     }
 
 }
+
 
 class Helpers {
 
@@ -148,5 +167,5 @@ class Helpers {
 
         return output.toString();
     }
-
 }
+// END STRIP

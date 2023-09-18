@@ -12,12 +12,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.*;
+// BEGIN STRIP
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+// END STRIP
 
 
 @ExtendWith(ConditionalOrderingExtension.class)
@@ -55,6 +56,7 @@ public class GalaxyPathTest {
         assertEquals(2, len);
     }
 
+    // BEGIN STRIP
     static Stream<Instance> instanceProvider() {
         return IntStream.range(0, 100).mapToObj(i -> {
             return new Instance("data/graphs.GalaxyPath/in_20_" + i);
@@ -141,5 +143,6 @@ public class GalaxyPathTest {
             }
         }
     }
+    // END STRIP
 
 }

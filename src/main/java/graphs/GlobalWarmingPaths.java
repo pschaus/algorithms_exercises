@@ -72,7 +72,7 @@ public class GlobalWarmingPaths {
     public List<Point> shortestPath(Point p1, Point p2) {
         // TODO
         // expected time complexity O(n^2)
-        // STUDENT return  return new ArrayList<Point>();
+        // STUDENT return null;
 
         // BEGIN STRIP
         // Extreme case when the path is just one point
