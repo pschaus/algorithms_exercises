@@ -12,11 +12,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.*;
+// BEGIN STRIP
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+// END STRIP
 
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -150,7 +152,8 @@ public class BreadthFirstShortestPathsTest {
         assertEquals(1, bfs.distTo(4));
         assertEquals(2, bfs.distTo(5));
     }
-    
+
+    // BEGIN STRIP
     static class Instance {
 
         BreadthFirstShortestPaths.Graph graph;
@@ -231,6 +234,7 @@ public class BreadthFirstShortestPathsTest {
             assertEquals(bfs.distTo(dest), sol);
         }
     }
+    // END STRIP
 }
 
 

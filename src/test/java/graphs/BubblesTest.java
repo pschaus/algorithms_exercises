@@ -72,6 +72,7 @@ public class BubblesTest {
     }
 
 
+    // BEGIN STRIP
     @Test
     @Grade(value = 1)
     @Order(3)
@@ -124,7 +125,7 @@ public class BubblesTest {
     @Test
     @Grade(value = 1, cpuTimeout = 2000)
     @Order(4)
-    public void perfTest() {
+    public void complexityTest() {
 
         final int SIZE = 1000;
         final int BSIZE = 200;
@@ -165,4 +166,5 @@ public class BubblesTest {
         for (HashSet<Integer> c : contacts)
             assertTrue(c.size() <= BSIZE);
     }
+    // END STRIP
 }

@@ -1,5 +1,6 @@
 package graphs;
 
+import java.util.List;
 // BEGIN STRIP
 import java.util.*;
 // END STRIP

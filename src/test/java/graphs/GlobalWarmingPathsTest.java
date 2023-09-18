@@ -113,6 +113,7 @@ public class GlobalWarmingPathsTest {
         return true;
     }
 
+    // BEGIN STRIP
     @Test
     @Grade(value= 1)
     @Order(3)
@@ -152,6 +153,7 @@ public class GlobalWarmingPathsTest {
         }
         return true;
     }
+    // END STRIP
 
 
     public boolean validPath(int [][] matrix, int level, GlobalWarmingPaths.Point p1, GlobalWarmingPaths.Point p2, List<GlobalWarmingPaths.Point> path) {
@@ -174,7 +176,7 @@ public class GlobalWarmingPathsTest {
         return Math.abs(p1.getX() - p2.getX()) + Math.abs(p1.getY() - p2.getY()) == 1;
     }
 
-
+    // BEGIN STRIP
     @Test
     @Grade(value= 1, cpuTimeout=10)
     @Order(4)
@@ -200,6 +202,7 @@ public class GlobalWarmingPathsTest {
         System.out.println("time shortestPath:"+(t1-t0));
 
     }
+    // END STRIP
 
 }
 

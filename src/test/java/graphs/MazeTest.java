@@ -14,10 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.Stream;
 
+import java.util.*;
+// BEGIN STRIP
+import java.io.*;
+import java.util.stream.Stream;
+// END STRIP
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Grade
@@ -38,7 +40,7 @@ public class MazeTest {
             {1, 1, 0, 0, 0, 1, 0}
     };
 
-
+    // BEGIN STRIP
     private static int[][] getMaze(String filename, int row, int col, int positions[][]) {
         String line;
         int[][] maze = new int[row][col];
@@ -70,6 +72,7 @@ public class MazeTest {
         }
         return maze;
     }
+    // END STRIP
 
     @Test
     @Grade(value = 1)
@@ -116,6 +119,7 @@ public class MazeTest {
         assertEquals(10, pathArray.length);
     }
 
+    // BEGIN STRIP
     static Stream<Instance> dataProvider() {
         return Stream.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).flatMap(i -> {
             return Stream.of(
@@ -151,6 +155,7 @@ public class MazeTest {
         int[][] maze = getMaze("data/graphs.Maze/in_0", 24, 110, positions);
         Maze.shortestPath(maze, positions[0][0], positions[0][1], positions[1][0], positions[1][1]);
     }
+    // END STRIP
 
     public static boolean validPathSourceToDest(int x1, int y1, int x2, int y2, int[][] maze, Iterable<Integer> path) {
         int m = maze[0].length;
@@ -186,6 +191,7 @@ public class MazeTest {
         return pos % mCols;
     }
 
+    // BEGIN STRIP
     static class Instance {
 
         int[][] maze;
@@ -241,4 +247,5 @@ public class MazeTest {
             }
         }
     }
+    // END STRIP
 }

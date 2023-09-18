@@ -1,8 +1,6 @@
 package graphs;
 
-// BEGIN STRIP
 import java.util.*;
-// END STRIP
 
 /**
  * Considering a list containing the relations between train stations
