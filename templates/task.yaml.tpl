@@ -6,9 +6,12 @@ context: |-
 
     This exercise is already available in your IntelliJ as a project.
     What you need to do is described in the comments at the top of the file in ``src/main/java/``.
-
+    
     .. _`Click here`: /course/{0}/{1}/{2}
 
+    .. code-block:: java
+        
+{4}
 
     .. warning::
 

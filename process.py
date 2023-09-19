@@ -117,12 +117,14 @@ def create_exercise_task(package, exercise):
     with open(os.path.join(templates_dir, 'task.yaml.tpl'), 'r') as f:
             task_config_tpl = ''.join(f.readlines())
 
+    java_exercice_description = ''.join(['        ' + line for line in open(os.path.join(script_dir, 'stripped_project', 'src', 'main', 'java', package, exercise + '.java')).readlines()])
     with open(os.path.join(exercise_dir, 'task.yaml'), 'w') as f:
         f.write(task_config_tpl.format(
             course_name,
             exercise_dir_name,
             exercise + '.zip',
-            exercise))
+            exercise,
+            java_exercice_description))
     # copy the archive in the public directory of the exercise so it can be downloaded
     # by the students
     shutil.copy(os.path.join('zips', package, exercise + '.zip'),
