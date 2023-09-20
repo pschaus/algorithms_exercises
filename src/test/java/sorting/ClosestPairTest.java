@@ -169,12 +169,14 @@ public class ClosestPairTest {
         assertEquals(2,res.length);
         assertEquals(10,Math.abs(x-res[0]-res[1]));
     }
-    
+
+    // BEGIN STRIP
     static Stream<Instance> dataProvider() {
             return Stream.of(new File("data/sorting.ClosestPair").listFiles())
                 .filter(file -> !file.isDirectory())
                 .map(file -> new Instance(file.getPath()));
     }
+
 
     @ParameterizedTest
     @Grade(value=1, cpuTimeout=1000)
@@ -206,5 +208,6 @@ public class ClosestPairTest {
             }
         }
     }
+    // END STRIP
 
 }

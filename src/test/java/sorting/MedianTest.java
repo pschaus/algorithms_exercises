@@ -45,6 +45,7 @@ public class MedianTest {
         }
     }
 
+    // BEGIN STRIP
     @Test
     @Grade(value = 1, cpuTimeout=500)
     public void testComplexityNLogNOk() {
@@ -54,4 +55,5 @@ public class MedianTest {
             Median.median(v1,0,v1.size()-1);
         }
     }
+    // END STRIP
 }

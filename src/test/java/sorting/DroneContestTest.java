@@ -13,6 +13,7 @@ public class DroneContestTest {
         return out;
     }
 
+    // BEGIN STRIP
     @Test
     @Grade(value = 1, cpuTimeout = 1000)
     public void simple1() { //everything the same, without holes, without duplicates
@@ -362,6 +363,7 @@ public class DroneContestTest {
             assertEquals( 0, changes.get(2).height);
         }
     }
+    // END STRIP
 
     @Test
     @Grade(value = 2, cpuTimeout = 1000)
@@ -387,6 +389,7 @@ public class DroneContestTest {
             assertEquals(correctHeight[i], changes.get(i).height);
         }
     }
+    // BEGIN STRIP
 
     @Test
     @Grade(value = 3, cpuTimeout = 3000)
@@ -503,4 +506,5 @@ public class DroneContestTest {
 
         return output;
     }
+    // END STRIP
 }

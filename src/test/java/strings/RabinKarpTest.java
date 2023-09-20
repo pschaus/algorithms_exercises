@@ -51,7 +51,7 @@ public class RabinKarpTest {
         assertEquals(txt.length(),rc.search(txt));
     }
 
-
+    // BEGIN STRIP
     @Test
     @Grade(value= 1)
     @Order(1)
@@ -119,6 +119,8 @@ public class RabinKarpTest {
 
         assertEquals(txt.length(),rc.search(txt));
     }
+
+    // END STRIP
 
 
 }
