@@ -1,25 +1,31 @@
 package searching;
 
 import org.javagrader.Grade;
+import org.javagrader.GradeFeedback;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-
-import java.util.HashSet;
+// BEGIN STRIP
 import java.util.Random;
-import java.util.Set;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.*;
+//END STRIP
 
-/**
- * This is just a limited number of tests provided for convenience
- * Don't hesitate to extend it with other tests
- */
 @Grade
 public class LinearProbingHashSTTest {
 
+    // BEGIN STRIP
+    private static final Random random = new Random(582);
+    //END STRIP
 
     @Test
+    @GradeFeedback(message="Sorry, something is wrong with your algorithm. Debug first on this small example")
     public void testExample() {
         LinearProbingHashST<Integer,String> lp = new LinearProbingHashST<>();
 
@@ -60,106 +66,130 @@ public class LinearProbingHashSTTest {
         assertTrue(lp.contains(9));
 
 
-        assertTrue(!lp.contains(4));
-        assertTrue(!lp.contains(32));
-        assertTrue(!lp.contains(64));
+        assertFalse(lp.contains(4));
+        assertFalse(lp.contains(32));
+        assertFalse(lp.contains(64));
     }
 
-
-
+    // BEGIN STRIP
     @Test
-    public void testCorrectness() {
-        for (int size = 20; size < 1000; size += 10) {
-            for (int k = 0; k < 10; k++) {
-
-                Set<Integer> in = new HashSet<>();
-
-                LinearProbingHashST<Integer,String> lp = new LinearProbingHashST<>();
-
-                Random rand = new Random();
-                for (int i = 0; i < size; i++) {
-                    int v = rand.nextInt();
-                    in.add(v);
-                    lp.put(v, v + "");
-                }
-                assertTrue(lp.size() >= lp.capacity()/4);
-                assertTrue(lp.size() <= lp.capacity()/2);
-                for (int i: in) {
-                    assertTrue(lp.contains(i));
-                    assertTrue(lp.get(i).equals(i+""));
-                }
-                for (int j = 0; j < size; j++) {
-                    int v = rand.nextInt();
-                    if (!in.contains(v)) {
-                        assertTrue(!lp.contains(v));
-                    }
-                }
-            }
-        }
-        correctnessTestBis();
+    @Grade(value=1, cpuTimeout = 1000)
+    @GradeFeedback(message="You do not raise a IllegalArgumentException when we try to put an element with a null key")
+    @Order(1)
+    public void testPutNullKey() {
+        LinearProbingHashST<Integer, String> lp = new LinearProbingHashST<>();
+        lp.put(1,"test");
+        lp.put(2,"test");
+        assertThrows(IllegalArgumentException.class, () -> lp.put(null, "test"));
     }
 
     @Test
-    @Grade(value=50.0, cpuTimeout = 1000)
-    public void testComplexity() {
-
-        LinearProbingHashST<Integer,String> lp = new LinearProbingHashST<>();
-
-        Random rand = new Random();
-
-        for (int i = 0; i < 1000; i++) {
-            int v = rand.nextInt();
-            lp.put(v, v + "");
-        }
-        for (int i = 0; i < 10000; i++) {
-            lp.put(i%1000, i%1000 + "");
-        }
-        for (int i = 0; i < 1000; i++) {
-            int v = rand.nextInt();
-            lp.put(v, v + "");
-        }
-
+    @Grade(value=1, cpuTimeout = 1000)
+    @GradeFeedback(message="You do not raise a IllegalArgumentException when we try to get an element with a null key")
+    @Order(1)
+    public void testGetNullKey() {
+        LinearProbingHashST<Integer, String> lp = new LinearProbingHashST<>();
+        lp.put(1,"test");
+        lp.put(2,"test");
+        assertThrows(IllegalArgumentException.class, () -> lp.get(null));
     }
 
-    //More tests
-    private void correctnessTestBis() {
-
-        LinearProbingHashST<String, Integer> st = new LinearProbingHashST<>(1);
-
-        String instance[] = generateInstance();
-
-        int i = 0;
-        for (String key : instance){
-            st.put(key, i);
-            i++;
-        }
-
-        //System.out.println("cap="+instance.capaity);
-        i = 0;
-        for (Object s : st.keys()) {
-            assertEquals(new Integer(i),st.get(s+""));
-            assertEquals(instance[i],s+"");
-            i++;
-        }
-
-        assertTrue(i != 0);
-    }
-
-    private String[] generateInstance(){
-        String[] sp = new String[]{"Aa", "BB"};
-        String[] list = new String[8];
-
-        int count = 0;
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
-                for (int k = 0; k < 2; k++) {
-                    list[count] = sp[i] + sp[j] + sp[k];
-                    count++;
-                }
+    static Stream<Arguments> dataProvider() {
+        return IntStream.range(0, 50).mapToObj(i -> {
+            int size = 10;
+            LinearProbingHashST<Integer,Integer> lp = new LinearProbingHashST<>(size);
+            HashMap<Integer, Integer> map = new HashMap<>(size);
+            for (int k = 0; k < size/2; k++) {
+                int v = random.nextInt(100);
+                lp.put(v,v);
+                map.put(v,v);
             }
+            return Arguments.of((Object) new LinearProbingHashSTTest.Instance(lp, map, size));
+        });
+    }
+
+    @Grade(value=1)
+    @ParameterizedTest
+    @MethodSource("dataProvider")
+    @GradeFeedback(message = "Your get method does not return the good value")
+    @Order(1)
+    public void testRandomGet(Instance instance) {
+        for (int i = 0; i < 5; i++) {
+            int key = random.nextInt(instance.size/2);
+            assertEquals(instance.map.get(key), instance.lp.get(key));
+        }
+    }
+
+    @Grade(value=1)
+    @ParameterizedTest
+    @MethodSource("dataProvider")
+    @GradeFeedback(message = "Something is wrong with your put method")
+    @Order(1)
+    public void testRandomPut(Instance instance) {
+        for (int i = 0; i < 5; i++) {
+            int key = instance.size+i;
+            int v = random.nextInt();
+            instance.lp.put(key, v);
+            instance.map.put(key, v);
+        }
+        for (int i = 0; i < 5; i++) {
+            int key = random.nextInt(instance.size/2 + 5);
+            assertEquals(instance.map.get(key), instance.lp.get(key));
+        }
+    }
+
+    static Stream<Instance> dataProviderComplexity() {
+        return IntStream.range(0, 5).mapToObj(i -> {
+            int size = 10000;
+            LinearProbingHashST<Integer,Integer> lp = new LinearProbingHashST<>(size);
+            HashMap<Integer, Integer> map = new HashMap<>(size);
+            for (int k = 0; k < size/2; k++) {
+                int v = random.nextInt();
+                lp.put(v,v);
+                map.put(v,v);
+            }
+            return new Instance(lp, map, size);
+        });
+    }
+
+    @Grade(value=1, cpuTimeout = 100)
+    @ParameterizedTest
+    @MethodSource("dataProviderComplexity")
+    @GradeFeedback(message = "Check the complexity of your get method")
+    @Order(1)
+    public void testRandomGetComplexity(Instance instance) {
+        for (int i = 0; i < 100; i++) {
+            int key = random.nextInt(instance.size/2);
+            assertEquals(instance.map.get(key), instance.lp.get(key));
+        }
+    }
+
+    @Grade(value=1, cpuTimeout = 100)
+    @ParameterizedTest
+    @MethodSource("dataProviderComplexity")
+    @GradeFeedback(message = "Check the complexity of your put method")
+    @Order(1)
+    public void testRandomPutComplexity(Instance instance) {
+        for (int i = 0; i < 100; i++) {
+            int key = instance.size+i;
+            int v = random.nextInt();
+            instance.lp.put(key, v);
+        }
+    }
+
+
+    private static class Instance {
+        LinearProbingHashST<Integer, Integer> lp;
+        HashMap<Integer, Integer> map;
+        int size;
+
+        public Instance(LinearProbingHashST<Integer, Integer> lp, HashMap<Integer, Integer> map, int size) {
+            this.lp = lp;
+            this.map = map;
+            this.size = size;
         }
 
-        return list;
     }
+    // END STRIP
     
 }

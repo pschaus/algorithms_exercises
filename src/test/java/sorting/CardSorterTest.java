@@ -11,7 +11,7 @@ import java.util.*;
 @Grade
 public class CardSorterTest {
 
-
+    // BEGIN STRIP
     public void test(int[] array) {
         LinkedListImpl l = new LinkedListImpl(array);
 
@@ -32,6 +32,7 @@ public class CardSorterTest {
             test(i);
         }
     }
+    // END STRIP
 
     @Test
     public void testExample() {
@@ -40,6 +41,7 @@ public class CardSorterTest {
         assertTrue(l.isSorted());
     }
 
+    // BEGIN STRIP
     @Test
     @Grade(value = 100, custom = true, cpuTimeout = 1000)
     public void alreadySorted() throws CustomGradingResult {
@@ -144,6 +146,7 @@ public class CardSorterTest {
 
         runAll(arrays);
     }
+    // END STRIP
 }
 
 

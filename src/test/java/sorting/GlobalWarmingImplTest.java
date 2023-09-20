@@ -18,7 +18,7 @@ import java.util.Random;
 @Grade
 public class GlobalWarmingImplTest {
 
-
+    // BEGIN STRIP
     final int [] seeds = new int[]{0,7,13};
 
     Random rand = new Random(seeds[new java.util.Random().nextInt(3)]);
@@ -29,6 +29,8 @@ public class GlobalWarmingImplTest {
     public void testSafePointExam() {
         assertEquals(new GlobalWarmingImpl(getExamMatrix()).nbSafePoints(2), 14);
     }
+
+    // END STRIP
 
     @Test
     @Grade(value=1)
@@ -49,6 +51,7 @@ public class GlobalWarmingImplTest {
         }
     }
 
+    // BEGIN STRIP
     @Test
     @Grade(value=1)
     public void testCorrectnessNbSafePoints() {
@@ -246,5 +249,7 @@ public class GlobalWarmingImplTest {
         }
 
     }
+
+    // END STRIP
 
 }

@@ -10,7 +10,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// BEGIN STRIP
 import java.util.Random;
+// END STRIP
 
 
 @ExtendWith(ConditionalOrderingExtension.class)
@@ -32,6 +34,7 @@ public class PreorderToBSTTest {
 
     }
 
+    // BEGIN STRIP
     PreorderToBST.Node [] bst5 = new PreorderToBST.Node[] {
         new PreorderToBST.Node(new PreorderToBST.Node(new PreorderToBST.Node(new PreorderToBST.Node(null,null,254),null,313),new PreorderToBST.Node(null,null,847),588),null,985),
         new PreorderToBST.Node(new PreorderToBST.Node(null,new PreorderToBST.Node(null,new PreorderToBST.Node(null,null,748),606),434),new PreorderToBST.Node(null,null,978),904),
@@ -204,4 +207,5 @@ public class PreorderToBSTTest {
         }
 
     }
+    // END STRIP
 }

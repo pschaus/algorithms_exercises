@@ -74,6 +74,8 @@ public class IncrementalHashTest {
         }
     }
 
+    // BEGIN STRIP
+
     static Stream<Instance> dataProviderSmall() {
         return IntStream.range(0, 6).mapToObj(i -> {
             return new Instance("data/strings.IncrementalHash/instance_" + i);
@@ -153,5 +155,6 @@ public class IncrementalHashTest {
             }
         }
     }
+    //END STRIP
 
 }

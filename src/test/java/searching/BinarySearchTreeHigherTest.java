@@ -12,10 +12,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+// BEGIN STRIP
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+// END STRIP
 
 
 @ExtendWith(ConditionalOrderingExtension.class)
@@ -49,7 +50,8 @@ public class BinarySearchTreeHigherTest {
         assertEquals(null, bst.higherKey(20));
 
     }
-    
+
+    // BEGIN STRIP
     static Stream<Instance> dataProvider() {
         return IntStream.range(0, 50).mapToObj(i -> {
             BinarySearchTreeHigher<Integer,Integer> tree = new BinarySearchTreeHigher<>();
@@ -139,4 +141,5 @@ public class BinarySearchTreeHigherTest {
             this.max = max;
         }
     }
+    // END STRIP
 }
