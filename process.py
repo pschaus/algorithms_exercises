@@ -59,20 +59,9 @@ def strip_directory(path):
         strip_file(os.path.join(path, file))
 
 def createTestFile(package, exercise, exercise_dir):
-    inname = exercise + 'Test.java'
-    outname = exercise + 'TestInginious.java'
-    _safe_mkdir(os.path.join(exercise_dir, package))
-    outfile = open(os.path.join(exercise_dir, package, outname), 'w')
-    with open(os.path.join(test_dir, package, inname)) as f:
-        buffer = list()
-        in_test = False
-        count_open_acc = 0
-        for line in f:
-            if line.startswith(f'public class {exercise}Test'):
-                outfile.write(line.replace(f'{exercise}Test', f'{exercise}TestInginious'))
-            else:
-                outfile.write(line)
-    outfile.close()
+    filename = exercise + 'Test.java'
+    with open(os.path.join(exercise_dir, 'src', 'test', 'java', package, filename), 'w') as f:
+        f.write(open(os.path.join(test_dir, package, filename)).read())
 
 
 def create_exercise_task(package, exercise):
@@ -80,38 +69,29 @@ def create_exercise_task(package, exercise):
     exercise_dir = os.path.join(inginious_dir, exercise_dir_name)
     _safe_mkdir(exercise_dir)
     _safe_mkdir(os.path.join(exercise_dir, 'public'))
-
-    # copy the data for the test
-    if os.path.exists(os.path.join(script_dir, 'data',exercise)):
-        shutil.copytree(os.path.join(script_dir, 'data',exercise),
-                        os.path.join(exercise_dir, 'data',exercise))
+    _safe_mkdir(os.path.join(exercise_dir, 'src', 'main', 'java', package))
+    _safe_mkdir(os.path.join(exercise_dir, 'src', 'test', 'java', package))
 
     # copy libs
     shutil.copytree(os.path.join(templates_dir, 'libs'),
                     os.path.join(exercise_dir, 'libs'))
+    
+    # copy pom.xml
+    shutil.copy(os.path.join(script_dir, 'pom.xml'),
+                    os.path.join(exercise_dir, 'pom.xml'))
 
     # Copy the test file to the src directory
     createTestFile(package, exercise, exercise_dir)
 
-    # Test runner
-    runner_file = 'RunTests.java'
-    with open(os.path.join(templates_dir, runner_file), 'r') as f:
-        test_runner_content = ''.join(f.readlines())
-
-    with open(os.path.join(exercise_dir, runner_file), 'w') as f:
-        f.write(test_runner_content.format(package, exercise + 'TestInginious'))
-
     # Run file
-    run_file = 'run'
-    with open(os.path.join(templates_dir, run_file), 'r') as f:
-        run_content = ''.join(f.readlines())
-
+    run_file = 'run.py'
+    
     with open(os.path.join(exercise_dir, run_file), 'w') as f:
-        f.write(run_content.format(package, exercise))
+        f.write(open(os.path.join(templates_dir, run_file)).read().format(package, exercise))
 
 
     # write the template file
-    with open(os.path.join(exercise_dir, package, exercise + '.java'), 'w') as f:
+    with open(os.path.join(exercise_dir, 'src', 'main', 'java', package, exercise + '.java'), 'w') as f:
         f.write('@@code@@')
 
     with open(os.path.join(templates_dir, 'task.yaml.tpl'), 'r') as f:
