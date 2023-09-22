@@ -17,7 +17,6 @@
             <artifactId>JavaGrader</artifactId>
             <version>1.0.6</version>
             <scope>test</scope>
-            <!-- <systemPath>${pom.basedir}/libs/JavaGrader-1.0.6.jar</systemPath> -->
         </dependency>
         <dependency>
             <groupId>unknown.group</groupId>

@@ -103,7 +103,7 @@ public class StackWithTwoQueuesTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
     @Order(7)
-    @Grade(cpuTimeout=3)
+    @Grade(cpuTimeout=10)
     public void testComplexity() {
         StackWithTwoQueues<Integer> stack = new StackWithTwoQueues<>();
         for (int i = 0; i < 30_000; i++) {

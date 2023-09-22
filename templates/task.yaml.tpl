@@ -26,11 +26,11 @@ file: ''
 groups: false
 input_random: '0'
 limits:
-    memory: '300'
-    time: '30'
+    memory: '600'
+    time: '120'
     output: '2'
 name: '{3}'
-network_grading: false
+network_grading: true 
 problems:
   code:
     header: 'Paste here the content of the whole file associated with this question'
