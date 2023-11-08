@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.*;
 
+@Grade
 public class DroneContestTest {
     private static Drone[] copyAndShuffle(Drone[] in, Random r) {
         Drone[] out = Arrays.copyOf(in, in.length);
@@ -73,7 +74,6 @@ public class DroneContestTest {
             }
 
             LinkedList<HeightChange> changes = DroneContest.findHighest(copyAndShuffle(content, r));
-//            System.out.println(changes);
             assertEquals(3, changes.size());
             assertEquals( 0, changes.get(0).time);
             assertEquals( 0, changes.get(0).height);
