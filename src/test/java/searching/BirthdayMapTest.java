@@ -2,28 +2,25 @@ package searching;
 
 import org.javagrader.ConditionalOrderingExtension;
 import org.javagrader.Grade;
-import org.javagrader.GradeFeedback;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Random;
-
 import java.util.List;
-import java.util.Random;
 
 
-
+@Grade
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BirthdayMapTest {
 
     
     @Test
     @Grade(value = 1)
+    @Order(0)
     public void testSimple() {
         BirthdayMap birthdayMap = new BirthdayMap();
 
@@ -80,6 +77,7 @@ public class BirthdayMapTest {
 
     @Test
     @Grade(value = 4, cpuTimeout = 1000)
+    @Order(1)
     public void testCorrect() {
         testCorrectnessRandom();
     }
@@ -87,6 +85,7 @@ public class BirthdayMapTest {
 
     @Test
     @Grade(value = 5, cpuTimeout = 1000)
+    @Order(1)
     public void testEfficientInsertion() {
 
         testCorrectnessRandom();
@@ -117,6 +116,7 @@ public class BirthdayMapTest {
 
     @Test
     @Grade(value = 5, cpuTimeout = 1000)
+    @Order(1)
     public void testEfficientPeopleBornOnDate() {
 
         testCorrectnessRandom();
@@ -153,6 +153,7 @@ public class BirthdayMapTest {
 
     @Test
     @Grade(value = 5, cpuTimeout = 1000)
+    @Order(1)
     public void testEfficientPeopleBornOnYear() {
 
         testCorrectnessRandom();

@@ -11,12 +11,15 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@Grade
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WordCounterTest {
 
 
     @Test
     @Grade(value = 1, cpuTimeout = 1000)
+    @Order(0)
     @GradeFeedback(message = "Sorry, something is wrong with your get-count, debug on small example", on = TestResultStatus.FAIL)
     public void testWordCount() {
         WordCounter wc = new WordCounter();
@@ -35,6 +38,7 @@ public class WordCounterTest {
 
     @Test
     @Grade(value = 1, cpuTimeout = 1000)
+    @Order(0)
     @GradeFeedback(message = "Sorry, something is wrong with your iterator, debug on small example", on = TestResultStatus.FAIL)
     public void testIterator() {
         WordCounter wc = new WordCounter();
@@ -56,6 +60,7 @@ public class WordCounterTest {
     // BEGIN STRIP
     @Test
     @Grade(value = 1, cpuTimeout = 1000)
+    @Order(1)
     @GradeFeedback(message = "Too slow, failed for time-complexity", on = TestResultStatus.FAIL)
     public void testTimeComplexityIterator() {
         WordCounter wc = new WordCounter();

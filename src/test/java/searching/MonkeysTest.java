@@ -8,34 +8,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
-
-import org.junit.jupiter.api.Nested;
+import org.javagrader.Grade;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@Grade
 public class MonkeysTest {
 
-
-
-    @Nested
-    class Tests {
-
-        @ParameterizedTest
-        @CsvSource({
-                "data/search.Monkeys/input_advent21.txt,  324122188240430",
-                "data/search.Monkeys/input_advent21_debug.txt, 152"
-        })
-        void test(String fname, long solution) throws Exception {
-            Instance instance = new Instance(fname,solution);
-            assertEquals(instance.solution, Monkeys.evaluateRoot(instance.lines));
-        }
+    @ParameterizedTest
+    @Grade(value=1)
+    @CsvSource({
+            "data/search.Monkeys/input_advent21.txt,  324122188240430",
+            "data/search.Monkeys/input_advent21_debug.txt, 152"
+    })
+    void test(String fname, long solution) throws Exception {
+        Instance instance = new Instance(fname,solution);
+        assertEquals(instance.solution, Monkeys.evaluateRoot(instance.lines));
     }
-
 
 
     static class Instance {
@@ -61,7 +51,6 @@ public class MonkeysTest {
         try {
             String[] lines = readLines(file);
 
-            int quality = 0;
             for (String l : lines) {
                 if (l.length() < 10) {
 
@@ -72,7 +61,6 @@ public class MonkeysTest {
                 } else {
                     // tjhg: svdh * svcm
                     String[] monkeys = l.split(":");
-                    String yellingMonkey = monkeys[0];
                     String monkey = monkeys[0];
                     monkeys[1] = monkeys[1].trim();
                     String left = monkeys[1].substring(0, 4);
@@ -91,7 +79,7 @@ public class MonkeysTest {
     public static String[] readLines(String filename) throws IOException {
         FileReader fileReader = new FileReader(filename);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
         String line = null;
         while ((line = bufferedReader.readLine()) != null) {
             lines.add(line);
@@ -99,5 +87,4 @@ public class MonkeysTest {
         bufferedReader.close();
         return lines.toArray(new String[lines.size()]);
     }
-
 }
