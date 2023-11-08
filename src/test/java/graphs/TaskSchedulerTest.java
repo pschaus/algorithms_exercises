@@ -21,10 +21,14 @@ import java.util.Random;
 
 
 
+@Grade
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TaskSchedulerTest {
 
     @Test
     @Grade(value = 1, cpuTimeout = 1000)
+    @Order(0)
     @GradeFeedback(message = "Sorry, something is wrong with your algorithm, debug first this small example", on = TestResultStatus.FAIL)
     public void testSingleTask() {
         TaskScheduler scheduler = new TaskScheduler();
@@ -34,6 +38,7 @@ public class TaskSchedulerTest {
 
     @Test
     @Grade(value = 1, cpuTimeout = 1000)
+    @Order(0)
     @GradeFeedback(message = "Sorry, something is wrong with your algorithm, debug first this small example", on = TestResultStatus.FAIL)
     public void testDependentTasksSmall() {
         TaskScheduler scheduler = new TaskScheduler();
@@ -53,6 +58,7 @@ public class TaskSchedulerTest {
 
     @Test
     @Grade(value = 3, cpuTimeout = 1000)
+    @Order(0)
     @GradeFeedback(message = "Sorry, something is wrong with your algorithm, debug first this small example", on = TestResultStatus.FAIL)
     public void testDependentTasksMedium() {
         TaskScheduler scheduler = new TaskScheduler();
@@ -75,6 +81,7 @@ public class TaskSchedulerTest {
 
     @Test
     @Grade(value = 1, cpuTimeout = 1000)
+    @Order(0)
     @GradeFeedback(message = "Sorry, something is wrong with your algorithm, debug first this small example", on = TestResultStatus.FAIL)
     public void testCyclicDependencies() {
         TaskScheduler scheduler = new TaskScheduler();
@@ -93,6 +100,7 @@ public class TaskSchedulerTest {
 
     @Test
     @Grade(value = 5, cpuTimeout = 1000)
+    @Order(1)
     @GradeFeedback(message = "Sorry, something is wrong with your algorithm, debug first this small example", on = TestResultStatus.FAIL)
     public void testRandom() {
 
@@ -138,6 +146,7 @@ public class TaskSchedulerTest {
 
     @Test
     @Grade(value = 5, cpuTimeout = 1000)
+    @Order(2)
     @GradeFeedback(message = "Time Complexity", on = TestResultStatus.FAIL)
     public void testComplexity() {
 

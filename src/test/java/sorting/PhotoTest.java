@@ -2,8 +2,6 @@ package sorting;
 
 import org.javagrader.ConditionalOrderingExtension;
 import org.javagrader.Grade;
-import org.javagrader.GradeFeedback;
-import org.javagrader.TestResultStatus;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.Random;
 
-
+@Grade
+@ExtendWith(ConditionalOrderingExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PhotoTest {
     // BEGIN STRIP
     Random r = new Random(31235657);
@@ -22,6 +22,7 @@ public class PhotoTest {
     
     @Test
     @Grade(value = 1)
+    @Order(0)
     public void testExampleTrue() {
         int [] teamA = new int[]{170, 155, 162, 184};
         int [] teamB = new int[]{160, 172, 190, 185};
@@ -31,6 +32,7 @@ public class PhotoTest {
     
     @Test
     @Grade(value = 1)
+    @Order(0)
     public void testExampleFalse() {
         int [] teamA = new int[]{144, 173, 158, 195};
         int [] teamB = new int[]{152, 169, 165, 189};
@@ -66,6 +68,7 @@ public class PhotoTest {
 
     @Test
     @Grade(value = 6, cpuTimeout = 1000)
+    @Order(1)
     public void testSmall() {
         for (int i = 0; i < 1000; i++) {
             int [] teamA =randomArrayEven(100);
@@ -77,6 +80,7 @@ public class PhotoTest {
     
     @Test
     @Grade(value = 6, cpuTimeout = 1000)
+    @Order(2)
     public void testComplexity() {
         for (int i = 0; i < 1000; i++) {
             int [] teamA =randomArrayEven(100);
@@ -95,6 +99,7 @@ public class PhotoTest {
     
     @Test
     @Grade(value = 6)
+    @Order(2)
     public void testSymmetry() {
         for (int i = 0; i < 100; i++) {
             int [] teamA = randomArrayOdd(100);
@@ -114,7 +119,7 @@ public class PhotoTest {
     public static int expected(int [] teamA, int [] teamB) {
         Arrays.sort(teamA);
         Arrays.sort(teamB);
-        boolean a_front = teamA[0] < teamB[0] ? true : false;
+        boolean a_front = teamA[0] < teamB[0];
         int sum = 0;
         for (int i = 0; i < teamA.length; i++) {
             if (teamA[i] == teamB[i]) {

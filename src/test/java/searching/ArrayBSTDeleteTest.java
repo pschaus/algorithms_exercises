@@ -68,7 +68,7 @@ public class ArrayBSTDeleteTest {
 
         assertEquals('G',bst.get(5));
         assertEquals('E',bst.get(8));
-        assertEquals(null,bst.get(16)); // key not present
+        assertNull(bst.get(16)); // key not present
 
         assertTrue(bst.values.size() <= 5);
 
