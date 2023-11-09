@@ -139,12 +139,14 @@ public class ArrayBSTDelete<Key extends Comparable<Key>, Value> {
      * NONE if not present
      */
     private int getNodeIndex(Key key) {
-        int i = 0;
-        while (i != NONE) {
-            int cmp = key.compareTo(keys.get(i));
-            if (cmp == 0) return i;
-            else if (cmp < 0) i = idxLeftNode.get(i);
-            else i = idxRightNode.get(i);
+        if (!keys.isEmpty()) {
+            int i = 0;
+            while (i != NONE) {
+                int cmp = key.compareTo(keys.get(i));
+                if (cmp == 0) return i;
+                else if (cmp < 0) i = idxLeftNode.get(i);
+                else i = idxRightNode.get(i);
+            }
         }
         return NONE;
     }
