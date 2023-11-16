@@ -93,7 +93,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
      * Returns the element that was removed from the list.
      */
     public Item remove(int index) {
-        // BEGIN STUDENT return null;
+        // STUDENT return null;
         // BEGIN STRIP
         nOp++;
         if (index < 0 || index >= size()) {
@@ -145,7 +145,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
 
         @Override
         public boolean hasNext() {
-            // BEGIN STUDENT return false;
+            // STUDENT return false;
             // BEGIN STRIP
             return current != last.next;
             // END STRIP
@@ -153,7 +153,7 @@ public class CircularLinkedList<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            // BEGIN STUDENT return null;
+            // STUDENT return null;
             // BEGIN STRIP
             if (nOp() != nOp) throw new ConcurrentModificationException();
             if (!hasNext()) throw new NoSuchElementException();

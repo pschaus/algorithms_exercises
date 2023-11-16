@@ -55,15 +55,18 @@ jobs:
           cd algorithms_exercises_students
       - name: Compiling source code for students
         run: |
+          cd algorithms_exercises_students
           mvn compile
       - name: Compiling test for the students
         run: |
+          cd algorithms_exercises_students
           mvn test-compile
       - name: Publishing the student repo if there were changes
         env:
           MY_SSH_KEY: ${{ secrets.MY_SSH_KEY }}
           #KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
         run: |
+          cd algorithms_exercises_students
           # git diff --exit-code is the normal git diff command but return 0 if there are no changes, or 1 if there are
           # This avoid crashing when we do a commit on something that is not pushed on the student repo
           if git diff --exit-code >> /dev/null;
