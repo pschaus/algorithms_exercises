@@ -30,7 +30,6 @@ public class RabinKarp {
 
 
     // STUDENT private String pat; // pattern (only needed for Las Vegas)
-
     // STUDENT private long patHash; // pattern hash value
 
 
@@ -43,10 +42,8 @@ public class RabinKarp {
     private long RM; // R^(M-1) % Q
 
     public RabinKarp(String[] pat) {
-
-
-        // STUDENT this.pat = pat; // save pattern (only needed for Las Vegas)
-        // STUDENT this.M = pat.length();
+        // STUDENT this.pat = pat[0]; // save pattern (only needed for Las Vegas)
+        // STUDENT this.M = this.pat.length();
         // BEGIN STRIP
         this.M = pat[0].length();
         // END STRIP

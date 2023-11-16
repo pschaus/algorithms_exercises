@@ -92,7 +92,7 @@ public abstract class FList<A> implements Iterable<A> {
     // return a list on which only the elements that satisfies predicate are kept
     public final FList<A> filter(Predicate<A> f) {
         // TODO
-        // STUDENT return null;;
+        // STUDENT return null;
         // BEGIN STRIP
         if (isEmpty()) {
             return nil();

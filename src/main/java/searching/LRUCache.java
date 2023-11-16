@@ -1,4 +1,5 @@
-package searching;// BEGIN STRIP
+package searching;
+// BEGIN STRIP
 import java.util.HashMap;
 import java.util.LinkedList;
 // END STRIP
