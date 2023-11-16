@@ -13,9 +13,9 @@ import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.HashMap;
+//END STRIP
 
 import static org.junit.jupiter.api.Assertions.*;
-//END STRIP
 
 @Grade
 public class LinearProbingHashSTTest {

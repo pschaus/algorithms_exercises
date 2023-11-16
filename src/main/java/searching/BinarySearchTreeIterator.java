@@ -105,8 +105,10 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
         private int size;
         // Internal stack used to keep track of the ancestors of the current node
         private Stack<BSTNode<Key>> stack;
+		// END STRIP
 
         public BSTIterator() {
+			// BEGIN STRIP
             this.stack = new Stack<>();
             BSTNode<Key> current = root;
             while (current != null) {
@@ -114,21 +116,28 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
                 current = current.getLeft();
             }
             this.size = size();
-
+			// END STRIP
         }
 
         @Override
         public boolean hasNext() {
+			// TODO
+			// STUDENT return false;
+			// BEGIN STRIP
             // The size of the tree has changed since the creation of the iterator.
             // It means that the tree has been modified (safe since no deletion allowed)
             if (this.size != size()) {
                 throw new ConcurrentModificationException();
             }
             return !this.stack.isEmpty();
+			// END STRIP
         }
 
         @Override
         public Key next() {
+			// TODO
+			// STUDENT return null;
+			// BEGIN STRIP
             if (this.size != size()) {
                 throw new ConcurrentModificationException();
             }
@@ -148,8 +157,8 @@ public class BinarySearchTreeIterator<Key extends Comparable<Key>> implements It
                 }
             }
             return key;
+        	// END STRIP
         }
-        // END STRIP
     }
 
     class BSTNode<K extends Comparable<K>> {

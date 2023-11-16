@@ -143,5 +143,6 @@ public class BinarySearchTreeIteratorTest {
             }
         }
     }
+	// END STRIP
 }
 

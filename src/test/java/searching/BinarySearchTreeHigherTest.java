@@ -24,7 +24,9 @@ import java.util.stream.Stream;
 @Grade
 public class BinarySearchTreeHigherTest {
     
+	// BEGIN STRIP
     private static final Random random = new Random(699645);
+	// END STRIP
     
     @Test
     @Grade(value=5)
