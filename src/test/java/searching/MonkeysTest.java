@@ -19,8 +19,8 @@ public class MonkeysTest {
     @ParameterizedTest
     @Grade(value=1)
     @CsvSource({
-            "data/search.Monkeys/input_advent21.txt,  324122188240430",
-            "data/search.Monkeys/input_advent21_debug.txt, 152"
+            "data/searching.Monkeys/input_advent21.txt,  324122188240430",
+            "data/searching.Monkeys/input_advent21_debug.txt, 152"
     })
     void test(String fname, long solution) throws Exception {
         Instance instance = new Instance(fname,solution);
