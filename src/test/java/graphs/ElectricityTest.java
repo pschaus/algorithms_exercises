@@ -3,12 +3,14 @@ package graphs;
 import org.javagrader.Grade;
 import org.javagrader.GradeFeedback;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 import java.io.FileInputStream;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -50,13 +52,13 @@ public class ElectricityTest {
     }
 
     @Test
-    @Grade(value = 1, cpuTimeout = 1000)
+    @Grade(value = 1, cpuTimeout = 2000, unit = TimeUnit.MILLISECONDS)
     public void ComplexityTest(){
         List<Edge> graph = new ArrayList<>();
 
         int answer = 0;
         Random r = new Random();
-        for(int i = 0; i < 10000000; i++) {
+        for(int i = 0; i < 5000000; i++) { // max for n log n
             int weight = r.nextInt(100);
             answer += weight;
             graph.add(new Edge(i, i+1, weight));
@@ -68,7 +70,7 @@ public class ElectricityTest {
     }
 
     @ParameterizedTest
-    @Grade(value = 1, cpuTimeout = 1000)
+    @Grade(value = 1, cpuTimeout = 1000, unit = TimeUnit.MILLISECONDS)
     @Order(1)
     @MethodSource("dataProvider")
     @GradeFeedback(message = "Your method does not return the good value")
