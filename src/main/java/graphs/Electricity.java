@@ -101,7 +101,7 @@ public class Electricity {
         }
 
         int find(int a) {
-            return parent[a] == a ? a : (parent[a] = find(parent[a]));
+             return parent[a] == a ? a : (parent[a] = find(parent[a]));
         }
 
         void union(int a, int b) {
