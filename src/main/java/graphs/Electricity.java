@@ -9,7 +9,8 @@ import java.util.*;
  * Unfortunately, the engineers have not provided you with the plans for the city's electrical network.
  * All you know is the size of the electrical wires between each city.
  * You are well aware that the cost associated with the electrical wires is enormous.
- * Therefore, you want to minimize these costs throughout the entire electrical network.
+ * Therefore, you want to minimize these costs throughout the entire electrical network. In a such way
+ * that each city is connected by one wire.
  *
  *                                   ┌───────┐
  *                                   │       │
