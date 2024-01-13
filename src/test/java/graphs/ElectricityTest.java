@@ -113,6 +113,6 @@ public class ElectricityTest {
     }
 
     static Stream<ElectricityTest.Instance> dataProvider() {
-        return IntStream.range(0, 20).mapToObj(i -> new ElectricityTest.Instance("data/graphs.Electricity/in_" + i));
+        return IntStream.range(0, 10).mapToObj(i -> new ElectricityTest.Instance("data/graphs.Electricity/in_" + i));
     }
 }

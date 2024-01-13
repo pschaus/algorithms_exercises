@@ -30,15 +30,18 @@ import java.util.*;
  */
 
 public class Electricity {
+
     // BEGIN STRIP
     private int min_cost = 0;
-    // END TRIP
+
+    // END STRIP
 
     /**
      * @param network list of edges in the network
      */
     public Electricity(List<Edge> network) {
         //TODO
+
         // BEGIN STRIP
         UnionFind uf = new UnionFind(network.size() + 1);
 
