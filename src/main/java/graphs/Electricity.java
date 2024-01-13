@@ -68,7 +68,7 @@ public class Electricity {
         // TODO
         // STUDENT return -1;
         // BEGIN STRIP
-        return this.min_cost;
+         return this.min_cost;
         // END STRIP
     }
 
