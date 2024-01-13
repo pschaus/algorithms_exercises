@@ -54,13 +54,17 @@ public class ElectricityTest {
     public void ComplexityTest(){
         List<Edge> graph = new ArrayList<>();
 
+        int answer = 0;
+        Random r = new Random();
         for(int i = 0; i < 10000000; i++) {
-            graph.add(new Edge(i, i+1, 1));
+            int weight = r.nextInt(100);
+            answer += weight;
+            graph.add(new Edge(i, i+1, weight));
         }
 
         Electricity student = new Electricity(graph);
 
-        assertEquals(student.getMinCost(), 10000000);
+        assertEquals(student.getMinCost(), answer);
     }
 
     @ParameterizedTest
