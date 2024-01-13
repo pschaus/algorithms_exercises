@@ -33,6 +33,10 @@ public class Electricity {
     // BEGIN STRIP
     private int min_cost = 0;
     // END TRIP
+
+    /**
+     * @param network list of edges in the network
+     */
     public Electricity(List<Edge> network) {
         //TODO
         // BEGIN STRIP
@@ -52,6 +56,10 @@ public class Electricity {
         // END STRIP
     }
 
+    /**
+     * Returns the minimum cost in the network
+     * @returns minimum cost in the network
+     */
     int getMinCost() {
         // TODO
         // STUDENT return -1;
