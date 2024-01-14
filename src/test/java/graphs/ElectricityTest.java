@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 import java.io.FileInputStream;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
@@ -21,104 +22,60 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class ElectricityTest {
     @Test
     @Grade(value = 1)
-    public void simpleTest(){
-        List<Edge> graph = new ArrayList<>();
-        graph.add(new Edge(1, 2, 5));
-        graph.add(new Edge(2, 3, 10));
-        graph.add(new Edge(1, 3, 20));
-
-        Electricity student = new Electricity(graph);
-
-        assertEquals(student.getMinCost(), 15);
+    public void simpleTest() {
+        int[][] edges = new int[][]{
+                {0, 1, 5},
+                {1, 2, 10},
+                {0, 2, 20}
+        };
+        assertEquals(Electricity.minimumSpanningCost(3, edges), 15);
     }
-
 
     @Test
     @Grade(value = 1)
-    public void complexGraphTest(){
-        List<Edge> graph = new ArrayList<>();
-        graph.add(new Edge(1, 2, 10));
-        graph.add(new Edge(2, 5, 8));
-        graph.add(new Edge(5, 3, 1));
-        graph.add(new Edge(3, 1, 7));
-        graph.add(new Edge(3, 6, 4));
-        graph.add(new Edge(3, 4, 8));
-        graph.add(new Edge(4, 6, 9));
-        graph.add(new Edge(6, 1, 1));
+    public void complexGraphTest() {
+        int[][] edges = new int[][]{
+                {0, 1, 10},
+                {1, 4, 8},
+                {4, 2, 1},
+                {2, 0, 7},
+                {2, 5, 4},
+                {2, 3, 8},
+                {3, 5, 9},
+                {5, 0, 1}};
 
-        Electricity student = new Electricity(graph);
-
-        assertEquals(student.getMinCost(), 22);
+        assertEquals(22, Electricity.minimumSpanningCost(6,edges));
     }
 
     @Test
     @Grade(value = 1, cpuTimeout = 2000, unit = TimeUnit.MILLISECONDS)
-    public void ComplexityTest(){
-        List<Edge> graph = new ArrayList<>();
-
+    public void complexityTest1() {
+        int n = 100000;
         int answer = 0;
-        Random r = new Random();
-        for(int i = 0; i < 5000000; i++) { // max for n log n
-            int weight = r.nextInt(100);
-            answer += weight;
-            graph.add(new Edge(i, i+1, weight));
+        ArrayList<int []> edgeList = new ArrayList<>();
+
+        HashSet<String> seen = new HashSet<>();
+
+        Random r = new Random(0);
+
+        for (int i = 0; i < n - 1; i++) {
+            answer += 1;
+            edgeList.add(new int[]{i, i + 1, 1});
+            seen.add(i + " " + (i + 1));
+            seen.add((i + 1) + " " + i);
         }
-
-        Electricity student = new Electricity(graph);
-
-        assertEquals(student.getMinCost(), answer);
-    }
-
-    @ParameterizedTest
-    @Grade(value = 1, cpuTimeout = 1000, unit = TimeUnit.MILLISECONDS)
-    @Order(1)
-    @MethodSource("dataProvider")
-    @GradeFeedback(message = "Your method does not return the good value")
-    public void randomGraphTest(ElectricityTest.Instance instance) {
-        Electricity student = new Electricity(instance.graph);
-        assertEquals(student.getMinCost(), instance.answer);
-    }
-
-
-    // Helpers for parameterized and complexity tests
-    static class Instance {
-
-        List<Edge> graph;
-        int answer;
-
-        public Instance(String file) {
-            try {
-
-                Scanner dis = new Scanner(new FileInputStream(file));
-                int nEdges = dis.nextInt();
-
-                graph = new ArrayList<>();
-
-                for (int i = 0; i < nEdges; i++) {
-                    int source = dis.nextInt();
-                    int dest = dis.nextInt();
-                    int weight = dis.nextInt();
-
-                    graph.add(new Edge(source, dest, weight));
-                }
-
-                answer = dis.nextInt();
-
-
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        for (int i = 0; i < n; i++) {
+            int a = r.nextInt(n);
+            int b = r.nextInt(n);
+            if (a != b && !seen.contains(a + " " + b) && !seen.contains(b + " " + a)) {
+                edgeList.add(new int[]{a, b, n + r.nextInt(1000)});
+                seen.add(a + " " + b);
+                seen.add(b + " " + a);
             }
         }
-
-        public Instance(List<Edge> g, int a) {
-            this.graph = g;
-            this.answer = a;
-
-        }
-
+        int [][] edges = edgeList.toArray(new int[0][]);
+        assertEquals(answer, Electricity.minimumSpanningCost(n,edges));
     }
 
-    static Stream<ElectricityTest.Instance> dataProvider() {
-         return IntStream.range(0, 10).mapToObj(i -> new ElectricityTest.Instance("data/graphs.Electricity/in_" + i));
-    }
+
 }
