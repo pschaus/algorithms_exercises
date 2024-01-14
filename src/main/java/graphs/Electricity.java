@@ -67,7 +67,7 @@ public class Electricity {
         // TODO
         // STUDENT return -1;
         // BEGIN STRIP
-        return this.min_cost;
+         return this.min_cost;
         // END STRIP
     }
 
@@ -100,7 +100,7 @@ public class Electricity {
         }
 
         int find(int a) {
-            return parent[a] == a ? a : (parent[a] = find(parent[a]));
+             return parent[a] == a ? a : (parent[a] = find(parent[a]));
         }
 
         void union(int a, int b) {
