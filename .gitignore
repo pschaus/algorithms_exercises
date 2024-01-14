@@ -26,3 +26,5 @@ hs_err_pid*
 inginious/
 stripped_project/
 target/
+.idea/
+LINFO1121-0821_p1.iml
