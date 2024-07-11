@@ -51,7 +51,7 @@ def strip_file(filename, outfile=None):
                 pruning = False
                 continue
             if not pruning:
-                fout.write(re.sub('\/\/.*STUDENT(S?)', "", line))
+                fout.write(re.sub('//.*STUDENT(S?)', "", line))
 
 
 def strip_directory(path):
