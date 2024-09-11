@@ -15,8 +15,9 @@ package sorting;
  * Specifically, a node at index i has three children at indices 3i+1, 3i+2, and 3i+3.
  * It is assumed that the root is at index 0 in the array.
  *
- * For instance, consider a heap with a capacity of 6. After inserting numbers <8,2,3,8,9> in this order, the array content should be as follows:
- *  content: [9, 8, 3, 8, 2, 0], the size = 5 and the heap looks like this :
+ * For instance, consider a heap with a capacity of 6. After inserting numbers <8,2,3,8,9> in this order,
+ * the array content could be as follows:
+ * content: [9, 8, 3, 8, 2, 0], the size = 5 and the heap looks like this :
  *
  *                                                  9
  *                                                  |
@@ -26,7 +27,8 @@ package sorting;
  *                                       |
  *                                       2
  *
- * Now after deleting the max, the array content should be content : [8, 2, 3, 8, (9), 0] and the size = 4 and the heap :
+ * Now after deleting the max, the array content could be :
+ * content [8, 2, 3, 8, (9), 0] and the size = 4 and the heap :
  *                                                  8
  *                                                  |
  *                                        ----------------------
@@ -53,7 +55,10 @@ public class TernaryHeap {
     // Array representing the heap. This is where all the values must be added
     // let this variable protected so that it can be accessed from the test suite
     protected int[] content;
-    int size;
+
+    // BEGIN STRIP
+    private int size;
+    // END STRIP
 
 
     /**
@@ -62,8 +67,10 @@ public class TernaryHeap {
      */
     public TernaryHeap(int capacity) {
         // TODO
+        // BEGIN STRIP
         this.content = new int[capacity];
-        this.size = 0;
+        size = 0;
+        // END STRIP
     }
 
     /**
@@ -71,13 +78,10 @@ public class TernaryHeap {
      */
     public int size() {
         // TODO
+        // STUDENT return -1;
+        // BEGIN STRIP
         return size;
-    }
-
-    public void swap(int ind1, int ind2){
-        int temp = content[ind2];
-        content[ind2] = content[ind1];
-        content[ind1] = temp;
+        // END STRIP
     }
 
 
@@ -88,43 +92,11 @@ public class TernaryHeap {
      */
     public void insert(int x) {
         // TODO
-        System.out.printf("inserting: %d\n", x);
-        if(size == content.length){
-            int[] doubled = new int[content.length*2];
-            for (int i = 0; i < content.length; i++) {
-                doubled[i] = content[i];
-            }
-            content = doubled;
-        }
-        content[size] = x;
-        if(size > 0){
-            int parent = (size-1)/3;
-            System.out.printf("parent: %d\n", parent);
-            while(x > content[parent]){
-                System.out.printf("parent: %d\n", parent);
-                swap(size, (size-1)/3);
-                if(parent > 0){
-                    parent = (parent-1)/3;
-                }else if(parent <= 0){
-                    parent = 0;
-                }
-            }
-        }
-        size++;
-    }
-
-    public int chooseChild(int parent){
-        int child1 = content[3*parent +1];
-        int child2 = content[3*parent +2];
-        int child3 = content[3*parent +3];
-        if(child1 - child2 >= 0 && child1 - child3 >= 0){
-            return 3*parent + 1;
-        }else if(child2 - child1 >= 0 && child2 - child3 >= 0){
-            return 3*parent + 2;
-        }else if(child3 - child2 >= 0 && child3 - child1 >= 0){
-            return 3*parent + 3;
-        }
-        return 0;
+        // STUDENT
+        // BEGIN STRIP
+        content[size++] = x;
+        swim(size-1);
+        // END STRIP
     }
 
     /**
@@ -133,33 +105,13 @@ public class TernaryHeap {
      */
     public int delMax() {
         // TODO
-        int toRet = content[0];
-        int i = 0;
-        while(3*i +3 < size){
-            int child = chooseChild(i);
-            swap(i, child);
-            i = child;
-        }
-        if(3*i +2 < size){
-            int child1 = content[3*i +1];
-            int child2 = content[3*i +2];
-            if(child1 - child2 >= 0){
-                swap(i, child1);
-                i = child1;
-            }else{
-                swap(i, child2);
-                i = child2;
-            }
-        }else if(3*i +1 < size){
-            swap(i, 3*i +1);
-            i = 3*i + 1;
-        }
-        while(i <= size-1){
-            swap(i, i+1);
-            i = i+1;
-        }
-        size--;
-        return toRet;
+        // STUDENT return Integer.MIN_VALUE;
+        // BEGIN STRIP
+        int max = content[0];
+        swap(0, --size);
+        sink(0);
+        return max;
+        // END STRIP
     }
 
     /**
@@ -167,8 +119,70 @@ public class TernaryHeap {
      */
     public int getMax() {
         // TODO
+        // STUDENT return Integer.MIN_VALUE;
+        // BEGIN STRIP
         return content[0];
+        // END STRIP
     }
 
+    // BEGIN STRIP
+    /**
+     * Swap the values at index i and j
+     * @param i : the index of the first value
+     * @param j : the index of the second value
+     */
+    private void swap(int i, int j) {
+        int temp = content[i];
+        content[i] = content[j];
+        content[j] = temp;
+    }
+
+    /**
+     * Move the node at index k up the tree until it is smaller than its parent
+     * @param k : the index of the node to move up
+     */
+    private void swim(int k) {
+        int parent = (k-1)/3;
+        while (parent >=0 && content[parent] < content[k]) {
+            swap(k, parent);
+            k = parent;
+            parent = (k-1)/3;
+        }
+    }
+
+    /**
+     * Move the node at index k down the tree until it is bigger than its children
+     * @param k : the index of the node to move down
+     */
+    private void sink(int k) {
+
+        while (3*k < size) {
+            int largest = largestChild(k);
+            if (largest == -1) break;
+            if (content[k] >= content[largest]) break;
+            swap(k, largest);
+            k = largest;
+        }
+    }
+
+    /**
+     * Get the biggest child of the node at index i
+     * @param i : the index of the node
+     * return the index of the smallest child of the node at index i
+     */
+    private int largestChild(int i) {
+        if (3 * i +1 > size - 1) return -1;
+        int index = 3 * i + 1;
+        int max = content[index];
+        int maxIndex = index;
+        for (int j : new int[]{index + 1, index + 2}) {
+            if (j < size && content[j] > max) {
+                maxIndex = j;
+                max = content[j];
+            }
+        }
+        return maxIndex;
+    }
+    // END STRIP
 
 }
