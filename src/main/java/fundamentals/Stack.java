@@ -152,6 +152,10 @@ class ArrayStack<E> implements Stack<E> {
             E ret = array[size-1];
             size--;
             array[size] = null; // so that the object can possibly be garbage collected
+            // Resize the array if size is less than half the length
+            if (size > 0 && size <= array.length / 2) {
+                resize(array.length / 2);
+            }
             return ret;
         }
         // END STRIP
@@ -162,13 +166,18 @@ class ArrayStack<E> implements Stack<E> {
         // TODO Implement push method
         // BEGIN STRIP
         if (size == array.length) {
-            // doubling the size
-            E newArray[] = (E[]) new Object[size*2];
-            System.arraycopy(array, 0, newArray, 0, size);
-            array = newArray;
+            resize(array.length * 2); // doubling the size of the array
         }
         array[size++] = item;
         // END STRIP
     }
+
+    // BEGIN STRIP
+    private void resize(int newCapacity) {
+        E[] newArray = (E[]) new Object[newCapacity];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
+    }
+    // END STRIP
 }
 
