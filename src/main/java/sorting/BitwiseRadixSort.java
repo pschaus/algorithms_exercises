@@ -59,7 +59,7 @@ public class BitwiseRadixSort {
             aux[count[getBit(arr[i], bitIndex) + 1]++] = arr[i];
         }
 
-        // Step 4: Rearrange the array based on whether it's the first call
+        // Rearrange the array based on whether it's the first call
         if (isFirstCall) {
             // On the first call, move elements with the most significant bit set to the beginning (for negative numbers)
             int[] adjustedCounts = new int[R + 2];
