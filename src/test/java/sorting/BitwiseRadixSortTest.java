@@ -20,6 +20,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(1)
+    @Grade(value = 1)
     public void testExample() {
         int [] arr = new int[]{5, 10, 1, 75, -10, -23};
         BitwiseRadixSort sorter = new BitwiseRadixSort();
@@ -29,6 +30,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(2)
+    @Grade(value = 1)
     public void testEmpty() {
         int [] arr = new int[]{};
         BitwiseRadixSort sorter = new BitwiseRadixSort();
@@ -38,6 +40,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(2)
+    @Grade(value = 1)
     public void testOneNumber(){
         int [] arr = new int[]{1};
         BitwiseRadixSort sorter = new BitwiseRadixSort();
@@ -47,6 +50,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(2)
+    @Grade(value = 1)
     public void testPositiveNumbers(){
         int size = 100;
         int [] arr = generateRandomNumber(size, 0, 1000);
@@ -60,6 +64,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(2)
+    @Grade(value = 1)
     public void testNegativeNumbers(){
         int size = 100;
         int [] arr = generateRandomNumber(size, -1000, -1);
@@ -73,6 +78,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(2)
+    @Grade(value = 1)
     public void testMixSignedNumbers(){
         int size = 1000;
         int [] arr = generateRandomNumber(size, -10000, 10000);
@@ -86,6 +92,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(2)
+    @Grade(value = 1)
     public void testSameNumbers(){
         int size = 100;
         Random random = new Random();
@@ -102,6 +109,7 @@ public class BitwiseRadixSortTest {
 
     @Test
     @Order(3)
+    @Grade(value = 1, cpuTimeout = 1000)
     public void testLargeNumbers(){
         int size = 100000;
         int [] arr = generateRandomNumber(size, -size, size);
