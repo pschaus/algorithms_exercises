@@ -1,5 +1,7 @@
 package sorting;
 
+import java.util.PriorityQueue;
+
 /**
  * In this task you need to implement a structure to store values such as :
  * - insertion is done in logarithmic time
@@ -16,102 +18,19 @@ package sorting;
 public class MedianHeap {
     // BEGIN STRIP
 
-    /**
-     * Implementation of a binary heap that keep the minimal
-     * value at its root
-     */
-    private class Heap {
-        public int size;
-        public int[] content;
-
-        public Heap(int initialSize) {
-            this.size = 0;
-            this.content = new int[initialSize];
-        }
-
-        /**
-         * Insertion of a new value in the heap
-         * Complexity O(log(n)) with n the size of this heap
-         * @param value the value to insert
-         */
-        public void insertion(int value) {
-            if (this.size == this.content.length) this.increaseSize();
-            this.content[this.size++] = value;
-            swim(this.size-1);
-        }
-
-        /**
-         * Doubles the available size of this binary heap
-         */
-        public void increaseSize() {
-            int[] newContent = new int[this.size*2];
-            System.arraycopy(this.content, 0, newContent, 0, this.content.length);
-            this.content = newContent;
-        }
-
-        /**
-         * Move the node at index k down the tree until it is lower than its children
-         * Complexity O(log(n)) with n the size of this heap
-         * @param k : the index of the node to move down
-         */
-        private void sink(int k) {
-            while (2*k < this.size) {
-                int lowestChild = 2*k;
-                if (2*k+1 < this.size && this.content[2*k] > this.content[2*k+1]) lowestChild = 2*k+1;
-
-                if (this.content[k] <= this.content[lowestChild]) break;
-
-                int tmp = this.content[k];
-                this.content[k] = this.content[lowestChild];
-                this.content[lowestChild] = tmp;
-                k = lowestChild;
-            }
-        }
-
-        /**
-         * Move the node at index k up the tree until it is stronger than its parent
-         * Complexity O(log(n)) with n the size of this heap
-         * @param k : the index of the node to move up
-         */
-        private void swim(int k) {
-            while (k > 0 && this.content[k] < this.content[k/2]) {
-                int tmp = this.content[k/2];
-                this.content[k/2] = this.content[k];
-                this.content[k] = tmp;
-                k = k/2;
-            }
-        }
-
-        /**
-         * Retrieve and delete the root of this heap
-         * Complexity O(log(n)) with n the size of this heap
-         * @return the root of this heap
-         */
-        private int pullRoot() {
-            assert this.size > 0;
-            int root = this.content[0];
-            this.content[0] = this.content[--this.size];
-            sink(0);
-
-            return root;
-        }
-
-        public int getRoot() {return this.content[0];}
-    }
-
     // internal heap containing the value < to the median
-    private Heap lHeap;
+    private PriorityQueue<Integer> lHeap;
 
     // internal heap containing the value >= to the median
-    private Heap rHeap;
+    private PriorityQueue<Integer> rHeap;
 
     // END STRIP
 
     public MedianHeap(int initialSize) {
         // TODO
         // BEGIN STRIP
-        lHeap = new Heap(initialSize/2);
-        rHeap = new Heap(initialSize/2);
+        lHeap = new PriorityQueue<>(initialSize/2);
+        rHeap = new PriorityQueue<>(initialSize/2);
         // END STRIP
     }
 
@@ -126,8 +45,9 @@ public class MedianHeap {
         // BEGIN STRIP
         // all value in lHeap are represented by their opposite,
         // hence lHeap keeps the largest value at its root
-        if (value < rHeap.getRoot()) lHeap.insertion(-value);
-        else rHeap.insertion(value);
+        if (rHeap.isEmpty()) rHeap.add(value);
+        else if (value < rHeap.peek()) lHeap.add(-value);
+        else rHeap.add(value);
 
         // For the median to be at the root of rHeap,
         // we need that lHeap.length == rHeap.length - 1
@@ -148,14 +68,14 @@ public class MedianHeap {
      * the lowly loaded heap
      */
     private void balanceHeaps() {
-        if (lHeap.size > rHeap.size) {
-            int root = -lHeap.pullRoot();
-            rHeap.insertion(root);
+        if (lHeap.size() > rHeap.size()) {
+            int root = -lHeap.poll();
+            rHeap.add(root);
         }
 
-        if (lHeap.size + 1 < rHeap.size) {
-            int root = rHeap.pullRoot();
-            lHeap.insertion(-root);
+        if (lHeap.size() + 1 < rHeap.size()) {
+            int root = rHeap.poll();
+            lHeap.add(-root);
         }
     }
     // END STRIP
@@ -170,7 +90,7 @@ public class MedianHeap {
         // STUDENT return -1;
 
         // BEGIN STRIP
-        return rHeap.getRoot();
+        return rHeap.peek();
         // END STRIP
     }
 
@@ -183,7 +103,7 @@ public class MedianHeap {
         // TODO
         // STUDENT return -1;
         // BEGIN STRIP
-        int median = rHeap.pullRoot();
+        int median = rHeap.poll();
         balanceHeaps();
         return median;
         // END STRIP
