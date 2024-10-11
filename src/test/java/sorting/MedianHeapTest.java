@@ -19,7 +19,6 @@ import java.util.*;
 @Grade
 public class MedianHeapTest {
 
-
     @Test
     @Grade(value=1, cpuTimeout=1000)
     @GradeFeedback(message="The median element is not always at the root of the tree !")
@@ -76,7 +75,7 @@ public class MedianHeapTest {
         for (Integer index: indices) {
             heap.insertion(pushedValues.get(index));
         }
-        while (pushedValues.size() > 0) {
+        while (!pushedValues.isEmpty()) {
             if (pushedValues.size() % 2 == 1) {
                 assertEquals(pushedValues.get((pushedValues.size() - 1) / 2), heap.deleteMedian());
                 pushedValues.remove((pushedValues.size() - 1)/2);
