@@ -41,47 +41,78 @@ public class MedianHeapTest {
         assertEquals(-2, heap.deleteMedian());
     }
 
-    @Test
-    @Grade(value=1, cpuTimeout=1000)
-    @GradeFeedback(message="Do not forget to resize if needed")
-    @Order(1)
-    public void testExampleResize() {
-        MedianHeap heap = new MedianHeap(10);
-        for (int i = 0; i < 20; i++) {
-            heap.insertion(i);
-        }
-    }
 
     // BEGIN STRIP
     @Test
-    @Grade(value=1, cpuTimeout=700)
+    @Grade(value=1, cpuTimeout=1)
     @GradeFeedback(message="Your structure is to slow, check your complexity")
     @Order(2)
-    public void testComplexity() {
+    public void testComplexityInsertionAndFind() {
         int seed = 658846465;
         Random random = new Random(seed);
-        MedianHeap heap = new MedianHeap(10);
-        int strongerValuePushed = -30;
-        int numberValue = 10000;
-        List<Integer> pushedValues = new LinkedList<>();
-        List<Integer> indices = new ArrayList<>();
-        for (int i = 0; i < numberValue; i++) {
-            strongerValuePushed = strongerValuePushed + random.nextInt(15);
-            pushedValues.add(strongerValuePushed);
-            indices.add(i);
-        }
+        int testNbr = 30;
+        for (int test = 0; test < testNbr; test++) {
+            MedianHeap heap = new MedianHeap(10);
+            int strongerValuePushed = -30;
+            int numberValue = 10000; // number of values that will be inserted in the Heap
 
-        Collections.shuffle(indices);
-        for (Integer index: indices) {
-            heap.insertion(pushedValues.get(index));
-        }
-        while (!pushedValues.isEmpty()) {
+
+            List<Integer> pushedValues = new LinkedList<>();
+            List<Integer> indices = new ArrayList<>(numberValue);
+            for (int i = 0; i < numberValue; i++) {
+                strongerValuePushed = strongerValuePushed + random.nextInt(15);
+                pushedValues.add(strongerValuePushed);
+                indices.add(i);
+            }
+
+            Collections.shuffle(indices);
+            for (Integer index : indices) {
+                heap.insertion(pushedValues.get(index));
+            }
             if (pushedValues.size() % 2 == 1) {
-                assertEquals(pushedValues.get((pushedValues.size() - 1) / 2), heap.deleteMedian());
-                pushedValues.remove((pushedValues.size() - 1)/2);
+                assertEquals(pushedValues.get((pushedValues.size() - 1) / 2), heap.findMedian());
+                pushedValues.remove((pushedValues.size() - 1) / 2);
             } else {
-                assertEquals(pushedValues.get(pushedValues.size()/2), heap.deleteMedian());
-                pushedValues.remove(pushedValues.size()/2);
+                assertEquals(pushedValues.get(pushedValues.size() / 2), heap.findMedian());
+                pushedValues.remove(pushedValues.size() / 2);
+            }
+        }
+    }
+
+    @Test
+    @Grade(value=1, cpuTimeout=5)
+    @GradeFeedback(message="Your structure is to slow, check your complexity")
+    @Order(2)
+    public void testComplexityInsertionAndDelete() {
+        int seed = 658846465;
+        Random random = new Random(seed);
+        int testNbr = 30;
+        for (int test = 0; test < testNbr; test++) {
+            MedianHeap heap = new MedianHeap(10);
+            int strongerValuePushed = -30;
+            int numberValue = 10000; // number of values that will be inserted in the Heap
+
+
+            List<Integer> pushedValues = new LinkedList<>();
+            List<Integer> indices = new ArrayList<>(numberValue);
+            for (int i = 0; i < numberValue; i++) {
+                strongerValuePushed = strongerValuePushed + random.nextInt(15);
+                pushedValues.add(strongerValuePushed);
+                indices.add(i);
+            }
+
+            Collections.shuffle(indices);
+            for (Integer index : indices) {
+                heap.insertion(pushedValues.get(index));
+            }
+            while (!pushedValues.isEmpty()) {
+                if (pushedValues.size() % 2 == 1) {
+                    assertEquals(pushedValues.get((pushedValues.size() - 1) / 2), heap.deleteMedian());
+                    pushedValues.remove((pushedValues.size() - 1) / 2);
+                } else {
+                    assertEquals(pushedValues.get(pushedValues.size() / 2), heap.deleteMedian());
+                    pushedValues.remove(pushedValues.size() / 2);
+                }
             }
         }
     }
