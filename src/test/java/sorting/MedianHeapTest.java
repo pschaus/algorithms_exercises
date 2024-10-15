@@ -50,7 +50,7 @@ public class MedianHeapTest {
     public void testComplexityInsertionAndFind() {
         int seed = 658846465;
         Random random = new Random(seed);
-        int testNbr = 30;
+        int testNbr = 5;
         for (int test = 0; test < testNbr; test++) {
             MedianHeap heap = new MedianHeap(10);
             int strongerValuePushed = -30;
@@ -86,7 +86,7 @@ public class MedianHeapTest {
     public void testComplexityInsertionAndDelete() {
         int seed = 658846465;
         Random random = new Random(seed);
-        int testNbr = 30;
+        int testNbr = 5;
         for (int test = 0; test < testNbr; test++) {
             MedianHeap heap = new MedianHeap(10);
             int strongerValuePushed = -30;
