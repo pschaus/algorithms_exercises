@@ -1,12 +1,20 @@
 package sorting;
 
+// BEGIN STRIP
 import java.util.PriorityQueue;
+// END STRIP
 
 /**
- * In this task you need to implement a structure to store values such as :
- * - insertion is done in logarithmic time
- * - the median can be retrieved in constant time
- * - the median can be deleted in logarithmic time
+ * Imagine a data structure that supports :
+ * - insertion in logarithmic time
+ * - the median retrieval in constant time
+ * - median deletion in logarithmic time
+ *
+ * Hint: You can use two heaps to solve this problem.
+ *       There is no need to implement your own heap, you can
+ *       use the PriorityQueue class from Java.
+ *       Think about the clas invariant that you need to maintain
+ *       after each insertion and deletion.
  *
  * When the number of stored element is odd, the median value is the value
  * at rank n+1/2 where n is the number of element
