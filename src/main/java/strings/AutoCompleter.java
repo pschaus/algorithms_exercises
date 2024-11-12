@@ -13,12 +13,14 @@ import java.util.Queue;
  *
  * Example:
  *     // Initialize AutoCompleter with a dictionary
- *     String[] dictionary = {"cat", "car", "dog", "door"};
+ *     String[] dictionary = {"bifold", "bind","cat", "car", "dot", "dog", "bike", "bill",  };
  *     AutoCompleter completer = new AutoCompleter(dictionary);
  *
  *     // Auto-complete examples
- *     System.out.println(completer.complete("ca")); // Output: "cat"
- *     System.out.println(completer.complete("do")); // Output: "dog"
+ *     System.out.println(completer.complete("ca")); // Output: "car" since it competes with cat but is lexicographically smaller
+ *     System.out.println(completer.complete("do")); // Output: "dog" since it competes with dot but is lexicographically smaller
+ *     System.out.println(completer.complete("bi")); // Output: "bike" since it competes bill and bind but is lexicographically smaller (bifold is lexicographically smaller but longer)
+ *
  */
 public class AutoCompleter {
     private static final int R = 26;
@@ -29,7 +31,7 @@ public class AutoCompleter {
      * (one for each letter of the alphabet) and a flag is_key indicating if it represents the end of a word.
      */
     private static class Node {
-        boolean is_key = false;
+        boolean isKey = false;
         private Node[] next = new Node[R];
     }
 
@@ -81,7 +83,7 @@ public class AutoCompleter {
             node = new Node();
         }
         if (d == word.length()) {
-            node.is_key = true;
+            node.isKey = true;
             return node;
         }
         char c = word.charAt(d);
@@ -114,10 +116,17 @@ public class AutoCompleter {
     // END STRIP
 
     /**
-     * Returns the first word in the dictionary that starts with the given prefix.
+     * Returns the shortest (number of letters) word in the dictionary
+     * that starts with the given prefix.
+     * In case of ties, the lexicographically smallest word is returned.
+     *
+     * Hint: Use a queue to perform a breadth-first search starting from the last node of the prefix.
+     * If you don't know what a breadth-first search is,
+     * you can look it here https://en.wikipedia.org/wiki/Breadth-first_search
      *
      * @param prefix the prefix to search for
-     * @return the first word in the dictionary that starts with the prefix, or null if no such word is found
+     * @return the shortest word in the dictionary that starts with the prefix, or null if no such word is found.
+     *         in case of ties, the lexicographically smallest word is returned.
      */
     public String complete(String prefix) {
         // TODO
@@ -126,14 +135,14 @@ public class AutoCompleter {
         if (node == null) {  // Cannot find prefix in trie
             return null;
         }
-        if (node.is_key) {  // The prefix is a key in the trie
+        if (node.isKey) {  // The prefix is a key in the trie
             return prefix;
         }
         Queue<StringNode> q = new LinkedList<>();
         q.add(new StringNode(prefix, node));
         while (!q.isEmpty()) {
             StringNode current = q.poll();
-            if (current.node.is_key) {
+            if (current.node.isKey) {
                 return current.prefix;
             }
             for (int i = 0; i < R; i++) {

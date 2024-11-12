@@ -63,6 +63,16 @@ public class AutoCompleterTest {
 
     @Test
     @Grade(value=1)
+    public void testLexicographic() {
+         String[] dictionary = {"bifold", "bind","cat", "car", "dot", "dog", "bike", "bill",  };
+         AutoCompleter ac = new AutoCompleter(dictionary);
+         assertEquals(ac.complete("ca"), "car");
+         assertEquals(ac.complete("do"), "dog");
+         assertEquals(ac.complete("bi"), "bike");
+    }
+
+    @Test
+    @Grade(value=1)
     public void testMultipleKeysForPrefix() {
         String[] dictionary = new String[]{ "abruptly", "abrus", "abrui", "babylonite", "cinurous", "drabbing", "exocardiac"};
         AutoCompleter ac = new AutoCompleter(dictionary);
