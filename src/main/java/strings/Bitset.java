@@ -6,14 +6,21 @@ import static java.lang.Long.bitCount;
 // END STRIP
 
 /**
- * A Bitset is a data structure that efficiently represents a fixed-size sequence of bits (binary values of 0 or 1) in memory.
- * Instead of using an array of boolean values, it uses an array of long integers to store bits compactly.
- *  Each long (64 bits) can hold 64 individual bits, which allows for space-efficient storage.
+ * A Bitset is a data structure that efficiently represents a fixed-size sequence of bits (binary values 0 or 1) in memory.
+ * Rather than using an array of boolean values, it utilizes an array of long integers to store bits in a compact, memory-efficient manner.
+ * Each long integer (64 bits) can hold 64 individual bits, allowing for significant space savings.
  *
- *  Your task consists of :
- *  1. Implementing the initialization of the Bitset, calculating the necessary number of long words needed to represent the desired number of bits.
- *  2. Implementing helpers methods to set, unset and count bits in the bitsets
+ * Your tasks include:
+ * 1. Implementing the initialization of the Bitset, calculating the number of long words required to represent the specified number of bits.
+ * 2. Implementing helper methods to set, clear, and count bits within the Bitset.
  *
+ * Example:
+ * Suppose we create a Bitset with a capacity of 8 bits, with each "word" (long) holding up to 4 bits (for simplicity in illustration).
+ * The Bitset would initially be represented internally as [0000, 0000]. Performing the following operations would result in:
+ *  - set(4) : Updates state to [0000, 0001] (sets the first bit of the second word).
+ *  - set(2) : Updates state to [0100, 0001] (sets the third bit of the first word).
+ *  - set(7) : Updates state to [0100, 1001] (sets the fourth bit of the second word).
+ *  - count(): Returns 3.
  */
 public class Bitset {
 
