@@ -6,6 +6,7 @@ import org.javagrader.GradeFeedback;
 import org.javagrader.TestResultStatus;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 // BEGIN STRIP
@@ -20,7 +21,7 @@ import java.util.stream.IntStream;
 @Grade
 @ExtendWith(ConditionalOrderingExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class BitsetTests {
+public class BitsetTest {
 
     // BEGIN STRIP
     Random random = new Random(546543);
@@ -46,7 +47,7 @@ public class BitsetTests {
         assertTrue(bitset.contains(29));
 
         // All the others bits are clear
-        for (int i = 1; i < 29 ; i++) {
+        for (int i = 1; i < 29; i++) {
             assertFalse(bitset.contains(i));
         }
 
@@ -76,7 +77,7 @@ public class BitsetTests {
 
 
         // Set all first word bits
-        for (int i = 0; i < 64 ; i++) {
+        for (int i = 0; i < 64; i++) {
             bitset.set(i);
         }
         assertEquals(64, bitset.count());
@@ -126,10 +127,10 @@ public class BitsetTests {
         for (int i = 0; i < size - 1; i++) {
             bitset.set(i);
         }
-        assertEquals(size-1, bitset.count());
+        assertEquals(size - 1, bitset.count());
 
 
-        for(int bit: indices) {
+        for (int bit : indices) {
             bitset.clear(bit);
             assertFalse(bitset.contains(bit));
         }
@@ -142,37 +143,37 @@ public class BitsetTests {
     @GradeFeedback(message = "Your implementation does not finish in the allocated time.", on = TestResultStatus.FAIL)
     @Order(3)
     public void largeBitsetTest() {
-       int iterations = 100;
-       for (int i = 0; i < iterations; i++) {
-           int size = 10000;
-           int toSet = 2000  + random.nextInt(size - 2000);
-           int toRemove = 100 + random.nextInt(toSet - 100);
+        int iterations = 100;
+        for (int i = 0; i < iterations; i++) {
+            int size = 10000;
+            int toSet = 2000 + random.nextInt(size - 2000);
+            int toRemove = 100 + random.nextInt(toSet - 100);
 
-           List<Integer> indicesToSet = getRandomBits(size, toSet);
-           List<Integer> indicesToRemove = getRandomBits(size, toRemove);
+            List<Integer> indicesToSet = getRandomBits(size, toSet);
+            List<Integer> indicesToRemove = getRandomBits(size, toRemove);
 
-           int nbCommonElements = indicesToSet.stream()
-                   .distinct()
-                   .filter(indicesToRemove::contains)
-                   .collect(Collectors.toSet()).size();
+            int nbCommonElements = indicesToSet.stream()
+                    .distinct()
+                    .filter(indicesToRemove::contains)
+                    .collect(Collectors.toSet()).size();
 
 
-           Bitset bitset = new Bitset(size);
-           assertEquals(157, bitset.getNbWords());
-           assertEquals(0, bitset.count());
+            Bitset bitset = new Bitset(size);
+            assertEquals(157, bitset.getNbWords());
+            assertEquals(0, bitset.count());
 
-           for(int bit: indicesToSet) {
-               bitset.set(bit);
-               assertTrue(bitset.contains(bit));
-           }
+            for (int bit : indicesToSet) {
+                bitset.set(bit);
+                assertTrue(bitset.contains(bit));
+            }
 
-           assertEquals(toSet, bitset.count());
-           for(int bit: indicesToRemove) {
-               bitset.clear(bit);
-               assertFalse(bitset.contains(bit));
-           }
-           assertEquals(toSet - nbCommonElements, bitset.count());
-       }
+            assertEquals(toSet, bitset.count());
+            for (int bit : indicesToRemove) {
+                bitset.clear(bit);
+                assertFalse(bitset.contains(bit));
+            }
+            assertEquals(toSet - nbCommonElements, bitset.count());
+        }
 
     }
 
@@ -182,7 +183,6 @@ public class BitsetTests {
         indices = indices.subList(0, nbElements);
         return indices;
     }
-
     // END STRIP
 
 }
