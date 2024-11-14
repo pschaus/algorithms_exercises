@@ -1,4 +1,4 @@
-package strings;
+package searching;
 
 // BEGIN STRIP
 import static java.lang.Long.bitCount;

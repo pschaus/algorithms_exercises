@@ -1,4 +1,4 @@
-package strings;
+package searching;
 
 import org.javagrader.ConditionalOrderingExtension;
 import org.javagrader.Grade;
@@ -124,10 +124,10 @@ public class BitsetTest {
         assertEquals(16, bitset.getNbWords());
         assertEquals(0, bitset.count());
 
-        for (int i = 0; i < size - 1; i++) {
+        for (int i = 0; i < size; i++) {
             bitset.set(i);
         }
-        assertEquals(size - 1, bitset.count());
+        assertEquals(size, bitset.count());
 
 
         for (int bit : indices) {
@@ -135,7 +135,7 @@ public class BitsetTest {
             assertFalse(bitset.contains(bit));
         }
 
-        assertEquals(size - to_remove - 1, bitset.count());
+        assertEquals(size - to_remove, bitset.count());
     }
 
     @Test
