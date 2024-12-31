@@ -38,8 +38,13 @@ import java.util.stream.Collectors;
  *        
  * ________
  *
+ * Input:
+ * int[][] buildings = {{2, 5, 4}, {3, 3, 6}};
+ * Output:
+ * {{2,5},{5,3},{7,0}};
  *
- * We ask you to compute, gien a set of building, their skyline.
+ *
+ * We ask you to compute, given a set of building, their skyline.
  */
 public class Skyline {
 
@@ -79,7 +84,7 @@ public class Skyline {
      *   The buildings are defined with triplets (left, height, right).
      *         int[][] buildings = {{1, 11, 5}, {2, 6, 7}, {3, 13, 9}, {12, 7, 16}, {14, 3, 25}, {19, 18, 22}, {23, 13, 29}, {24, 4, 28}};
      *
-     *         [{1,11},{3,13},{9,0},{12,7},{16,3},{19,18},{22,3},{23,13},{29,0}]
+     *         {{1,11},{3,13},{10,0},{12,7},{17,3},{19,18},{23,13},{30,0}};
      *
      * @param buildings
      * @return  the skyline in the form of a list of "key points [x, height]".
@@ -94,43 +99,45 @@ public class Skyline {
         int index = 0;
         for (int[] building : buildings) {
             points[index] = new BuildingPoint(building[0], true, building[1]);
-            points[index + 1] = new BuildingPoint(building[2], false, building[1]);
+            points[index + 1] = new BuildingPoint(building[2]+1, false, building[1]);
             index += 2;
         }
 
-        Arrays.sort(points); // Sort the points.
+        Arrays.sort(points);
+
 
         // Use a tree map to represent the active buildings.
         TreeMap<Integer, Integer> queue = new TreeMap<>();
         queue.put(0, 1); // Add a ground level (height 0).
         int prevMaxHeight = 0;
-
         List<int[]> result = new ArrayList<>();
-
-        for (BuildingPoint point : points) {
-            if (point.isStart) {
-                // If it's a start point, add the height to the map, or increment the existing height's count.
-                queue.compute(point.height, (key, value) -> {
-                    if (value != null) return value + 1;
-                    return 1;
-                });
-            } else {
-                // If it's an end point, decrement or remove the height from the map.
-                queue.compute(point.height, (key, value) -> {
-                    if (value == 1) return null;
-                    return value - 1;
-                });
+        int i = 0;
+        while (i < points.length) {
+            int currX = points[i].x;
+            while (i < points.length && points[i].x == currX) {
+                if (points[i].isStart) {
+                    // If it's a start point, add the height to the map, or increment the existing height's count.
+                    queue.compute(points[i].height, (key, value) -> {
+                        if (value != null) return value + 1;
+                        return 1;
+                    });
+                } else {
+                    // If it's an end point, decrement or remove the height from the map.
+                    queue.compute(points[i].height, (key, value) -> {
+                        if (value == 1) return null;
+                        return value - 1;
+                    });
+                }
+                i++;
             }
             // Get current max height after the addition/removal above.
             int currentMaxHeight = queue.lastKey();
-
             // If the current max height is different from the previous one, we have a critical point.
             if (prevMaxHeight != currentMaxHeight) {
-                result.add(new int[]{point.x, currentMaxHeight});
+                result.add(new int[]{currX, currentMaxHeight});
                 prevMaxHeight = currentMaxHeight;
             }
         }
-
         return result;
 		// END STRIP
     }
