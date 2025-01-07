@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.File;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
@@ -171,43 +172,30 @@ public class ClosestPairTest {
     }
 
     // BEGIN STRIP
-    static Stream<Instance> dataProvider() {
-            return Stream.of(new File("data/sorting.ClosestPair").listFiles())
-                .filter(file -> !file.isDirectory())
-                .map(file -> new Instance(file.getPath()));
-    }
 
-
-    @ParameterizedTest
-    @Grade(value=1, cpuTimeout=1000)
-    @MethodSource("dataProvider")
+    @Test
+    @Grade(value = 1, cpuTimeout = 1000)
     @Order(2)
-    public void testComplexity(Instance instance) {
-        ClosestPair.closestPair(instance.input.clone(), instance.query);
-    }
+    public void testComplexity() {
 
-    private static class Instance {
-        int [] input;
-        int query;
-        int [] result;
+        Random random = new Random(0);
 
-        public Instance(String file) {
-            try {
-                Scanner scan = new Scanner(new FileInputStream(file));
-                int n = scan.nextInt();
-                this.input = new int[n];
-                for (int i = 0; i < n; i++) {
-                    this.input[i] = scan.nextInt();
-                }
-                this.query = scan.nextInt();
-                this.result = new int[2];
-                result[0] = scan.nextInt();
-                result[1] = scan.nextInt();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        for (int iter = 0; iter < 10; iter++) {
+            int size = 100_000; // Specify the size of the array
+            int[] largeArray = new int[size];
+
+            // Fill the array with random integers
+            for (int i = 0; i < largeArray.length; i++) {
+                largeArray[i] = random.nextInt(1_000_000); // Generates a random integer
             }
+
+            int target = largeArray[0] + largeArray[largeArray.length - 1];
+            int[] res = ClosestPair.closestPair(largeArray, target);
+            assertEquals(target, res[0] + res[1]);
+            assertTrue(inArray(largeArray, res));
         }
     }
+
     // END STRIP
 
 }
