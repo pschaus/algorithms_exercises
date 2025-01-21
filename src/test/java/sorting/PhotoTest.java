@@ -119,18 +119,17 @@ public class PhotoTest {
     public static int expected(int [] teamA, int [] teamB) {
         Arrays.sort(teamA);
         Arrays.sort(teamB);
-        boolean a_front = teamA[0] < teamB[0];
+        if (teamA[0] > teamB[0]) {
+            int[] tmp = teamA;
+            teamA = teamB;
+            teamB = tmp;
+        }
         int sum = 0;
         for (int i = 0; i < teamA.length; i++) {
-            if (teamA[i] == teamB[i]) {
+            if (teamA[i] >= teamB[i]) {
                 return -1;
             }
-            if (a_front && teamA[i] > teamB[i]) {
-                return -1;
-            } else if (!a_front && teamA[i] < teamB[i]) {
-                return -1;
-            }
-            sum += Math.abs(teamA[i] - teamB[i]);
+            sum += teamB[i] - teamA[i];
         }
         return sum;
     }

@@ -42,20 +42,24 @@ public class Photo {
     public static int canTakePictures(int [] teamA, int [] teamB) {
         // STUDENT return -2;
         // BEGIN STRIP
+        // Sort players
         Arrays.sort(teamA);
         Arrays.sort(teamB);
-        boolean a_front = teamA[0] < teamB[0] ? true : false;
+
+        // Front row: team A, back row: team B
+        if (teamA[0] > teamB[0]) {
+            int[] tmp = teamA;
+            teamA = teamB;
+            teamB = tmp;
+        }
+
+        // Check if photo can be taken and compute sum
         int sum = 0;
         for (int i = 0; i < teamA.length; i++) {
-            if (teamA[i] == teamB[i]) {
+            if (teamA[i] >= teamB[i]) {
                 return -1;
             }
-            if (a_front && teamA[i] > teamB[i]) {
-                return -1;
-            } else if (!a_front && teamA[i] < teamB[i]) {
-                return -1;
-            }
-            sum += Math.abs(teamA[i] - teamB[i]);
+            sum += teamB[i] - teamA[i];
         }
         return sum;
         // END STRIP
