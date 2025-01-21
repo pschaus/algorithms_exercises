@@ -173,12 +173,14 @@ public class LRUCacheTest {
 
 
         private HashMap<K, Node> map = new HashMap<>();
-        private Node head = null; // the MRU (most recently used)
-        private Node tail = null; // the LRU (least recently used)
+        private Node list; // Circular doubly linked list (most recent first)
 
 
         public LRUCacheRef(int capacity) {
             this.capacity = capacity;
+            list = new Node(null, null); // Dummy item
+            list.prev = list;
+            list.next = list;
         }
 
         public V get(K key) {
@@ -223,37 +225,20 @@ public class LRUCacheTest {
         }
 
         private void remove(Node node) {
-            if (node.prev != null) {
-                node.prev.next = node.next;
-            } else {
-                head = node.next;
-            }
-
-            if (node.next != null) {
-                node.next.prev = node.prev;
-            } else {
-                tail = node.prev;
-            }
+            node.next.prev = node.prev;
+            node.prev.next = node.next;
         }
 
         private void addToFront(Node node) {
-            node.next = head;
-            node.prev = null;
-
-            if (head != null) {
-                head.prev = node;
-            }
-
-            head = node;
-
-            if (tail == null) {
-                tail = head;
-            }
+            node.prev = list;
+            node.next = list.next;
+            list.next.prev = node;
+            list.next = node;
         }
 
         private void removeLRU() {
-            map.remove(tail.key);
-            remove(tail);
+            map.remove(list.prev.key);
+            remove(list.prev);
         }
     }
     // END STRIP
