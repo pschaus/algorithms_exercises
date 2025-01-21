@@ -3,6 +3,7 @@ package sorting;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Your task involves creating an `aggregate` function.
@@ -81,18 +82,11 @@ public class Aggregate {
         int maxOccurrences = -1;
         int mostFrequentValue = -1;
         for (int i = from; i <= to; i++) {
-            if (occurrence.containsKey(array[i][column]))
-                occurrence.put(array[i][column], occurrence.get(array[i][column])+1);
-            else
-                occurrence.put(array[i][column], 1);
-
-            if (occurrence.get(array[i][column]) > maxOccurrences) {
-                maxOccurrences = occurrence.get(array[i][column]);
+            int occurrences = occurrence.merge(array[i][column], 1, Integer::sum);
+            if (occurrences > maxOccurrences || (occurrences == maxOccurrences && array[i][column] < mostFrequentValue)) {
+                maxOccurrences = occurrences;
                 mostFrequentValue = array[i][column];
             }
-
-            if (occurrence.get(array[i][column]) == maxOccurrences && array[i][column] < mostFrequentValue)
-                mostFrequentValue = array[i][column];
         }
         return mostFrequentValue;
         // END STRIP
@@ -121,33 +115,30 @@ public class Aggregate {
         // Sort the array
         Arrays.sort(input, Comparator.comparingInt(a -> a[column])); //O(n.log(n))
 
-        // Compute for each group the range of lines to consider
+        // Aggregate each group
         int currentGroup = input[0][column];
         int min = 0;
-        int max = 0;
-        HashMap<Integer, int[]> range = new HashMap<>(); // store the range of each group
-        for (int i = 0; i < input.length; i++) { //O(n)
+        ArrayList<int[]> aggregated = new ArrayList<>();
+        for (int i = 1; i < input.length; i++) { //O(n)
             if (currentGroup != input[i][column]) {
-                max = i - 1;
-                range.put(currentGroup, new int[]{min, max});
+                aggregated.add(aggregate(input, min, i - 1, column));
                 currentGroup = input[i][column];
                 min = i;
             }
         }
-        range.put(currentGroup, new int[]{min, input.length - 1});
-
-        // Compute the `mode` for each column of each group
-        int[][] aggregated = new int[range.size()][input[0].length];
-        int rowIndex = 0;
-        for (int valIndex : range.keySet()) { //O(n.m)
-            for (int columnIndex = 0; columnIndex < input[0].length; columnIndex++) {
-                aggregated[rowIndex][columnIndex] = mode(input, range.get(valIndex)[0], range.get(valIndex)[1], columnIndex);
-            }
-            rowIndex++;
-        }
-
-        return aggregated;
+        aggregated.add(aggregate(input, min, input.length - 1, column));
+        return aggregated.toArray(new int[aggregated.size()][]);
         // END STRIP
     }
+
+    // BEGIN STRIP
+    private static int[] aggregate(int[][] input, int from, int to, int column) {
+        int[] aggregatedGroup = new int[input[0].length];
+        for (int i = 0; i < aggregatedGroup.length; i++) {
+            aggregatedGroup[i] = mode(input, from, to, i);
+        }
+        return aggregatedGroup;
+    }
+    // END STRIP
 }
 
