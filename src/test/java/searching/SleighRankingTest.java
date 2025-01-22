@@ -135,50 +135,38 @@ public class SleighRankingTest {
                 private Node right = null;
 
                 private int N_LEFT = 0;
-                private int N = 0;
+                private int N = 1;
 
                 public Node(int key) {
                     this.key = key;
-                    this.N = 1;
                 }
             }
 
-            public BST() {}
-
-            public void put(int key) {
-                root = put(root, key);
+            private static class Rank {
+                public int v = 0;
             }
 
-            private Node put(Node x, int key) {
+            public int putAndRank(int key) {
+                Rank rank = new Rank(); // Get rank by reference
+                root = putAndRank(root, key, rank);
+                return rank.v;
+            }
+
+            private Node putAndRank(BST.Node x, int key, Rank rank) {
                 if (x == null) {
                     return new Node(key);
                 }
                 if (key < x.key) {
-                    x.left = put(x.left, key);
+                    x.left = putAndRank(x.left, key, rank);
                     x.N_LEFT++;
                 } else if (key > x.key) {
-                    x.right = put(x.right, key);
+                    rank.v += x.N_LEFT + x.N;
+                    x.right = putAndRank(x.right, key, rank);
                 } else {
+                    rank.v += x.N_LEFT;
                     x.N++;
                 }
                 return x;
-            }
-
-            public int getRank(int key) {
-                return getRank(root, key);
-            }
-
-            private int getRank(Node x, int key) {
-                if (x == null) {
-                    return 0;
-                }
-                if (key < x.key) {
-                    return getRank(x.left, key);
-                } else if (key > x.key) {
-                    return getRank(x.right, key) + x.N_LEFT + x.N;
-                } else {
-                    return x.N_LEFT;
-                }
             }
         }
 
@@ -186,8 +174,7 @@ public class SleighRankingTest {
             int[] answer = new int[array.length];
             BST bst = new BST();
             for (int i = 0; i < array.length; i++) {
-                bst.put(array[i]);
-                answer[i] = bst.getRank(array[i]);
+                answer[i] = bst.putAndRank(array[i]);
             }
             return answer;
         }
