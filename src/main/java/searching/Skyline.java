@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 public class Skyline {
 
     // BEGIN STRIP
-    public static class BuildingPoint implements Comparable<BuildingPoint> {
+    public static class BuildingPoint {
         int x;
         boolean isStart;
         int height;
@@ -64,18 +64,6 @@ public class Skyline {
             this.x = x;
             this.isStart = isStart;
             this.height = height;
-        }
-
-        @Override
-        public int compareTo(BuildingPoint other) {
-            if (this.x != other.x) {
-                return this.x - other.x;
-            } else {
-                // always put start points before end points
-                // if both are start points, order by decreasing height
-                // if both are end points, order by increasing height
-                return (this.isStart ? -this.height : this.height) - (other.isStart ? -other.height : other.height);
-            }
         }
     }
 	// END STRIP
@@ -98,12 +86,11 @@ public class Skyline {
         BuildingPoint[] points = new BuildingPoint[buildings.length * 2];
         int index = 0;
         for (int[] building : buildings) {
-            points[index] = new BuildingPoint(building[0], true, building[1]);
-            points[index + 1] = new BuildingPoint(building[2]+1, false, building[1]);
-            index += 2;
+            points[index++] = new BuildingPoint(building[0], true, building[1]);
+            points[index++] = new BuildingPoint(building[2]+1, false, building[1]);
         }
 
-        Arrays.sort(points);
+        Arrays.sort(points, Comparator.comparingInt(p -> p.x));
 
 
         // Use a tree map to represent the active buildings.
@@ -117,10 +104,7 @@ public class Skyline {
             while (i < points.length && points[i].x == currX) {
                 if (points[i].isStart) {
                     // If it's a start point, add the height to the map, or increment the existing height's count.
-                    queue.compute(points[i].height, (key, value) -> {
-                        if (value != null) return value + 1;
-                        return 1;
-                    });
+                    queue.merge(points[i].height, 1, Integer::sum);
                 } else {
                     // If it's an end point, decrement or remove the height from the map.
                     queue.compute(points[i].height, (key, value) -> {
