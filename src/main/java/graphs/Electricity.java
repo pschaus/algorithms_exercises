@@ -34,13 +34,13 @@ public class Electricity {
         int minCost = 0;
         UnionFind uf = new UnionFind(n);
 
-        Arrays.sort(edges, (a, b) -> a[2] - b[2]);
+        Arrays.sort(edges, Comparator.comparingInt(a -> a[2]));
 
         for (int [] edge : edges) {
             int u = uf.find(edge[0]);
             int v = uf.find(edge[1]);
 
-            if( u != v ) {
+            if (u != v) {
                 uf.union(u, v);
                 minCost += edge[2];
             }
@@ -53,15 +53,15 @@ public class Electricity {
     static class UnionFind {
         int parent[];
         int size[];
+
         UnionFind(int n) {
             parent = new int[n];
             size = new int[n];
 
-            for(int i = 0; i < n; i++ ) {
+            for (int i = 0; i < n; i++) {
                 parent[i] = i;
                 size[i] = 1;
             }
-
         }
 
         int find(int a) {
@@ -69,17 +69,13 @@ public class Electricity {
         }
 
         void union(int a, int b) {
-            a = find(a);
-            b = find(b);
-
-            if(size[b] > size[a]) {
-                int temp = a;
-                a = b;
-                b = temp;
+            if (size[b] > size[a]) {
+                parent[a] = b;
+                size[b] += size[a];
+            } else {
+                parent[b] = a;
+                size[a] += size[b];
             }
-
-            parent[b] = a;
-            size[a] += size[b];
         }
     }
     // END STRIP
