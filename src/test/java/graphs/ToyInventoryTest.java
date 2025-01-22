@@ -132,7 +132,7 @@ public class ToyInventoryTest {
             int n = rand.nextInt(1000);
             occurrences_name[i] = name;
             occurrences_count[i] = n;
-            uf.nb[uf.find(map.get(name))] += n;
+            uf.nb[map.get(name)] += n;
         }
 
         HashSet<String> link_set = new HashSet<>();
@@ -219,15 +219,8 @@ public class ToyInventoryTest {
             count = n;
         }
 
-        public boolean connected(int p, int q) {
-            return find(p) == find(q);
-        }
-
         public int find(int p) {
-            while (p != id[p]) {
-                p = id[p];
-            }
-            return p;
+            return id[p] == p ? p : (id[p] = find(p));
         }
 
         public void union(int p, int q) {

@@ -63,15 +63,8 @@ public class ToyInventory {
             }
         }
 
-        public boolean connected(int p, int q) {
-            return find(p) == find(q);
-        }
-
         public int find(int p) {
-            while (p != id[p]) {
-                p = id[p];
-            }
-            return p;
+            return id[p] == p ? p : (id[p] = find(p));
         }
 
         public void union(int p, int q) {
@@ -109,33 +102,33 @@ public class ToyInventory {
     public static int[] answerRequests(String[][] relations, String[] occurrencesName, int[] occurrencesCount, String[] requests) {
         // TODO
         // BEGIN STRIP
-        ArrayList<Integer> from = new ArrayList<>();
-        ArrayList<Integer> to = new ArrayList<>();
+        int[] from = new int[requests.length];
+        int[] to = new int[requests.length];
         HashMap<String, Integer> map = new HashMap<>();
-        for (String[] relation : relations) {
-            String a = relation[0];
-            String b = relation[1];
+        for (int i = 0; i < relations.length; i++) {
+            String a = relations[i][0];
+            String b = relations[i][1];
             map.putIfAbsent(a, map.size());
             map.putIfAbsent(b, map.size());
 
-            from.add(map.get(a));
-            to.add(map.get(b));
+            from[i] = map.get(a);
+            to[i] = map.get(b);
         }
-        ArrayList<Integer> recensed = new ArrayList<>(occurrencesName.length);
-        ArrayList<Integer> recensedc = new ArrayList<>(occurrencesName.length);
+        int[] recensed = new int[occurrencesName.length];
+        int[] recensedc = new int[occurrencesName.length];
         for (int i = 0; i < occurrencesName.length; i++) {
             String a = occurrencesName[i];
             int nb = occurrencesCount[i];
             map.putIfAbsent(a, map.size());
-            recensed.add(map.get(a));
-            recensedc.add(nb);
+            recensed[i] = map.get(a);
+            recensedc[i] = nb;
         }
         UF uf = new UF(map.size());
-        for (int i = 0; i < recensed.size(); i++) {
-            uf.nb[uf.find(recensed.get(i))] += recensedc.get(i);
+        for (int i = 0; i < recensed.length; i++) {
+            uf.nb[recensed[i]] += recensedc[i];
         }
-        for (int i = 0; i < from.size(); i++) {
-            uf.union(from.get(i), to.get(i));
+        for (int i = 0; i < from.length; i++) {
+            uf.union(from[i], to[i]);
         }
         int[] results = new int[requests.length];
         for (int i = 0; i < requests.length; i++) {
