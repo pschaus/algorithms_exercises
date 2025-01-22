@@ -242,19 +242,21 @@ public class SmallestPriceTest {
             SolNode node = queue.poll();
             int u = node.getNode();
             Integer value = destinationsMap.get(u);
-            if (value != null) {
+            if (value == null) {
+                continue;
+            } else {
                 minCost = Math.min(value, minCost);
                 destinationsMap.remove(u);
-            }
-            if (destinationsMap.isEmpty()) {
-                break;
+                if (destinationsMap.isEmpty()) {
+                    break;
+                }
             }
 
-            for (SmallestPrice.DirectedEdge edge : graph.outEdges(node.getNode())) {
+            for (SmallestPrice.DirectedEdge edge : graph.outEdges(u)) {
                 int w = edge.to();
                 int newPathCost = distTo[u] + edge.weight();
                 if (distTo[w] > newPathCost && newPathCost <= maxTime) {
-                    distTo[edge.to()] = newPathCost;
+                    distTo[w] = newPathCost;
                     queue.add(new SolNode(w, newPathCost));
                 }
             }
