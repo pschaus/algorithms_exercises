@@ -55,21 +55,28 @@ public class WordTransformationSP {
         PriorityQueue<Rotation> queue = new PriorityQueue<>();
         queue.add(new Rotation(from, 0));
         distTo.put(from, 0);
-        while (!queue.isEmpty()) {
+        while (true) {
             Rotation r = queue.poll();
+            if (r.value.equals(to)) { // Found "to"
+                return r.distance;
+            }
+            if (r.distance != distTo.get(r.value)) { // Check if r is outdated
+                continue;
+            }
             String val = r.value;
-            for (int i = 0; i < val.length(); i++) {
+            for (int i = 0; i < val.length() - 1; i++) {
                 for (int j = i + 2; j <= val.length(); j++) {
                     String out = rotation(val, i, j);
-                    int cost = distTo.get(val) + (j - i);
-                    if (!distTo.containsKey(out) || distTo.get(out) > cost) {
+                    int cost = r.distance + (j - i);
+                    Integer previous = distTo.get(out);
+                    if (previous == null || previous > cost) {
+                        // New distance is better than the previous one for this word
                         distTo.put(out, cost);
                         queue.add(new Rotation(out, cost));
                     }
                 }
             }
         }
-        return distTo.get(to);
         // END STRIP
     }
 
