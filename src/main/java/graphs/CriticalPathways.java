@@ -126,7 +126,7 @@ public class CriticalPathways {
 
             // Check if the nodes are still connected
             Arrays.fill(visited, false);
-            if (connected(adj, edge[0], edge[1], visited)) {
+            if (!connected(adj, edge[0], edge[1], visited)) {
                 critical_edges.add(edge);
             }
 

@@ -220,7 +220,7 @@ public class ToyInventoryTest {
         }
 
         public int find(int p) {
-            return id[p] == p ? p : (id[p] = find(p));
+            return id[p] == p ? p : (id[p] = find(id[p]));
         }
 
         public void union(int p, int q) {

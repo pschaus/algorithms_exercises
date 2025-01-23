@@ -241,10 +241,12 @@ public class SmallestPriceTest {
         while (!queue.isEmpty()) {
             SolNode node = queue.poll();
             int u = node.getNode();
-            Integer value = destinationsMap.get(u);
-            if (value == null) {
+            int cost = node.getWeight();
+            if (cost != node.weight) { // Check if u is outdated
                 continue;
-            } else {
+            }
+            Integer value = destinationsMap.get(u);
+            if (value != null) {
                 minCost = Math.min(value, minCost);
                 destinationsMap.remove(u);
                 if (destinationsMap.isEmpty()) {
@@ -254,7 +256,7 @@ public class SmallestPriceTest {
 
             for (SmallestPrice.DirectedEdge edge : graph.outEdges(u)) {
                 int w = edge.to();
-                int newPathCost = distTo[u] + edge.weight();
+                int newPathCost = cost + edge.weight();
                 if (distTo[w] > newPathCost && newPathCost <= maxTime) {
                     distTo[w] = newPathCost;
                     queue.add(new SolNode(w, newPathCost));

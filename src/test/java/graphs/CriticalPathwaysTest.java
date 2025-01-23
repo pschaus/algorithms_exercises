@@ -261,7 +261,7 @@ public class CriticalPathwaysTest {
 
                 // Count number of components
                 Arrays.fill(visited, false);
-                if (connected(adj, edge[0], edge[1], visited)) {
+                if (!connected(adj, edge[0], edge[1], visited)) {
                     critical_edges.add(edge);
                 }
 

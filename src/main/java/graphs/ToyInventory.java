@@ -64,7 +64,7 @@ public class ToyInventory {
         }
 
         public int find(int p) {
-            return id[p] == p ? p : (id[p] = find(p));
+            return id[p] == p ? p : (id[p] = find(id[p]));
         }
 
         public void union(int p, int q) {
@@ -102,8 +102,8 @@ public class ToyInventory {
     public static int[] answerRequests(String[][] relations, String[] occurrencesName, int[] occurrencesCount, String[] requests) {
         // TODO
         // BEGIN STRIP
-        int[] from = new int[requests.length];
-        int[] to = new int[requests.length];
+        int[] from = new int[relations.length];
+        int[] to = new int[relations.length];
         HashMap<String, Integer> map = new HashMap<>();
         for (int i = 0; i < relations.length; i++) {
             String a = relations[i][0];
