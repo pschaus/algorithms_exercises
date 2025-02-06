@@ -39,7 +39,9 @@ import java.util.HashMap;
  * For the second column of the group "2", both "1" and "2" are present one time.
  * As 1 < 2, "1" is chosen.
  *
- * The aggregate function should execute in O(n.m + n.log(n)) where n is the number of rows and m the number of columns.
+ * Although a more efficient solution is possible we ask you to use a binary search in the aggregate.
+ * Using hte binary search,n the aggregate function should execute in O(n.m + n.log(n))
+ * where n is the number of rows and m the number of columns.
  * The mode function should execute in O(n) where n is the number of rows.
  *
  * Debug your code on the small examples in the test suite.
