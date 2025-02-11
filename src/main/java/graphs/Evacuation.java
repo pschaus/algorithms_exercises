@@ -88,8 +88,4 @@ public class Evacuation {
         // END STRIP
         // STUDENT return null;
     }
-
-    public static void main(String[] args) {
-
-    }
 }

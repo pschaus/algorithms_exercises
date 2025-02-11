@@ -71,31 +71,31 @@ public class PancakeSorting {
         // TODO
         // BEGIN STRIP
         ArrayList<Integer> reverses = new ArrayList<>();
-        for (int i = 0; i < array.length; i++) {
-            int remainingMax = Integer.MIN_VALUE;
-            int remainingMaxIdx = -1;
+        for (int i = array.length - 1; i > 0; i--) {
+            int remainingMax = array[0];
+            int remainingMaxIdx = 0;
             boolean sorted = true;
-            for (int j = 0; j < array.length - i; j++) {
+            for (int j = 1; j <= i; j++) {
                 if (array[j] > remainingMax) {
                     remainingMax = array[j];
                     remainingMaxIdx = j;
                 }
-                if (j > 0 && array[j - 1] > array[j]) {
+                if (array[j - 1] > array[j]) {
                     sorted = false;
                 }
             }
             if (sorted) {
                 break;
             }
-            if (remainingMaxIdx == array.length - i - 1) {
+            if (remainingMaxIdx == i) {
                 continue;
             }
             if (remainingMaxIdx > 0) {
                 reverses.add(remainingMaxIdx);
                 flip(array, remainingMaxIdx);
             }
-            reverses.add(array.length - i - 1);
-            flip(array, array.length - i - 1);
+            reverses.add(i);
+            flip(array, i);
         }
         return reverses.stream().mapToInt(i -> i).toArray();
         // END STRIP

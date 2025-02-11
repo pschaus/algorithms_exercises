@@ -68,20 +68,24 @@ public class SmallestPrice {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
             int u = node.getNode();
+            int cost = node.getWeight();
+            if (cost != node.weight) { // Check if u is outdated
+                continue;
+            }
             Integer value = destinationsMap.get(u);
             if (value != null) {
                 minCost = Math.min(value, minCost);
                 destinationsMap.remove(u);
-            }
-            if (destinationsMap.size() == 0) {
-                break;
+                if (destinationsMap.isEmpty()) {
+                    break;
+                }
             }
 
-            for (DirectedEdge edge : graph.outEdges(node.getNode())) {
+            for (DirectedEdge edge : graph.outEdges(u)) {
                 int w = edge.to();
-                int newPathCost = distTo[u] + edge.weight();
+                int newPathCost = cost + edge.weight();
                 if (distTo[w] > newPathCost && newPathCost <= maxTime) {
-                    distTo[edge.to()] = newPathCost;
+                    distTo[w] = newPathCost;
                     queue.add(new Node(w, newPathCost));
                 }
             }

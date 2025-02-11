@@ -1,6 +1,6 @@
 package searching;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -69,149 +69,83 @@ public class Monkeys {
 
 
     /**
-     * Compute the number for monkey named "root.
+     * Compute the number for monkey named "root".
      * Your algorithm should run in O(n) where n is
      * the size of the input.
      */
     public static long evaluateRoot(List<Monkey> input) {
         // STUDENT return -1;
         // BEGIN STRIP
-        Hashtable<String, Node> nodes = new Hashtable<>();
-
-        for (Monkey m: input) {
-            if (m instanceof YellingMonkey) {
-                YellingMonkey monkey = (YellingMonkey) m;
-
-                if (nodes.containsKey(monkey.name)) {
-                    Node node = nodes.get(monkey.name);
-                    node.res = monkey.number;
-                } else {
-                    nodes.put(monkey.name,new Node(monkey.name,monkey.number));
-                }
-            } else {
-                OperationMonkey monkey = (OperationMonkey) m;
-
-                Node leftN = null;
-                Node rightN = null;
-
-                if (nodes.containsKey(monkey.leftMonkey)) {
-                    leftN = nodes.get(monkey.leftMonkey);
-                } else {
-                    // create left node
-                    leftN = new Node(monkey.leftMonkey);
-                    nodes.put(monkey.leftMonkey,leftN);
-                }
-                if (nodes.containsKey(monkey.rightMonkey)) {
-                    rightN = nodes.get(monkey.rightMonkey);
-                } else {
-                    // create right node
-                    rightN = new Node(monkey.rightMonkey);
-                    nodes.put(monkey.rightMonkey, rightN);
-                }
-
-                if (!nodes.containsKey(monkey.name)) {
-                    nodes.put(monkey.name,  new Node(monkey.name,leftN,rightN,monkey.op));
-                } else {
-                    Node n = nodes.get(monkey.name);
-                    n.left = leftN;
-                    n.right = rightN;
-                    n.op = monkey.op;
-                }
-            }
+        HashMap<String, Monkey> monkeys = new HashMap<>();
+        for (Monkey monkey : input) {
+            monkeys.put(monkey.name, monkey);
         }
-        Node root = nodes.get("root");
-        evaluate(root,null);
-        return nodes.get("root").res;
+        return monkeys.get("root").yell(monkeys);
         // END STRIP
-
-    }
-
-    // BEGIN STRIP
-    public static void evaluate(Node n, Node parent) {
-        n.parent = parent;
-        if (n.isLeaf()) return;
-        else {
-            evaluate(n.left,n);
-            evaluate(n.right,n);
-            switch (n.op) {
-                case '*':
-                    n.res = n.left.res * n.right.res;
-                    break;
-                case '/':
-                    n.res = n.left.res / n.right.res;
-                    break;
-                case '+':
-                    n.res = n.left.res + n.right.res;
-                    break;
-                case '-':
-                    n.res = n.left.res - n.right.res;
-                    break;
-                default:
-                    throw new IllegalArgumentException("unknown op");
-            }
-        }
     }
 
 
-
-    public static class Node {
-
-        public Node(String monkey) {
-            this.monkey = monkey;
-        }
-        public Node(String monkey, int res) {
-            this.monkey = monkey;
-            this.res = res;
-        }
-        public Node(String monkey, Node left, Node right, char op) {
-            this.monkey = monkey;
-            this.left = left;
-            this.right = right;
-            this.op = op;
-        }
-
-        public boolean isLeaf() {
-            return this.op == ' ';
-        }
-
-        public String monkey;
-        public long res;
-        public char op = ' ';
-        public Node left;
-        public Node right;
-
-        public Node parent;
-    }
-    // END STRIP
-
-
-
-
-    static class Monkey {
+    static abstract class Monkey {
         String name;
+
+        // BEGIN STRIP
+        // Method implemented by monkeys to compute the result
+        public abstract long yell(HashMap<String, Monkey> monkeys);
+        // END STRIP
     }
+
     static class YellingMonkey extends Monkey {
         int number;
+
         public YellingMonkey(String name,int number) {
             this.name = name;
             this.number = number;
         }
+
+        // BEGIN STRIP
+        @Override
+        public long yell(HashMap<String, Monkey> monkeys) {
+            return number;
+        }
+        // END STRIP
 
         @Override
         public String toString() {
             return name+": "+number;
         }
     }
+
     static class OperationMonkey extends Monkey {
         char op;
         String leftMonkey;
         String rightMonkey;
+
         public OperationMonkey(String name, String left, char op, String right) {
             this.name = name;
             this.leftMonkey = left;
             this.op = op;
             this.rightMonkey = right;
         }
+
+        // BEGIN STRIP
+        @Override
+        public long yell(HashMap<String, Monkey> monkeys) {
+            long leftRes = monkeys.get(leftMonkey).yell(monkeys);
+            long rightRes = monkeys.get(rightMonkey).yell(monkeys);
+            switch (op) {
+                case '+':
+                    return leftRes + rightRes;
+                case '-':
+                    return leftRes - rightRes;
+                case '*':
+                    return leftRes * rightRes;
+                case '/':
+                    return leftRes / rightRes;
+                default:
+                    throw new IllegalArgumentException("unknown op");
+            }
+        }
+        // END STRIP
 
         @Override
         public String toString() {

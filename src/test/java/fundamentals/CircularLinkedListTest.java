@@ -70,13 +70,15 @@ public class CircularLinkedListTest {
             correct.add(i);
         }
 
-        // Remove 0, 10, [End], 25, 30
+        // Remove 0, 10, [End], add 50, remove 25, 30
         student.remove(0);
         correct.remove(0);
         student.remove(10);
         correct.remove(10);
         student.remove(correct.size() - 1);
         correct.remove(correct.size() - 1);
+        student.enqueue(50);
+        correct.add(50);
         student.remove(25);
         correct.remove(25);
         student.remove(30);

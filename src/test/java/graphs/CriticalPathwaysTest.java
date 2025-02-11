@@ -208,81 +208,51 @@ public class CriticalPathwaysTest {
 
     private static class SolutionCriticalPathways {
 
-        private static int[][] computeSpanningTree(HashSet<Integer>[] adj) {
+        private static int[][] computeSpanningTree(HashSet<Integer>[] adj, boolean[] visited) {
             if (adj.length == 0) {
                 return new int[0][0];
             }
 
             Stack<Integer> stack = new Stack<>();
-            Stack<int[]> path = new Stack<>();
-
             stack.push(0);
-            path.push(new int[]{0, 0});
-
-            HashSet<Integer> visited = new HashSet<>();
+            visited[0] = true;
             ArrayList<int[]> edges = new ArrayList<>();
             while (!stack.isEmpty()) {
                 int node = stack.pop();
-                int[] edge = path.pop();
-                if (!visited.contains(node)) {
-                    visited.add(node);
-                    edges.add(edge);
-                    for (Integer adjNode : adj[node]) {
-                        if (!visited.contains(adjNode)) {
-                            stack.push(adjNode);
-                            path.push(new int[]{node, adjNode});
-                        }
+                for (int adjNode : adj[node]) {
+                    if (!visited[adjNode]) {
+                        visited[adjNode] = true;
+                        stack.push(adjNode);
+                        edges.add(new int[]{node, adjNode});
                     }
                 }
             }
-            int[][] res = new int[edges.size()-1][2];
-            for (int i = 1; i < edges.size(); i++) {
-                res[i-1][0] = edges.get(i)[0];
-                res[i-1][1] = edges.get(i)[1];
-            }
-            return res;
+            return edges.toArray(new int[edges.size()][]);
         }
 
-        private static int countComponent(HashSet<Integer>[] adj) {
-            int count = 0;
-            HashSet<Integer> visited = new HashSet<>();
-            while (visited.size() < adj.length) {
-                Stack<Integer> stack = new Stack<>();
-
-                // Find start of DFS
-                for (int i = 0; i < adj.length; i++) {
-                    if (!visited.contains(i)) {
-                        stack.push(i);
-                        break;
+        private static boolean connected(HashSet<Integer>[] adj, int a, int b, boolean[] visited) {
+            Stack<Integer> stack = new Stack<>();
+            stack.push(a);
+            visited[a] = true;
+            while (!stack.isEmpty()) {
+                int node = stack.pop();
+                if (node == b) return true;
+                for (int adjNode : adj[node]) {
+                    if (!visited[adjNode]) {
+                        visited[adjNode] = true;
+                        stack.push(adjNode);
                     }
                 }
-
-                // Perform DFS
-                while (!stack.isEmpty()) {
-                    int node = stack.pop();
-                    if (!visited.contains(node)) {
-                        visited.add(node);
-                        for (Integer adjNode : adj[node]) {
-                            if (!visited.contains(adjNode)) {
-                                stack.push(adjNode);
-                            }
-                        }
-                    }
-                }
-                count++;
             }
-            return count;
+            return false;
         }
 
         public static int[][] findCriticalPathways(HashSet<Integer>[] adj) {
-            int[][] spanning_tree = computeSpanningTree(adj);
-
-            if (spanning_tree.length == 0) {
-                return new int[0][2];
-            }
+            boolean[] visited = new boolean[adj.length];
+            int[][] spanning_tree = computeSpanningTree(adj, visited);
 
             ArrayList<int[]> critical_edges = new ArrayList<>();
-            // For each edges in spanning tree, try to remove it and check number of components
+            // For each edges in spanning tree, try to remove it and check if its nodes are still reachable
             for (int[] edge : spanning_tree) {
 
                 // Remove edge
@@ -290,8 +260,8 @@ public class CriticalPathwaysTest {
                 adj[edge[1]].remove(edge[0]);
 
                 // Count number of components
-                int count = countComponent(adj);
-                if (count > 1) {
+                Arrays.fill(visited, false);
+                if (!connected(adj, edge[0], edge[1], visited)) {
                     critical_edges.add(edge);
                 }
 
@@ -299,13 +269,7 @@ public class CriticalPathwaysTest {
                 adj[edge[0]].add(edge[1]);
                 adj[edge[1]].add(edge[0]);
             }
-
-            int[][] res = new int[critical_edges.size()][2];
-            for (int i = 0; i < res.length; i++) {
-                res[i] = critical_edges.get(i);
-            }
-
-            return res;
+            return critical_edges.toArray(new int[critical_edges.size()][]);
         }
     }
     // END STRIP
