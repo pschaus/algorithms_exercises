@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import os
 import random
 import string
@@ -13,7 +15,7 @@ test_dir = os.path.join(script_dir, 'src', 'test', 'java')
 inginious_dir = os.path.join(script_dir, 'inginious')
 templates_dir = os.path.join(script_dir, 'templates')
 
-course_name = 'LINFO1121'
+course_name = 'LEPL1402'
 
 def _safe_mkdir(directory, delete=False):
     if delete and os.path.exists(directory):
@@ -25,15 +27,16 @@ def get_dir_from_exercices(exs):
     return course_name + '_'.join(exs)
 
 def get_packages():
-    return [f for f in os.listdir(source_dir) if os.path.isdir(os.path.join(source_dir, f))]
-
+    res = [f for f in os.listdir(source_dir) if os.path.isdir(os.path.join(source_dir, f))]
+    print(res)
+    return [p for p in res if not p == 'junk']
 def get_exercises(package):
     """Get the list of exercises from the source directory"""
     directory = os.path.join(source_dir, package)
     # Note that for some exercises, there are "generators" which are used to generate data for testing.
     # These files are not exercises per se and should be omited from the exercise list.
     # They are name <exercise_name>Generator.java
-    return [os.path.splitext(os.path.basename(f))[0] for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f)) and not str(f).endswith('Generator.java')]
+    return [os.path.splitext(os.path.basename(f))[0] for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f)) and not str(f).endswith('Generator.java') and not str(f).endswith('~')]
 
 packages = get_packages()
 exercises = {p: get_exercises(p) for p in packages}
@@ -51,14 +54,14 @@ def strip_file(filename, outfile=None):
                 pruning = False
                 continue
             if not pruning:
-                fout.write(re.sub('//.*STUDENT(S?)', "", line))
+                fout.write(re.sub('\/\/.*STUDENT(S?)', "", line))
 
 
 def strip_directory(path):
     for file in os.listdir(path):
         strip_file(os.path.join(path, file))
 
-def createTestFile(package, exercise, exercise_dir):
+def create_test_file(package, exercise, exercise_dir):
     filename = exercise + 'Test.java'
     with open(os.path.join(exercise_dir, 'src', 'test', 'java', package, filename), 'w') as f:
         f.write(open(os.path.join(test_dir, package, filename)).read())
@@ -75,17 +78,17 @@ def create_exercise_task(package, exercise):
     # copy libs
     shutil.copytree(os.path.join(templates_dir, 'libs'),
                     os.path.join(exercise_dir, 'libs'))
-    
+
     # copy pom.xml
     shutil.copy(os.path.join(script_dir, 'pom.xml'),
-                    os.path.join(exercise_dir, 'pom.xml'))
+                os.path.join(exercise_dir, 'pom.xml'))
 
     # Copy the test file to the src directory
-    createTestFile(package, exercise, exercise_dir)
+    create_test_file(package, exercise, exercise_dir)
 
     # Run file
     run_file = 'run.py'
-    
+
     with open(os.path.join(exercise_dir, run_file), 'w') as f:
         f.write(open(os.path.join(templates_dir, run_file)).read().format(package, exercise))
 
@@ -95,7 +98,7 @@ def create_exercise_task(package, exercise):
         f.write('@@code@@')
 
     with open(os.path.join(templates_dir, 'task.yaml.tpl'), 'r') as f:
-            task_config_tpl = ''.join(f.readlines())
+        task_config_tpl = ''.join(f.readlines())
 
     java_exercice_description = ''.join(['        ' + line for line in open(os.path.join(script_dir, 'stripped_project', 'src', 'main', 'java', package, exercise + '.java')).readlines()])
     with open(os.path.join(exercise_dir, 'task.yaml'), 'w') as f:
@@ -108,7 +111,7 @@ def create_exercise_task(package, exercise):
     # copy the archive in the public directory of the exercise so it can be downloaded
     # by the students
     shutil.copy(os.path.join('zips', package, exercise + '.zip'),
-            os.path.join(exercise_dir, 'public', f'{exercise}.zip'))
+                os.path.join(exercise_dir, 'public', f'{exercise}.zip'))
 
     # If some data exists for this task, copy them
     data_directory = os.path.join('data', f'{package}.{exercise}')
@@ -128,16 +131,27 @@ def generate_inginious_tasks():
 
 def generate_course_yaml():
     with open(os.path.join(templates_dir, 'course.yaml.tpl'), 'r') as f:
-              tpl = ''.join(f.readlines())
+        tpl = ''.join(f.readlines())
     toc = ""
     for i, package in enumerate(packages):
         toc += f"- id: {package}\n  title: {package}\n  rank: {i}\n  tasks_list:\n"
         for j, exercise in enumerate(exercises[package]):
             toc += f"    {package}_{exercise}: {j}\n"
+    dispenser_data = ""
+    for i, package in enumerate(packages):
+        config= ""
+        for j, exercise in enumerate(exercises[package]):
+            config += f"    {package}_{exercise}\n"
+            config += f"        accessibility: true\n"
+            config += f"        evaluation_mode: last\n"
+            config += f"        submission_limit:\n"
+            config += f"            amount: -1\n"
+            config += f"        period: -1\n"
+            config += f"        weight: 1.0\n"
+        dispenser_data += f"config:\n{config}\n"
 
     with open(os.path.join(inginious_dir, 'course.yaml'), 'w') as f:
-        f.write(tpl.format(toc))
-    
+        f.write(tpl.format(toc=toc, dispenser_data=dispenser_data))
 
 def create_stripped_project():
     # This function copy the whole java project in the `stripped_project` directory
@@ -149,7 +163,7 @@ def create_stripped_project():
     stripped_test = os.path.join(directory, 'src', 'test', 'java')
     _safe_mkdir(stripped_src)
     _safe_mkdir(stripped_test)
-    for package in packages: 
+    for package in packages:
         _safe_mkdir(os.path.join(stripped_src, package))
         _safe_mkdir(os.path.join(stripped_test, package))
         for exercise in exercises[package]:
@@ -158,9 +172,9 @@ def create_stripped_project():
             strip_file(in_src, outfile=os.path.join(stripped_src, package, exercise + '.java'))
             strip_file(in_test, outfile=os.path.join(stripped_test, package, exercise + 'Test.java'))
     shutil.copytree(os.path.join(script_dir, 'templates', 'libs'),
-            os.path.join(directory, 'libs'))
+                    os.path.join(directory, 'libs'))
     shutil.copyfile(os.path.join(script_dir, 'pom.xml'),
-            os.path.join(directory, 'pom.xml'))
+                    os.path.join(directory, 'pom.xml'))
 
 def make_archives():
     # This functions creates the archives containing the maven projects for the exercises
