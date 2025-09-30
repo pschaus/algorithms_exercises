@@ -28,12 +28,12 @@ public abstract class FList<A> implements Iterable<A> {
             list = list.cons(i);
         }
 
+
         list = list.map(i -> i+1);
         // will print 10,9,...,1
         for (Integer i: list) {
             System.out.println(i);
         }
-
         list = list.filter(i -> i%2 == 0);
         // will print 10,...,6,4,2
         for (Integer i: list) {
@@ -56,7 +56,10 @@ public abstract class FList<A> implements Iterable<A> {
         // TODO
         // STUDENT return -1;
         // BEGIN STRIP
-        return -1;
+        if (isEmpty()) {
+            return 0;
+        }
+        return 1 + tail().length();
         // END STRIP;
     }
 

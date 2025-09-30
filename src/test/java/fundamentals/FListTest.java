@@ -74,6 +74,21 @@ public class FListTest {
     }
 
     @Test
+    @Grade
+    public void testLength() {
+        FList<Integer> list = FList.nil();
+        assertEquals(0, list.length());
+
+        for (int i = 0; i < 10; i++) {
+            list = list.cons(i);
+        }
+        assertEquals(10, list.length());
+
+        FList<Integer> list2 = list.filter(i -> i%2 == 0);
+        assertEquals(5, list2.length());
+    }
+
+    @Test
     @Grade(value = 1)
     public void testIterator() {
         FList<Integer> list = FList.nil();
