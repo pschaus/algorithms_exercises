@@ -21,8 +21,9 @@ public class StackWithTwoQueues<E> {
     }
 
     /**
-     * Looks at the object at the top of this stack
-     * without removing it from the stack
+     * Checks if the queue is empty.
+     *
+     * @return true if the queue contains no elements, false otherwise
      */
     public boolean empty() {
         // STUDENT return false;
