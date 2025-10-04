@@ -56,10 +56,10 @@ public abstract class FList<A> implements Iterable<A> {
         // TODO
         // STUDENT return -1;
         // BEGIN STRIP
-        if (isEmpty()) {
-            return 0;
+        if (isEmpty()) return 0;
+        else {
+            return 1 + tail().length();
         }
-        return 1 + tail().length();
         // END STRIP;
     }
 
