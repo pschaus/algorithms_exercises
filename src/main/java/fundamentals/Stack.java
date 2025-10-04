@@ -12,8 +12,9 @@ import java.util.EmptyStackException;
 public interface Stack<E> {
 
     /**
-     * Looks at the object at the top of this stack
-     * without removing it from the stack
+     * Checks if the queue is empty.
+     *
+     * @return true if the queue contains no elements, false otherwise
      */
     public boolean empty();
 
@@ -110,7 +111,8 @@ class LinkedStack<E> implements Stack<E> {
 /**
  * Implement the Stack interface above using an array as internal representation
  * The capacity of the array should double when the number of elements exceed its length.
- * You should have at least one constructor withtout argument.
+ * Resize the array to half its capacity when size is less than half the length.
+ * You should have at least one constructor without argument.
  * You are not allowed to use classes from java.util
  * @param <E>
  */

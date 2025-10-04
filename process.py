@@ -15,7 +15,7 @@ test_dir = os.path.join(script_dir, 'src', 'test', 'java')
 inginious_dir = os.path.join(script_dir, 'inginious')
 templates_dir = os.path.join(script_dir, 'templates')
 
-course_name = 'LEPL1402'
+course_name = 'LINFO1121'
 
 def _safe_mkdir(directory, delete=False):
     if delete and os.path.exists(directory):
