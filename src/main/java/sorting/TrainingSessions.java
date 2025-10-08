@@ -1,6 +1,8 @@
 package sorting;
 // BEGIN STRIP
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 // END STRIP
 
@@ -52,36 +54,22 @@ public class TrainingSessions {
         // TODO
         // STUDENT return -1;
         // BEGIN STRIP
-
-        if (sessions.length == 0) {
-            return 0;
+        // sweep line algorithm
+        List<int[]> events = new ArrayList<>();
+        for (int[] session : sessions) {
+            events.add(new int[]{session[0], 1});
+            events.add(new int[]{session[1], -1});
         }
-        // Sorting the sessions by the starting time. If they are the same compare the end time O(nlogn)
-        Arrays.sort(sessions, (a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
-
-        // Priority queue with end times of the sessions
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
-        queue.add(sessions[0][1]);
-
-        // The idea is that for each new session, we check if we can use
-        // an existing facility or if we need an additional one of a session that was completed
-        // This is done lazily so at the end, the number of facilities in the queue is the final answer.
-        // Tnhis is node in O(n.log(n))
-        for (int i = 1; i < sessions.length; i++) {
-            // check if we can use an existing session ?
-            if (queue.peek() <= sessions[i][0]) {
-                // using an existing facility means deleting it from the queue
-                // we delete the one finishing first (min priority queue)
-                queue.poll();
-            }
-            queue.add(sessions[i][1]); // then we use a new facility
+        events.sort((a, b) -> (a[0] == b[0]) ? a[1] - b[1] : a[0] - b[0]);
+        int max = 0;
+        int current = 0;
+        for (int[] event : events
+        ) {
+            current += event[1];
+            max = Math.max(max, current);
         }
-        return queue.size();
+        return max;
         // END STRIP
     }
-
-
-
-
 
 }

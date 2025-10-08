@@ -1,4 +1,4 @@
-package searching;
+package sorting;
 
 import org.javagrader.ConditionalOrderingExtension;
 import org.javagrader.Grade;
@@ -6,13 +6,9 @@ import org.javagrader.GradeFeedback;
 import org.javagrader.TestResultStatus;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import sorting.FixQuickSort;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;

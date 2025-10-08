@@ -43,11 +43,17 @@ public class FixQuickSort {
         int v = a[lo];
         while (true) {
             // find item on lo to swap
-            while (a[++i] <= v) {
+            // STUDENT while (a[++i] <= v) {
+            // BEGIN STRIP
+            while (a[++i] < v) {
+            // END STRIP
                 if (i == hi) break;
             }
             // find item on hi to swap
-            while (v <= a[--j]) {
+            // STUDENT while (v <= a[--j]) {
+            // BEGIN STRIP
+            while (v < a[--j]) {
+             // END STRIP
                 if (j == lo) break;      // redundant since a[lo] acts as sentinel
             }
             // check if pointers cross
