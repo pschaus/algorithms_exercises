@@ -14,7 +14,7 @@ public class ResizingArrayQueueTest {
     @Test
     @Grade(value = 1, cpuTimeout = 1)
     public void testBasicEnqueueDequeue() {
-        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>(2);
+        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>();
 
         assertTrue(q.isEmpty());
         q.enqueue(1);
@@ -31,7 +31,7 @@ public class ResizingArrayQueueTest {
     @Test
     @Grade(value = 1, cpuTimeout = 1)
     public void testWrapAround() {
-        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>(2);
+        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>();
 
         for (int i = 0; i < 10; i++) q.enqueue(i);
         for (int i = 0; i < 5; i++) assertEquals(Integer.valueOf(i), q.dequeue());
@@ -44,7 +44,7 @@ public class ResizingArrayQueueTest {
     @Test
     @Grade(value = 1, cpuTimeout = 1)
     public void testResizeDown() {
-        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>(2);
+        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>();
 
         for (int i = 0; i < 32; i++) q.enqueue(i);
         Object[] arr = q.q;
@@ -62,7 +62,7 @@ public class ResizingArrayQueueTest {
     @Test
     @Grade(value = 1, cpuTimeout = 1)
     public void testResizeUp() {
-        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>(2);
+        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>();
 
         q.enqueue(1);
         q.enqueue(2);
@@ -85,7 +85,7 @@ public class ResizingArrayQueueTest {
     @Test
     @Grade(value = 1, cpuTimeout = 1)
     public void testIteratorOrderAndWrap() {
-        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>(4);
+        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>();
 
         q.enqueue(1);
         q.enqueue(2);
@@ -107,7 +107,7 @@ public class ResizingArrayQueueTest {
     @Test
     @Grade(value = 1, cpuTimeout = 1)
     public void testIteratorFailFast() {
-        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>(4);
+        ResizingArrayQueue<Integer> q = new ResizingArrayQueue<>();
         q.enqueue(1);
         q.enqueue(2);
         q.enqueue(3);

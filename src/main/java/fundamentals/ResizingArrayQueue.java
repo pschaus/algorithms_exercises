@@ -4,24 +4,40 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * We are interested in the implementation of a Queue using an array.
+ * The array size needs to be updated when it is full or close to empty
+ * i.e. when the array is full, the size of the array should double
+ *  and when the array is less than 1/4 full, the size of the array should halve.
+ *
+ * You are asked to implement this Queue by completing the class see (TODO's)
+ * Most important methods are:
+ *  - the enqueue method to add an element
+ *  - the remove method [The NoSuchElementException is thrown when the queue is empty]
+ *  - the iterator used to browse the queue in FIFO
+ *
+ * Hint : when the head of the stack reaches the end of the array, go back at its beginning.
+ *
+ * @param <Item>
+ */
 public class ResizingArrayQueue<Item> implements Iterable<Item> {
 
     public Item[] q;
+    private long nOp = 0;
+    // BEGIN STRIP
     private int head;
     private int tail;
     private int size;
-    // BEGIN STRIP
-    private long nOp = 0;
     // END STRIP
 
     @SuppressWarnings("unchecked")
-    public ResizingArrayQueue(int capacity) {
-        q = (Item[]) new Object[capacity];
+    public ResizingArrayQueue() {
+        q = (Item[]) new Object[2];
+        nOp = 0;
         // BEGIN STRIP
         head = 0;
         tail = 0;
         size = 0;
-        nOp = 0;
         // END STRIP
     }
 
@@ -58,6 +74,11 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
     }
     // END STRIP
 
+    /**
+     * Add an item at the tail of the queue.
+     * Resize the array if needed.
+     * @param item the item to add.
+     */
     public void enqueue(Item item) {
         // TODO
         // BEGIN STRIP
@@ -71,7 +92,13 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         // END STRIP
     }
 
-    public Item dequeue() {
+    /**
+     * Removes and return the element at the head of the queue.
+     * Resize the array if needed.
+     * @return The item freshly removed.
+     * @throws NoSuchElementException when the queue is empty.
+     */
+    public Item dequeue() throws NoSuchElementException{
         // TODO
         // STUDENT return null;
         // BEGIN STRIP
@@ -91,6 +118,10 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         // END STRIP
     }
 
+    /**
+     * Returns an iterator that iterates through the items in FIFO order.
+     * @return an iterator that iterates through the items in FIFO order.
+     */
     @Override
     public Iterator<Item> iterator() {
         // TODO
