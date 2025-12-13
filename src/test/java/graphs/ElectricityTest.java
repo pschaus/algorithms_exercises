@@ -78,5 +78,4 @@ public class ElectricityTest {
         assertEquals(answer, Electricity.minimumSpanningCost(n,edges));
     }
 
-
 }
