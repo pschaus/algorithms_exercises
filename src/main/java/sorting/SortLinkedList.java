@@ -64,6 +64,7 @@ public class SortLinkedList implements Iterable<Integer> {
      */
     protected Node mergeSort(Node head) {
         // TODO
+        // STUDENT return null;
         // BEGIN STRIP
         if (head == null || head.next == null) {
             return head;
@@ -90,6 +91,7 @@ public class SortLinkedList implements Iterable<Integer> {
      */
     protected Node merge(Node a, Node b) {
         // TODO
+        // STUDENT return null;
         // BEGIN STRIP
         Node dummy = new Node(0, null);
         Node tail = dummy;
