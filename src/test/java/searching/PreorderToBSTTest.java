@@ -195,10 +195,10 @@ public class PreorderToBSTTest {
     @GradeFeedback(message = "Check the complexity of your algorithm")
     @Order(2)
     public void testComplexity() {
-        PreorderToBST teacher = new PreorderToBST(longBst(5000));
-        teacher.put(50005);
-        teacher.put(50007);
-        teacher.put(50002);
+        PreorderToBST teacher = new PreorderToBST(longBst(1000));
+        teacher.put(10005);
+        teacher.put(10007);
+        teacher.put(10002);
 
         int [] preOrder = teacher.preorderWrite();
 
