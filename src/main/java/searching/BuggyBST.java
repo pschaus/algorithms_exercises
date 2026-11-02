@@ -6,6 +6,8 @@ package searching;
  * After the repair, the keys must satisfy the strict BST ordering property
  * (equivalently, an in-order traversal must produce strictly increasing keys).
  *
+ * A detailed video explanations is available here: https://youtu.be/15pRnqHv7F4
+ *
  * <p>See {@code BuggyBSTTest} for examples.
  */
 public class BuggyBST {
