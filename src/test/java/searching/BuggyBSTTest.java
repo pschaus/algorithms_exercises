@@ -17,9 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BuggyBSTTest {
 
-    // BEGIN STRIP
     private static final Random random = new Random(569663);
-    // END STRIP
 
     @Test
     @Grade(value = 1)
